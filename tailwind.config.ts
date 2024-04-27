@@ -7,6 +7,14 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      baloo2: ["Baloo 2", "sans-serif"],
+    },
+    colors: {
+      'primary': '#FF6600',
+      'primary-light': '#FF983F',
+      'white': '#FFFFFF',
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
