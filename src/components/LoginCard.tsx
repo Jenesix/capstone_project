@@ -13,9 +13,9 @@ const LoginCard: React.FC = () => {
     };
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 mx-4 sm:mx-8 md:mx-12 lg:mx-20 xl:mx-52 mb-4 mt-12 border-primary-light border-2 rounded-5xl md:rounded-tr-10xl md:rounded-9xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 mx-4 sm:mx-8 md:mx-12 md:rounded-bl-10xl lg:mx-20 xl:mx-52 mb-4 mt-12 border-0 border-primary-light md:border-2 rounded-5xl md:rounded-tr-10xl md:rounded-9xl">
                 {/* Left Side */}
-                <div className="bg-gradient-to-r from-primary to-primary-light rounded-9xl rounded-r-none md:block hidden">
+                <div className="bg-gradient-to-r from-primary to-primary-light rounded-9xl rounded-bl-10xl rounded-r-none md:block hidden">
                     <div className="mx-4 sm:mx-8 mt-5 mb-4 sm:mb-24 md:flex flex-col items-center">
                         <Image
                             className="mb-12"
