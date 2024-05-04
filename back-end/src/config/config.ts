@@ -1,4 +1,4 @@
-export const PORT = 5000;
+export const PORT = 8000;
 export const MONGO_URI = "mongodb+srv://kritamet:1234@cluster0.kdvkhdy.mongodb.net/Learno";
 export const secret_jwt = "LearnoPlus";
 export const supabaseUrl = "https://lrxsabvitoecnhgmynmk.supabase.co";

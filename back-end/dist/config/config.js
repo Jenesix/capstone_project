@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.supabaseKey = exports.supabaseUrl = exports.secret_jwt = exports.MONGO_URI = exports.PORT = void 0;
-exports.PORT = 5000;
+exports.PORT = 8000;
 exports.MONGO_URI = "mongodb+srv://kritamet:1234@cluster0.kdvkhdy.mongodb.net/Learno";
 exports.secret_jwt = "LearnoPlus";
 exports.supabaseUrl = "https://lrxsabvitoecnhgmynmk.supabase.co";
