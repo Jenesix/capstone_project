@@ -20,7 +20,7 @@ app.use(cors(
 app.use(cookieParser());
 app.use(express.json());
 app.get("/", async (req, res) => {
-    res.send({ message: "test server.js" });
+    res.send({ message: "test server.ts" });
 });
 
 const multerMid = multer({

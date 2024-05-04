@@ -29,7 +29,7 @@ app.use((0, cors_1.default)({
 app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send({ message: "test server.js" });
+    res.send({ message: "test server.ts" });
 }));
 const multerMid = (0, multer_1.default)({
     storage: multer_1.default.memoryStorage(),
