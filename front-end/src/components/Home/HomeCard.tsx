@@ -15,7 +15,7 @@ const Homepage: React.FC = () => {
           </select>
         </div>
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:mt-6 mt-12 gap-8 mx-16 2xl:mx-36'>
+      <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:mt-6 mt-12 gap-2 md:gap-5 xl:gap-8 mx-16 2xl:mx-36'>
         <Card />
         <Card />
         <Card />

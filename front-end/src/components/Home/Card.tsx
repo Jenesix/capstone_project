@@ -3,7 +3,7 @@ import banner from "../../../public/Homebanner.svg";
 
 const Card = () => {
     return (
-        <div className="relative rounded-xl overflow-hidden shadow-lg mb-8 lg:mb-0">
+        <div className="relative rounded-xl overflow-hidden shadow-lg ">
             <div className="rounded-xl overflow-hidden">
                 <Image
                     src={banner}
@@ -20,7 +20,7 @@ const Card = () => {
                 <p className="text-sm mb-1 text-salate-400 font-bold md:text-base lg:text-lg">Section 1</p>
                 <p className="text-lg font-bold md:text-xl lg:text-2xl">CSS 234</p>
                 <p className="text-xl font-bold md:text-2xl lg:text-3xl">Web Programming II</p>
-                <p className="text-sm md:text-xs lg:text-sm">(Semester 2024/2)</p>
+                <p className="text-sm md:text-xs font-semibold text-salate-400 lg:text-sm">(Semester 2024/2)</p>
             </div>
         </div>
     );
