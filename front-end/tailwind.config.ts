@@ -26,6 +26,7 @@ const config: Config = {
         800: '#334e68',
         900: '#243b53',
       },
+      'black': '#000000',
     },
     borderRadius: {
       'none': '0',
