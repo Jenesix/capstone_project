@@ -1,7 +1,9 @@
+import Homepage from "@/components/Home/HomeCard";
 
 export default function Home() {
   return (
-    <main>
-    </main>
+    <>
+    <Homepage/>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import logo from '../../public/Logo.svg';
+import logo from '../../../public/Logo.svg';
 import Link from 'next/link';
 
 const Navbar: React.FC = () => {
@@ -15,20 +15,20 @@ const Navbar: React.FC = () => {
       </div>
       <div className='ml-3 sm:ml-0 mx-2 md:mx-10 flex space-x-2 sm:space-x-4'>
         <Link href='/login'>
-        <button className="
+          <button className="
           bg-primary-light transition-all duration-300 transform hover:scale-105 
           text-white ml-16 md:ml-4 xl:ml-6 text-sm lg:text-base font-bold 
           whitespace-nowrap rounded-3xl px-4 sm:px-8 h-12">
-          Log in
-        </button>
+            Log in
+          </button>
         </Link>
         <Link href='/signup'>
-        <button className="
+          <button className="
           bg-primary-light transition-all duration-300 transform hover:scale-105 
-          text-white md:ml-4 xl:ml-6 text-sm lg:text-base font-bold 
+          text-white md:mr-4 xl:mr-6 text-sm lg:text-base font-bold 
           whitespace-nowrap rounded-3xl px-4 sm:px-8 h-12">
-          Sign Up
-        </button>
+            Sign Up
+          </button>
         </Link>
       </div>
     </nav>
