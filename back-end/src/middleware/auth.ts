@@ -16,7 +16,7 @@ export const isLogin = (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.cookies.token;
     if (token) {
-      return res.status(401).json({ message: "You are logged in" });
+      return res.status(401).json({ message: "You are already logged in" });
     }
     next();
   } catch (error: any) {
