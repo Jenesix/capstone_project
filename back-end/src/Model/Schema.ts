@@ -1,15 +1,19 @@
 import { Schema, model } from "mongoose";
-import { Student } from "../interface/Model";
+import { User } from "../interface/Model";
 
 // _id = real ID number
 // ID = ObjectId in mongo
-const Student = new Schema<Student>({
-    student_id: {
+const User = new Schema<User>({
+    user_id: {
         type: String,
         required: true,
         unique: true
     },
     password: {
+        type: String,
+        required: true
+    },
+    role: {
         type: String,
         required: true
     },
@@ -46,4 +50,4 @@ const Student = new Schema<Student>({
         ref: "Major"
     }
 });
-export const StudentModel = model<Student>("Student", Student);
+export const UserModel = model<User>("Student", User);

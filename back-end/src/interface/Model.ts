@@ -2,9 +2,10 @@ import { ObjectId } from "mongoose";
 
 // _id = real ID number
 // ID = ObjectId in mongo
-export interface Student {
-    student_id: string;
+export interface User {
+    user_id: string;
     password: string;
+    role: string; // student, teacher
     email: string;
     firstname: string;
     lastname: string;
@@ -18,23 +19,9 @@ export interface Student {
     MajorID: ObjectId;
 }
 
-export interface Teacher {
-    teacher_id: string;
-    password: string;
-    email: string;
-    firstname: string;
-    lastname: string;
-    birthdate: Date;
-    phonenumber: string;
-    // Foreign Key
-    ClassID: ObjectId[];
-    AssignmentID: ObjectId[];
-    FacultyID: ObjectId;
-    DepartmentID: ObjectId;
-}
-
 export interface Faculty {
     faculty_name: string;
+    // Foreign Key
     DepartmentID: ObjectId[];
     MajorID: ObjectId[];
 }
@@ -54,8 +41,7 @@ export interface Class {
     class_code: string;
     section: number;
     // Foreign Key
-    TeacherID: ObjectId[];
-    StudentID: ObjectId[];
+    UserID: ObjectId[];
     SyllabusID: ObjectId;
     AssignmentID: ObjectId[];
     AnnouncementID: ObjectId[];
@@ -76,7 +62,7 @@ export interface Assignment {
     score: number;
     // Foreign Key
     ClassID: ObjectId[];
-    StudentID: ObjectId[];
+    UserID: ObjectId[];
 }
 
 export interface Resource {
@@ -90,7 +76,7 @@ export interface Attendance {
     timestamp: Date;
     // Foreign Key
     ClassID: ObjectId;
-    StudentID: ObjectId;
+    UserID: ObjectId; // student
 }
 
 export interface Post {
@@ -114,5 +100,5 @@ export interface Announcement {
     description_anm: string;
     // Foreign Key
     ClassID: ObjectId;
-    TeacherID: ObjectId;
+    UserID: ObjectId; // teacher
 }
