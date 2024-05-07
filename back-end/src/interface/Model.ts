@@ -72,8 +72,11 @@ export interface Resource {
 }
 
 export interface Attendance {
+    date_atd: Date;
+    time_expire: Date;
+    time_check: Date;
     status_atd: string;
-    timestamp: Date;
+    note_atd: string;
     // Foreign Key
     ClassID: ObjectId;
     UserID: ObjectId; // student

@@ -39,7 +39,7 @@ const User = new Schema<User>({
     ],
     FacultyID: {
         type: Schema.Types.ObjectId,
-        ref: "Teacher"
+        ref: "Faculty"
     },
     DepartmentID: {
         type: Schema.Types.ObjectId,
