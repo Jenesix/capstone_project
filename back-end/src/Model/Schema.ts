@@ -39,7 +39,8 @@ const User = new Schema<User>({
     ],
     FacultyID: {
         type: Schema.Types.ObjectId,
-        ref: "Faculty"
+        ref: "Faculty",
+        // required: true
     },
     DepartmentID: {
         type: Schema.Types.ObjectId,
@@ -50,4 +51,4 @@ const User = new Schema<User>({
         ref: "Major"
     }
 });
-export const UserModel = model<User>("Student", User);
+export const UserModel = model<User>("User", User);

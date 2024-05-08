@@ -18,8 +18,8 @@ const config_1 = require("./config/config");
 const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-// import userRouter from "./routers/userRouter";
-// import adminRouter from "./routers/adminRouter";
+const userRouter_1 = __importDefault(require("./Routers/userRouter"));
+const adminRouter_1 = __importDefault(require("./Routers/adminRouter"));
 const multer_1 = __importDefault(require("multer"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
@@ -36,8 +36,8 @@ const multerMid = (0, multer_1.default)({
 });
 app.use(multerMid.single("file"));
 // router zone
-// app.use("/api/user", userRouter);
-// app.use("/api/admin", adminRouter);
+app.use("/api/user", userRouter_1.default);
+app.use("/api/admin", adminRouter_1.default);
 app.listen(config_1.PORT, () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(config_1.MONGO_URI);

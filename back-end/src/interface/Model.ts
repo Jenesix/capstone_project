@@ -14,6 +14,8 @@ export interface User {
     // Foreign Key
     ClassID: ObjectId[];
     AssignmentID: ObjectId[];
+    AttendanceID: ObjectId[];
+
     FacultyID: ObjectId;
     DepartmentID: ObjectId;
     MajorID: ObjectId;
@@ -29,23 +31,31 @@ export interface Faculty {
 export interface Department {
     department_name: string;
     // Foreign Key
+    FacultyID: ObjectId;
     MajorID: ObjectId[];
 }
 
 export interface Major {
     major_name: string;
+    // Foreign Key
+    FacultyID: ObjectId;
+    DepartmentID: ObjectId;
 }
 
 export interface Class {
     class_name: string;
     class_code: string;
     section: number;
+    semester: number; // 1, 2
+    year: number;
     // Foreign Key
     UserID: ObjectId[];
     SyllabusID: ObjectId;
     AssignmentID: ObjectId[];
     AnnouncementID: ObjectId[];
     ResourceID: ObjectId[];
+    AttendanceID: ObjectId[];
+    PostID: ObjectId[];
 }
 
 export interface Syllabus {
@@ -58,6 +68,7 @@ export interface Assignment {
     assignment_name: string;
     description_asm: string;
     due_date: Date;
+    turnin_date: Date;
     status_asm: string;
     score: number;
     // Foreign Key
@@ -87,6 +98,7 @@ export interface Post {
     description_p: string;
     post_image: string;
     // Foreign Key
+    ClassID: ObjectId;
     OwnerID: ObjectId;
     CommentID: ObjectId[];
 }
@@ -103,5 +115,4 @@ export interface Announcement {
     description_anm: string;
     // Foreign Key
     ClassID: ObjectId;
-    UserID: ObjectId; // teacher
 }
