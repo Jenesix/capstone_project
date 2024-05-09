@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { FacultyModel } from "../../Model/Schema";
+import { FacultyModel } from "../../../Model/Schema";
 
 export const AddFaculty = async (req: Request, res: Response) => {
     try {

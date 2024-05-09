@@ -58,7 +58,8 @@ export const UserModel = model<User>("User", User);
 const Faculty = new Schema<Faculty>({
     faculty_name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     DepartmentID: [
         {
@@ -78,7 +79,7 @@ export const FacultyModel = model<Faculty>("Faculty", Faculty);
 const Department = new Schema<Department>({
     department_name: {
         type: String,
-        required: true
+        required: true,
     },
     FacultyID: {
         type: Schema.Types.ObjectId,
@@ -96,7 +97,8 @@ export const DepartmentModel = model<Department>("Department", Department);
 const Major = new Schema<Major>({
     major_name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     FacultyID: {
         type: Schema.Types.ObjectId,

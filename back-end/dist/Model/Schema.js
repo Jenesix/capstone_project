@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = void 0;
+exports.MajorModel = exports.DepartmentModel = exports.FacultyModel = exports.UserModel = void 0;
 const mongoose_1 = require("mongoose");
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -53,3 +53,56 @@ const User = new mongoose_1.Schema({
     }
 });
 exports.UserModel = (0, mongoose_1.model)("User", User);
+const Faculty = new mongoose_1.Schema({
+    faculty_name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    DepartmentID: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Department"
+        }
+    ],
+    MajorID: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Major"
+        }
+    ]
+});
+exports.FacultyModel = (0, mongoose_1.model)("Faculty", Faculty);
+const Department = new mongoose_1.Schema({
+    department_name: {
+        type: String,
+        required: true,
+    },
+    FacultyID: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Faculty"
+    },
+    MajorID: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Major"
+        }
+    ]
+});
+exports.DepartmentModel = (0, mongoose_1.model)("Department", Department);
+const Major = new mongoose_1.Schema({
+    major_name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    FacultyID: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Faculty"
+    },
+    DepartmentID: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Department"
+    }
+});
+exports.MajorModel = (0, mongoose_1.model)("Major", Major);
