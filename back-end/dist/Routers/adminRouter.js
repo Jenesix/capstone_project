@@ -12,6 +12,10 @@ const AddDepartment_1 = require("../Controller/Admin/department/AddDepartment");
 const EditDepartment_1 = require("../Controller/Admin/department/EditDepartment");
 const DeleteDepartment_1 = require("../Controller/Admin/department/DeleteDepartment");
 const GetDepartment_1 = require("../Controller/Admin/department/GetDepartment");
+const AddMajor_1 = require("../Controller/Admin/major/AddMajor");
+const EditMajor_1 = require("../Controller/Admin/major/EditMajor");
+const DeleteMajor_1 = require("../Controller/Admin/major/DeleteMajor");
+const GetMajor_1 = require("../Controller/Admin/major/GetMajor");
 const router = express_1.default.Router();
 router.get("/", (req, res) => {
     res.send({ message: "Admin router" });
@@ -22,9 +26,13 @@ router.put("/editfaculty/:facultyID", EditFaculty_1.EditFaculty);
 router.delete("/deletefaculty/:facultyID", DeleteFaculty_1.DeleteFaculty);
 router.get("/getfaculty", GetFaculty_1.GetFaculty);
 // Department
-router.post("/adddepartment", AddDepartment_1.AddDepartment);
+router.post("/add-department", AddDepartment_1.AddDepartment);
 router.put("/editdepartment/:departmentID", EditDepartment_1.EditDepartment);
 router.delete("/deletedepartment/:departmentID", DeleteDepartment_1.DeleteDepartment);
 router.get("/getdepartment", GetDepartment_1.GetDepartment);
 // Major
+router.post("/addmajor", AddMajor_1.AddMajor);
+router.put("/editmajor/:majorID", EditMajor_1.EditMajor);
+router.delete("/deletemajor/:majorID", DeleteMajor_1.DeleteMajor);
+router.get("/getmajor", GetMajor_1.GetMajor);
 exports.default = router;

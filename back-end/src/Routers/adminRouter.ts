@@ -7,6 +7,10 @@ import { AddDepartment } from "../Controller/Admin/department/AddDepartment";
 import { EditDepartment } from "../Controller/Admin/department/EditDepartment";
 import { DeleteDepartment } from "../Controller/Admin/department/DeleteDepartment";
 import { GetDepartment } from "../Controller/Admin/department/GetDepartment";
+import { AddMajor } from "../Controller/Admin/major/AddMajor";
+import { EditMajor } from "../Controller/Admin/major/EditMajor";
+import { DeleteMajor } from "../Controller/Admin/major/DeleteMajor";
+import { GetMajor } from "../Controller/Admin/major/GetMajor";
 
 const router = express.Router();
 
@@ -21,11 +25,15 @@ router.delete("/deletefaculty/:facultyID", DeleteFaculty);
 router.get("/getfaculty", GetFaculty);
 
 // Department
-router.post("/adddepartment", AddDepartment);
+router.post("/add-department", AddDepartment);
 router.put("/editdepartment/:departmentID", EditDepartment);
 router.delete("/deletedepartment/:departmentID", DeleteDepartment);
 router.get("/getdepartment", GetDepartment);
 
 // Major
+router.post("/addmajor", AddMajor);
+router.put("/editmajor/:majorID", EditMajor);
+router.delete("/deletemajor/:majorID", DeleteMajor);
+router.get("/getmajor", GetMajor);
 
 export default router;
