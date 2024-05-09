@@ -2,7 +2,7 @@ import express from "express";
 import { Register } from "../Controller/RegisterController";
 import { Login } from "../Controller/LoginController";
 import { validateToken, isLogin } from "../middleware/auth";
-import { Logout } from "../Controller/Logout";
+import { Logout } from "../Controller/LogoutController";
 
 const router = express.Router();
 
