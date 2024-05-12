@@ -16,6 +16,10 @@ const AddMajor_1 = require("../Controller/Admin/major/AddMajor");
 const EditMajor_1 = require("../Controller/Admin/major/EditMajor");
 const DeleteMajor_1 = require("../Controller/Admin/major/DeleteMajor");
 const GetMajor_1 = require("../Controller/Admin/major/GetMajor");
+const CreateClass_1 = require("../Controller/Admin/Class/CreateClass");
+const GetClass_1 = require("../Controller/Admin/Class/GetClass");
+const EditClass_1 = require("../Controller/Admin/Class/EditClass");
+const DeleteClass_1 = require("../Controller/Admin/Class/DeleteClass");
 const router = express_1.default.Router();
 router.get("/", (req, res) => {
     res.send({ message: "Admin router" });
@@ -35,4 +39,9 @@ router.post("/addmajor", AddMajor_1.AddMajor);
 router.put("/editmajor/:majorID", EditMajor_1.EditMajor);
 router.delete("/deletemajor/:majorID", DeleteMajor_1.DeleteMajor);
 router.get("/getmajor", GetMajor_1.GetMajor);
+// Class
+router.post("/createclass", CreateClass_1.CreateClass);
+router.get("/getclass", GetClass_1.GetClass);
+router.put("/editclass/:classID", EditClass_1.EditClass);
+router.delete("/deleteclass/:classID", DeleteClass_1.DeleteClass);
 exports.default = router;

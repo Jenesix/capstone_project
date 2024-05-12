@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { User, Faculty, Department, Major } from '../interface/Model';
+import { User, Faculty, Department, Major, Class } from '../interface/Model';
 
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -110,3 +110,69 @@ const Major = new Schema<Major>({
     }
 });
 export const MajorModel = model<Major>("Major", Major);
+
+
+
+const Class = new Schema<Class>({
+    class_name: {
+        type: String,
+        required: true,
+    },
+    class_code: {
+        type: String,
+        required: true
+    },
+    section: {
+        type: Number,
+        required: true
+    },
+    semester: {
+        type: Number,
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true
+    },
+    UserID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+    SyllabusID: {
+        type: Schema.Types.ObjectId,
+        ref: "Syllabus"
+    },
+    AssignmentID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Assignment"
+        }
+    ],
+    AnnouncementID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Announcement"
+        }
+    ],
+    ResourceID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Resource"
+        }
+    ],
+    AttendanceID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Attendance"
+        }
+    ],
+    PostID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Post"
+        }
+    ]
+});
+export const ClassModel = model<Class>("Class", Class);

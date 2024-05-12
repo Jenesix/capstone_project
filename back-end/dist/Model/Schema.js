@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MajorModel = exports.DepartmentModel = exports.FacultyModel = exports.UserModel = void 0;
+exports.ClassModel = exports.MajorModel = exports.DepartmentModel = exports.FacultyModel = exports.UserModel = void 0;
 const mongoose_1 = require("mongoose");
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -106,3 +106,66 @@ const Major = new mongoose_1.Schema({
     }
 });
 exports.MajorModel = (0, mongoose_1.model)("Major", Major);
+const Class = new mongoose_1.Schema({
+    class_name: {
+        type: String,
+        required: true,
+    },
+    class_code: {
+        type: String,
+        required: true
+    },
+    section: {
+        type: Number,
+        required: true
+    },
+    semester: {
+        type: Number,
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true
+    },
+    UserID: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
+    SyllabusID: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Syllabus"
+    },
+    AssignmentID: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Assignment"
+        }
+    ],
+    AnnouncementID: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Announcement"
+        }
+    ],
+    ResourceID: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Resource"
+        }
+    ],
+    AttendanceID: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Attendance"
+        }
+    ],
+    PostID: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Post"
+        }
+    ]
+});
+exports.ClassModel = (0, mongoose_1.model)("Class", Class);

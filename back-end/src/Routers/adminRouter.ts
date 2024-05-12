@@ -11,6 +11,10 @@ import { AddMajor } from "../Controller/Admin/major/AddMajor";
 import { EditMajor } from "../Controller/Admin/major/EditMajor";
 import { DeleteMajor } from "../Controller/Admin/major/DeleteMajor";
 import { GetMajor } from "../Controller/Admin/major/GetMajor";
+import { CreateClass } from "../Controller/Admin/Class/CreateClass";
+import { GetClass } from "../Controller/Admin/Class/GetClass";
+import { EditClass } from "../Controller/Admin/Class/EditClass";
+import { DeleteClass } from "../Controller/Admin/Class/DeleteClass";
 
 const router = express.Router();
 
@@ -35,5 +39,11 @@ router.post("/addmajor", AddMajor);
 router.put("/editmajor/:majorID", EditMajor);
 router.delete("/deletemajor/:majorID", DeleteMajor);
 router.get("/getmajor", GetMajor);
+
+// Class
+router.post("/createclass", CreateClass);
+router.get("/getclass", GetClass);
+router.put("/editclass/:classID", EditClass);
+router.delete("/deleteclass/:classID", DeleteClass);
 
 export default router;

@@ -1,41 +1,52 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-*.swp
+# Ignore node_modules directory
+node_modules/
 
-pids
-logs
-results
-tmp
+# Ignore built TypeScript files
+dist/
 
-# Build
-public/css/main.css
-
-# Coverage reports
-coverage
-
-# API keys and secrets
+# Ignore environment-specific configuration files
 .env
 
-# Dependency directory
-node_modules
-bower_components
+# Ignore any logs or temporary files
+*.log
+*.pid
+*.seed
 
-# Editors
-.idea
-*.iml
-
-# OS metadata
+# Ignore macOS file system metadata
 .DS_Store
-Thumbs.db
 
-# Ignore built ts files
-dist/**/*
+# Ignore Visual Studio Code settings
+.vscode/
 
-# ignore yarn.lock
+# Ignore npm debugging logs
+npm-debug.log*
+
+# Ignore yarn's lockfile
 yarn.lock
+
+# Ignore dependency directories
+/pnpm-store
+.pnpm
+
+# Ignore TypeScript configuration file
+tsconfig.json
+
+# Ignore JavaScript source maps
+*.js.map
+
+# Ignore local development environment configuration
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore editor specific files
+.idea/
+*.suo
+*.ntvs*
+
+# Ignore Jest coverage output
+coverage/
+
+# Ignore Cypress video files
+cypress/videos/
