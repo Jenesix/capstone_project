@@ -13,9 +13,6 @@ export interface User {
     phonenumber: string;
     // Foreign Key
     ClassID: ObjectId[];
-    AssignmentID: ObjectId[];
-    AttendanceID: ObjectId[];
-
     FacultyID: ObjectId;
     DepartmentID: ObjectId;
     MajorID: ObjectId;
@@ -24,15 +21,15 @@ export interface User {
 export interface Faculty {
     faculty_name: string;
     // Foreign Key
-    DepartmentID: ObjectId[];
-    MajorID: ObjectId[];
+    // DepartmentID: ObjectId[];
+    // MajorID: ObjectId[];
 }
 
 export interface Department {
     department_name: string;
     // Foreign Key
     FacultyID: ObjectId;
-    MajorID: ObjectId[];
+    // MajorID: ObjectId[];
 }
 
 export interface Major {
@@ -64,34 +61,55 @@ export interface Syllabus {
     ClassID: ObjectId;
 }
 
+// teacher
 export interface Assignment {
     assignment_name: string;
     description_asm: string;
     due_date: Date;
+    fullscore: number;
+    file_asm: string;
+    // Foreign Key
+    ClassID: ObjectId[];
+    ResourceID: ObjectId;
+}
+// student
+export interface AssignmentTurnin {
     turnin_date: Date;
     status_asm: string;
     score: number;
+    file_turnin: string;
     // Foreign Key
-    ClassID: ObjectId[];
-    UserID: ObjectId[];
-    ResourceID: ObjectId[];
+    AssignmentID: ObjectId;
+    UserID: ObjectId;
 }
 
+export interface ResourceFolder {
+    folder_name: string;
+    // Foreign Key
+    ClassID: ObjectId;
+}
 export interface Resource {
     resource_file: string;
     // Foreign Key
     ClassID: ObjectId[];
+    ResourceFolderID: ObjectId;
 }
 
+// teacher
 export interface Attendance {
     date_atd: Date;
     time_expire: Date;
+    // Foreign Key
+    ClassID: ObjectId;
+}
+// student
+export interface AttendanceCheck {
     time_check: Date;
     status_atd: string;
     note_atd: string;
     // Foreign Key
-    ClassID: ObjectId;
     UserID: ObjectId; // student
+    AttendaceID: ObjectId;
 }
 
 export interface Post {

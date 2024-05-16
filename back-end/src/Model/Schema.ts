@@ -31,12 +31,6 @@ const User = new Schema<User>({
             ref: "Class"
         }
     ],
-    AssignmentID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Assignment"
-        }
-    ],
     FacultyID: {
         type: Schema.Types.ObjectId,
         ref: "Faculty",
@@ -61,18 +55,18 @@ const Faculty = new Schema<Faculty>({
         required: true,
         unique: true
     },
-    DepartmentID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Department"
-        }
-    ],
-    MajorID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Major"
-        }
-    ]
+    // DepartmentID: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "Department"
+    //     }
+    // ],
+    // MajorID: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "Major"
+    //     }
+    // ]
 });
 export const FacultyModel = model<Faculty>("Faculty", Faculty);
 
@@ -85,12 +79,12 @@ const Department = new Schema<Department>({
         type: Schema.Types.ObjectId,
         ref: "Faculty"
     },
-    MajorID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Major"
-        }
-    ]
+    // MajorID: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "Major"
+    //     }
+    // ]
 });
 export const DepartmentModel = model<Department>("Department", Department);
 
