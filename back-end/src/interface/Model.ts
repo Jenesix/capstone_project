@@ -74,6 +74,7 @@ export interface Assignment {
     // Foreign Key
     ClassID: ObjectId[];
     UserID: ObjectId[];
+    ResourceID: ObjectId[];
 }
 
 export interface Resource {

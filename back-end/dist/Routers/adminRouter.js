@@ -20,6 +20,7 @@ const CreateClass_1 = require("../Controller/Admin/Class/CreateClass");
 const GetClass_1 = require("../Controller/Admin/Class/GetClass");
 const EditClass_1 = require("../Controller/Admin/Class/EditClass");
 const DeleteClass_1 = require("../Controller/Admin/Class/DeleteClass");
+const addUserToClass_1 = require("../Controller/Admin/Class/addUserToClass");
 const router = express_1.default.Router();
 router.get("/", (req, res) => {
     res.send({ message: "Admin router" });
@@ -44,4 +45,5 @@ router.post("/createclass", CreateClass_1.CreateClass);
 router.get("/getclass", GetClass_1.GetClass);
 router.put("/editclass/:classID", EditClass_1.EditClass);
 router.delete("/deleteclass/:classID", DeleteClass_1.DeleteClass);
+router.put("/addusertoclass/:classID", addUserToClass_1.addUserToClass);
 exports.default = router;

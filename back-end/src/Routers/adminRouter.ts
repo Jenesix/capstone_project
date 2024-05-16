@@ -15,6 +15,7 @@ import { CreateClass } from "../Controller/Admin/Class/CreateClass";
 import { GetClass } from "../Controller/Admin/Class/GetClass";
 import { EditClass } from "../Controller/Admin/Class/EditClass";
 import { DeleteClass } from "../Controller/Admin/Class/DeleteClass";
+import { addUserToClass } from "../Controller/Admin/Class/addUserToClass";
 
 const router = express.Router();
 
@@ -45,5 +46,6 @@ router.post("/createclass", CreateClass);
 router.get("/getclass", GetClass);
 router.put("/editclass/:classID", EditClass);
 router.delete("/deleteclass/:classID", DeleteClass);
+router.put("/addusertoclass/:classID", addUserToClass);
 
 export default router;

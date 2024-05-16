@@ -24,8 +24,8 @@ router.get("/logout", LogoutController_1.Logout);
 // User
 router.get("/getuser", auth_1.validateToken, GetUser_1.GetUser); // get all user
 router.get("/getuserbyid", GetUserByID_1.GetUserByID); // must login
-router.put("/updateuser/:UserID", UpdateUser_1.UpdateUser);
-router.delete("/deleteuser/:UserID", DeleteUser_1.DeleteUser);
+router.put("/updateuser/:userID", UpdateUser_1.UpdateUser);
+router.delete("/deleteuser/:userID", DeleteUser_1.DeleteUser);
 // Post
-router.post("/createpost/:ClassID", CreatePost_1.CreatePost);
+router.post("/createpost/:classID", CreatePost_1.CreatePost);
 exports.default = router;

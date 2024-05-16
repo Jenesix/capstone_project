@@ -23,10 +23,10 @@ router.get("/logout", Logout);
 // User
 router.get("/getuser", validateToken, GetUser); // get all user
 router.get("/getuserbyid", GetUserByID); // must login
-router.put("/updateuser/:UserID", UpdateUser);
-router.delete("/deleteuser/:UserID", DeleteUser);
+router.put("/updateuser/:userID", UpdateUser);
+router.delete("/deleteuser/:userID", DeleteUser);
 
 // Post
-router.post("/createpost/:ClassID", CreatePost);
+router.post("/createpost/:classID", CreatePost);
 
 export default router;

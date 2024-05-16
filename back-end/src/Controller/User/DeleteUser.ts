@@ -3,8 +3,8 @@ import { UserModel } from "../../Model/Schema";
 
 export const DeleteUser = async (req: Request, res: Response) => {
     try {
-        const { UserID } = req.params;
-        const result = await UserModel.findByIdAndDelete(UserID);
+        const { userID } = req.params;
+        const result = await UserModel.findByIdAndDelete(userID);
         if (!result) {
             return res.status(400).json({ message: "User not found" });
         }

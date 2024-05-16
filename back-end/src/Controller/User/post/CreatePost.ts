@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { PostModel } from "../../../Model/Schema";
 import jwt from "jsonwebtoken";
 import { secret_jwt } from "../../../config/config";
-import { uploadImagePost } from "../../../utils/FileUpload";
+import { uploadImagePost } from "../../../utils/UploadFile";
 
 export const CreatePost = async (req: Request, res: Response) => {
     try {
-        const { ClassID } = req.params;
+        const { classID } = req.params;
         const { title_p, description_p } = req.body;
         const file = req.file;
 
@@ -26,7 +26,7 @@ export const CreatePost = async (req: Request, res: Response) => {
             title_p,   
             description_p,
             OwnerID,
-            ClassID,
+            ClassID: classID,
             post_image: imageUrl,
         });
         await post.save();
