@@ -3,7 +3,7 @@ import { UserModel } from "../../Model/Schema";
 import jwt from "jsonwebtoken";
 import { secret_jwt } from "../../config/config";
 
-export const GetUser_id = async (req: Request, res: Response) => {
+export const GetUserByID = async (req: Request, res: Response) => {
     try {
         const token = req.cookies.token;
         if (!token) {
@@ -27,5 +27,3 @@ export const GetUser_id = async (req: Request, res: Response) => {
         console.log(error);
     }
 };
-
-// get user by id

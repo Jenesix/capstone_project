@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { User, Faculty, Department, Major, Class } from '../interface/Model';
+import { User, Faculty, Department, Major, Class, Post } from '../interface/Model';
 
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -176,3 +176,24 @@ const Class = new Schema<Class>({
     ]
 });
 export const ClassModel = model<Class>("Class", Class);
+
+const Post = new Schema<Post>({
+    title_p: String,
+    description_p: String,
+    post_image: String,
+    ClassID: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    },
+    OwnerID: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    CommentID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ]
+});
+export const PostModel = model<Post>("Post", Post);

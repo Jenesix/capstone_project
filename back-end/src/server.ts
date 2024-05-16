@@ -42,3 +42,6 @@ app.listen(PORT, async () => {
         console.log("error : ", error);
     }
 });
+
+// tsc -watch
+// node --watch ./dist/server.js

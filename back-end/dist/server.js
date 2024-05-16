@@ -47,3 +47,5 @@ app.listen(config_1.PORT, () => __awaiter(void 0, void 0, void 0, function* () {
         console.log("error : ", error);
     }
 }));
+// tsc -watch
+// node --watch ./dist/server.js
