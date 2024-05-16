@@ -15,7 +15,7 @@ export const CreatePost = async (req: Request, res: Response) => {
         if (!validToken) {
             return res.status(400).json({ message: "Invalid token" });
         }
-        const OwnerID = (validToken as { UserID: any }).UserID;
+        const UserID = (validToken as { UserID: any }).UserID;
 
         let imageUrl = "";
         if (file) {
@@ -25,7 +25,7 @@ export const CreatePost = async (req: Request, res: Response) => {
         const post = new PostModel({
             title_p,   
             description_p,
-            OwnerID,
+            UserID,
             ClassID: classID,
             post_image: imageUrl,
         });

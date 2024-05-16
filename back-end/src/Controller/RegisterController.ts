@@ -33,7 +33,6 @@ export const Register = async (req: Request, res: Response) => {
             DepartmentID,
             MajorID
         });
-
         await user.save();
 
         const playload = jwt.sign({ UserID: user._id }, String(secret_jwt), { algorithm: "HS256" });

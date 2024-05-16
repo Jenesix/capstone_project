@@ -64,7 +64,7 @@ export interface Syllabus {
 // teacher
 export interface Assignment {
     assignment_name: string;
-    description_asm: string;
+    desc_asm: string; // description
     due_date: Date;
     fullscore: number;
     file_asm: string;
@@ -114,24 +114,28 @@ export interface AttendanceCheck {
 
 export interface Post {
     title_p: string;
-    description_p: string;
+    desc_p: string; // description
     post_image: string;
+    time_p: Date; // datetime created
     // Foreign Key
     ClassID: ObjectId;
-    OwnerID: ObjectId;
+    UserID: ObjectId;
     CommentID: ObjectId[];
 }
 
 export interface Comment {
     comment: string;
+    time_cm: Date; // datetime created
     // Foreign Key
-    OwnerID: ObjectId;
+    UserID: ObjectId;
     PostID: ObjectId;
 }
 
 export interface Announcement {
     title_anm: string;
-    description_anm: string;
+    desc_anm: string; // description
+    time_anm: Date; // datetime created
     // Foreign Key
     ClassID: ObjectId;
+    UserID: ObjectId;
 }

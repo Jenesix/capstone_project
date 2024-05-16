@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostModel = exports.ClassModel = exports.MajorModel = exports.DepartmentModel = exports.FacultyModel = exports.UserModel = void 0;
+exports.PostModel = exports.AnnouncementModel = exports.ClassModel = exports.MajorModel = exports.DepartmentModel = exports.FacultyModel = exports.UserModel = void 0;
 const mongoose_1 = require("mongoose");
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -163,15 +163,29 @@ const Class = new mongoose_1.Schema({
     ]
 });
 exports.ClassModel = (0, mongoose_1.model)("Class", Class);
+const Announcement = new mongoose_1.Schema({
+    title_anm: String,
+    desc_anm: String,
+    time_anm: Date,
+    ClassID: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Class"
+    },
+    UserID: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "User"
+    }
+});
+exports.AnnouncementModel = (0, mongoose_1.model)("Announcement", Announcement);
 const Post = new mongoose_1.Schema({
     title_p: String,
-    description_p: String,
+    desc_p: String,
     post_image: String,
     ClassID: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Class"
     },
-    OwnerID: {
+    UserID: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User"
     },

@@ -8,6 +8,10 @@ import { GetUserByID } from "../Controller/User/GetUserByID";
 import { UpdateUser } from "../Controller/User/UpdateUser";
 import { DeleteUser } from "../Controller/User/DeleteUser";
 import { CreatePost } from "../Controller/User/post/CreatePost";
+import { CreateAnnounce } from "../Controller/User/announcement/CreateAnnounce";
+import { EditAnnounce } from "../Controller/User/announcement/EditAnnounce";
+import { GetAnnounce } from "../Controller/User/announcement/GetAnnounce";
+import { DeleteAnnounce } from "../Controller/User/announcement/DeleteAnnounce";
 
 const router = express.Router();
 
@@ -28,5 +32,11 @@ router.delete("/deleteuser/:userID", DeleteUser);
 
 // Post
 router.post("/createpost/:classID", CreatePost);
+
+// Announcement
+router.post("/createannounce/:classID", CreateAnnounce);
+router.put("/editannounce/:announceID", EditAnnounce);
+router.get("/getannounce/:classID", GetAnnounce); // get all announcement of each class
+router.delete("/deleteannounce/:announceID", DeleteAnnounce);
 
 export default router;

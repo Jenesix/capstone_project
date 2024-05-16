@@ -13,6 +13,10 @@ const GetUserByID_1 = require("../Controller/User/GetUserByID");
 const UpdateUser_1 = require("../Controller/User/UpdateUser");
 const DeleteUser_1 = require("../Controller/User/DeleteUser");
 const CreatePost_1 = require("../Controller/User/post/CreatePost");
+const CreateAnnounce_1 = require("../Controller/User/announcement/CreateAnnounce");
+const EditAnnounce_1 = require("../Controller/User/announcement/EditAnnounce");
+const GetAnnounce_1 = require("../Controller/User/announcement/GetAnnounce");
+const DeleteAnnounce_1 = require("../Controller/User/announcement/DeleteAnnounce");
 const router = express_1.default.Router();
 router.get("/", (req, res) => {
     res.send({ message: "User router" });
@@ -28,4 +32,9 @@ router.put("/updateuser/:userID", UpdateUser_1.UpdateUser);
 router.delete("/deleteuser/:userID", DeleteUser_1.DeleteUser);
 // Post
 router.post("/createpost/:classID", CreatePost_1.CreatePost);
+// Announcement
+router.post("/createannounce/:classID", CreateAnnounce_1.CreateAnnounce);
+router.put("/editannounce/:announceID", EditAnnounce_1.EditAnnounce);
+router.get("/getannounce/:classID", GetAnnounce_1.GetAnnounce); // get all announcement of each class
+router.delete("/deleteannounce/:announceID", DeleteAnnounce_1.DeleteAnnounce);
 exports.default = router;
