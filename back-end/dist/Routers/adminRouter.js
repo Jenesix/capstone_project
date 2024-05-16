@@ -21,6 +21,7 @@ const GetClass_1 = require("../Controller/Admin/Class/GetClass");
 const EditClass_1 = require("../Controller/Admin/Class/EditClass");
 const DeleteClass_1 = require("../Controller/Admin/Class/DeleteClass");
 const addUserToClass_1 = require("../Controller/Admin/Class/addUserToClass");
+const deleteUserFromClass_1 = require("../Controller/Admin/Class/deleteUserFromClass");
 const router = express_1.default.Router();
 router.get("/", (req, res) => {
     res.send({ message: "Admin router" });
@@ -46,4 +47,5 @@ router.get("/getclass", GetClass_1.GetClass);
 router.put("/editclass/:classID", EditClass_1.EditClass);
 router.delete("/deleteclass/:classID", DeleteClass_1.DeleteClass);
 router.put("/addusertoclass/:classID", addUserToClass_1.addUserToClass);
+router.delete("/deleteuserclass/:classID/:userID", deleteUserFromClass_1.deleteUserClass); // delete user from class
 exports.default = router;
