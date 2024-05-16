@@ -23,5 +23,6 @@ export const addUserToClass = async (req: Request, res: Response) => {
         res.status(200).json({ message: "Add user to class success" });
     } catch (error) {
         console.log(error);
+        res.status(500).json(error);
     }
 };

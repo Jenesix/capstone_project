@@ -32,12 +32,6 @@ const User = new mongoose_1.Schema({
             ref: "Class"
         }
     ],
-    AssignmentID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Assignment"
-        }
-    ],
     FacultyID: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Faculty",
@@ -59,18 +53,18 @@ const Faculty = new mongoose_1.Schema({
         required: true,
         unique: true
     },
-    DepartmentID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Department"
-        }
-    ],
-    MajorID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Major"
-        }
-    ]
+    // DepartmentID: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "Department"
+    //     }
+    // ],
+    // MajorID: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "Major"
+    //     }
+    // ]
 });
 exports.FacultyModel = (0, mongoose_1.model)("Faculty", Faculty);
 const Department = new mongoose_1.Schema({
@@ -82,12 +76,12 @@ const Department = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Faculty"
     },
-    MajorID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Major"
-        }
-    ]
+    // MajorID: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "Major"
+    //     }
+    // ]
 });
 exports.DepartmentModel = (0, mongoose_1.model)("Department", Department);
 const Major = new mongoose_1.Schema({

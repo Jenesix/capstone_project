@@ -11,5 +11,6 @@ export const AddFaculty = async (req: Request, res: Response) => {
         return res.status(200).json({ message: "Add faculty success" });
     } catch (error) {
         console.log(error);
+        res.status(500).json(error);
     }
 };

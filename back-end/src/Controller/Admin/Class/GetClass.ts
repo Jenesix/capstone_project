@@ -7,5 +7,6 @@ export const GetClass = async (req: Request, res: Response) => {
         res.status(200).json(classes);
     } catch (error) {
         console.log(error);
+        res.status(500).json(error);
     }
 };

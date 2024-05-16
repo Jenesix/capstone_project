@@ -33,5 +33,6 @@ export const CreatePost = async (req: Request, res: Response) => {
         res.status(201).send("Post created successfully!");
     } catch (error) {
         console.log(error);
+        res.status(500).json(error);
     }
 };
