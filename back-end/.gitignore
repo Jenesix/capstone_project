@@ -50,3 +50,5 @@ coverage/
 
 # Ignore Cypress video files
 cypress/videos/
+
+.DS_Store
