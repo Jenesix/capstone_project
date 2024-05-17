@@ -11,8 +11,7 @@ export const deleteUserClass = async (req: Request, res: Response) => {
         }
 
         await ClassModel.findByIdAndUpdate(classID, { $pull: { UserID: userID } }, { new: true });
-        await UserModel.findByIdAndUpdate(userID, { $pull: { ClassID: classID } }, { new: true });
-
+        
         res.status(200).json({ message: "Delete user from class success" });
     } catch (error) {
         console.log(error);

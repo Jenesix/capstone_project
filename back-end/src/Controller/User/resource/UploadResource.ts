@@ -5,13 +5,18 @@ import { uploadFile } from "../../../utils/UploadFile";
 export const UploadResource = async (req: Request, res: Response) => {
     try {
         const { classID } = req.params;
-        const { folder_name } = req.body;
         const file = req.file;
 
         let fileUrl = "";
         if (file) {
             fileUrl = await uploadFile(file);
         }
+
+        const resource = new ResourceModel({
+            file_rs: fileUrl,
+            ClassID: classID,
+        });
+        await resource.save();
 
         return res.status(200).json({ message: "Upload resource success" });
     } catch (error) {

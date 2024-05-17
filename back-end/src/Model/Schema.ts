@@ -34,12 +34,6 @@ const User = new Schema<User>({
     lastname: String,
     birthdate: Date,
     phonenumber: String,
-    ClassID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Class"
-        }
-    ],
     FacultyID: {
         type: Schema.Types.ObjectId,
         ref: "Faculty",
@@ -143,40 +137,6 @@ const Class = new Schema<Class>({
             ref: "User"
         }
     ],
-    SyllabusID: {
-        type: Schema.Types.ObjectId,
-        ref: "Syllabus"
-    },
-    AssignmentID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Assignment"
-        }
-    ],
-    AnnouncementID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Announcement"
-        }
-    ],
-    ResourceID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Resource"
-        }
-    ],
-    AttendanceID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Attendance"
-        }
-    ],
-    PostID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Post"
-        }
-    ]
 });
 export const ClassModel = model<Class>("Class", Class);
 
@@ -198,12 +158,10 @@ export const AnnouncementModel = model<Announcement>("Announcement", Announcemen
 
 const Resource = new Schema<Resource>({
     file_rs: String,
-    ClassID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Class"
-        }
-    ],
+    ClassID: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    },
     ResourceFolderID: {
         type: Schema.Types.ObjectId,
         ref: "ResourceFolder"

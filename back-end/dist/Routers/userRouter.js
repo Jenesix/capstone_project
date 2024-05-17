@@ -17,6 +17,7 @@ const CreateAnnounce_1 = require("../Controller/User/announcement/CreateAnnounce
 const EditAnnounce_1 = require("../Controller/User/announcement/EditAnnounce");
 const GetAnnounce_1 = require("../Controller/User/announcement/GetAnnounce");
 const DeleteAnnounce_1 = require("../Controller/User/announcement/DeleteAnnounce");
+const UploadResource_1 = require("../Controller/User/resource/UploadResource");
 const router = express_1.default.Router();
 router.get("/", (req, res) => {
     res.send({ message: "User router" });
@@ -37,4 +38,6 @@ router.post("/createannounce/:classID", CreateAnnounce_1.CreateAnnounce);
 router.put("/editannounce/:announceID", EditAnnounce_1.EditAnnounce);
 router.get("/getannounce/:classID", GetAnnounce_1.GetAnnounce); // get all announcement of each class
 router.delete("/deleteannounce/:announceID", DeleteAnnounce_1.DeleteAnnounce);
+// Resource
+router.post("/uploadresource/:classID", UploadResource_1.UploadResource); // for teacher
 exports.default = router;

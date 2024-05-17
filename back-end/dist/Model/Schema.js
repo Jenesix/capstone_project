@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PostModel = exports.AnnouncementModel = exports.ClassModel = exports.MajorModel = exports.DepartmentModel = exports.FacultyModel = exports.UserModel = void 0;
+exports.PostModel = exports.ResourceModel = exports.AnnouncementModel = exports.ClassModel = exports.MajorModel = exports.DepartmentModel = exports.FacultyModel = exports.UserModel = void 0;
 const mongoose_1 = require("mongoose");
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -26,12 +26,6 @@ const User = new mongoose_1.Schema({
     lastname: String,
     birthdate: Date,
     phonenumber: String,
-    ClassID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Class"
-        }
-    ],
     FacultyID: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Faculty",
@@ -127,40 +121,6 @@ const Class = new mongoose_1.Schema({
             ref: "User"
         }
     ],
-    SyllabusID: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: "Syllabus"
-    },
-    AssignmentID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Assignment"
-        }
-    ],
-    AnnouncementID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Announcement"
-        }
-    ],
-    ResourceID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Resource"
-        }
-    ],
-    AttendanceID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Attendance"
-        }
-    ],
-    PostID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Post"
-        }
-    ]
 });
 exports.ClassModel = (0, mongoose_1.model)("Class", Class);
 const Announcement = new mongoose_1.Schema({
@@ -177,6 +137,18 @@ const Announcement = new mongoose_1.Schema({
     }
 });
 exports.AnnouncementModel = (0, mongoose_1.model)("Announcement", Announcement);
+const Resource = new mongoose_1.Schema({
+    file_rs: String,
+    ClassID: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Class"
+    },
+    ResourceFolderID: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "ResourceFolder"
+    }
+});
+exports.ResourceModel = (0, mongoose_1.model)("Resource", Resource);
 const Post = new mongoose_1.Schema({
     title_p: String,
     desc_p: String,

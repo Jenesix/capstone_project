@@ -12,7 +12,6 @@ export interface User {
     birthdate: Date;
     phonenumber: string;
     // Foreign Key
-    ClassID: ObjectId[];
     FacultyID: ObjectId;
     DepartmentID: ObjectId;
     MajorID: ObjectId;
@@ -47,12 +46,6 @@ export interface Class {
     year: number;
     // Foreign Key
     UserID: ObjectId[];
-    SyllabusID: ObjectId;
-    AssignmentID: ObjectId[];
-    AnnouncementID: ObjectId[];
-    ResourceID: ObjectId[];
-    AttendanceID: ObjectId[];
-    PostID: ObjectId[];
 }
 
 export interface Syllabus {
@@ -69,7 +62,7 @@ export interface Assignment {
     fullscore: number;
     file_asm: string;
     // Foreign Key
-    ClassID: ObjectId[];
+    ClassID: ObjectId;
     ResourceID: ObjectId;
 }
 // student
@@ -91,7 +84,7 @@ export interface ResourceFolder {
 export interface Resource {
     file_rs: string;
     // Foreign Key
-    ClassID: ObjectId[];
+    ClassID: ObjectId;
     ResourceFolderID: ObjectId;
 }
 
@@ -109,7 +102,7 @@ export interface AttendanceCheck {
     note_atd: string;
     // Foreign Key
     UserID: ObjectId; // student
-    AttendaceID: ObjectId;
+    AttendanceID: ObjectId;
 }
 
 export interface Post {

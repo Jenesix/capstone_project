@@ -17,7 +17,6 @@ export const addUserToClass = async (req: Request, res: Response) => {
                 return res.status(404).json({ message: `UserID ${userID} not found` });
             }
             await ClassModel.findByIdAndUpdate(classID, { $addToSet: { UserID: userID } }, { new: true });
-            await UserModel.findByIdAndUpdate(userID, { $addToSet: { ClassID: classID } }, { new: true });
         }
 
         res.status(200).json({ message: "Add user to class success" });

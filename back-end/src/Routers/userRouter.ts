@@ -12,6 +12,7 @@ import { CreateAnnounce } from "../Controller/User/announcement/CreateAnnounce";
 import { EditAnnounce } from "../Controller/User/announcement/EditAnnounce";
 import { GetAnnounce } from "../Controller/User/announcement/GetAnnounce";
 import { DeleteAnnounce } from "../Controller/User/announcement/DeleteAnnounce";
+import { UploadResource } from "../Controller/User/resource/UploadResource";
 
 const router = express.Router();
 
@@ -38,5 +39,8 @@ router.post("/createannounce/:classID", CreateAnnounce);
 router.put("/editannounce/:announceID", EditAnnounce);
 router.get("/getannounce/:classID", GetAnnounce); // get all announcement of each class
 router.delete("/deleteannounce/:announceID", DeleteAnnounce);
+
+// Resource
+router.post("/uploadresource/:classID", UploadResource); // for teacher
 
 export default router;
