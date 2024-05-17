@@ -12,7 +12,6 @@ export interface User {
     birthdate: Date;
     phonenumber: string;
     // Foreign Key
-    ClassID: ObjectId[];
     FacultyID: ObjectId;
     DepartmentID: ObjectId;
     MajorID: ObjectId;

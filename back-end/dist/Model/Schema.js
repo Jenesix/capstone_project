@@ -26,12 +26,6 @@ const User = new mongoose_1.Schema({
     lastname: String,
     birthdate: Date,
     phonenumber: String,
-    ClassID: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Class"
-        }
-    ],
     FacultyID: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Faculty",

@@ -34,12 +34,6 @@ const User = new Schema<User>({
     lastname: String,
     birthdate: Date,
     phonenumber: String,
-    ClassID: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Class"
-        }
-    ],
     FacultyID: {
         type: Schema.Types.ObjectId,
         ref: "Faculty",
