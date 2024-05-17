@@ -14,6 +14,7 @@ const config: Config = {
     colors: {
       'primary': '#FF6600',
       'primary-light': '#FF983F',
+      'assign': '#FFE3C8',
       'white': '#FFFFFF',
       salate: {
         50: '#f8fafc',

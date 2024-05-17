@@ -7,7 +7,7 @@ import { FaUser } from "react-icons/fa";
 import { FiLogOut } from 'react-icons/fi';
 
 const Navbar: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('65090500447');
 
   const handleLogout = () => {
