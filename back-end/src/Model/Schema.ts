@@ -8,6 +8,7 @@ import {
     Announcement,
     Resource,
     Post,
+    Comment
 } from '../interface/Model';
 
 // _id = real ID number
@@ -146,6 +147,8 @@ const Class = new Schema<Class>({
 });
 export const ClassModel = model<Class>("Class", Class);
 
+
+
 const Announcement = new Schema<Announcement>({
     title_anm: String,
     desc_anm: String,
@@ -162,6 +165,7 @@ const Announcement = new Schema<Announcement>({
 export const AnnouncementModel = model<Announcement>("Announcement", Announcement);
 
 
+
 const Resource = new Schema<Resource>({
     file_rs: String,
     ClassID: {
@@ -174,6 +178,8 @@ const Resource = new Schema<Resource>({
     }
 });
 export const ResourceModel = model<Resource>("Resource", Resource);
+
+
 
 const Post = new Schema<Post>({
     title_p: String,
@@ -195,3 +201,17 @@ const Post = new Schema<Post>({
     ]
 });
 export const PostModel = model<Post>("Post", Post);
+
+const Comment = new Schema<Comment>({
+    comment: String,
+    time_cm: Date,
+    UserID: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    PostID: {
+        type: Schema.Types.ObjectId,
+        ref: "Post"
+    }
+});
+export const CommentModel = model<Comment>("Comment", Comment);

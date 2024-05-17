@@ -28,6 +28,7 @@ export const CreatePost = async (req: Request, res: Response) => {
             UserID,
             ClassID: classID,
             post_image: imageUrl,
+            time_p: new Date(),
         });
         await post.save();
         res.status(201).send("Post created successfully!");

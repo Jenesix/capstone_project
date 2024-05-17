@@ -5,7 +5,7 @@ import { ObjectId } from "mongoose";
 export interface User {
     user_id: string;
     password: string;
-    role: string; // student, teacher
+    role: string; // student, teacher, admin
     email: string;
     firstname: string;
     lastname: string;
