@@ -6,6 +6,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  
   theme: {
     fontFamily: {
       baloo2: ["Baloo 2", "sans-serif"],
@@ -25,7 +26,9 @@ const config: Config = {
         700: '#486581',
         800: '#334e68',
         900: '#243b53',
+        1000: '#5D7285',
       },
+      'black': '#000000',
     },
     borderRadius: {
       'none': '0',
@@ -52,6 +55,7 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      
     },
   },
   plugins: [],

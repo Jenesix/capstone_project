@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import student from "../../public/StudentBanner.png";
-import logo from "../../public/Logo.svg";
+import student from "../../../public/StudentBanner.png";
+import logo from "../../../public/Logo.svg";
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -18,13 +18,13 @@ const LoginCard: React.FC = () => {
                 <div className="bg-gradient-to-r from-primary to-primary-light rounded-9xl rounded-bl-10xl rounded-r-none md:block hidden">
                     <div className="mx-4 sm:mx-8 mt-5 mb-4 sm:mb-24 md:flex flex-col items-center">
                         <Image
-                            className="mb-12"
+                            className="mb-12 select-none pointer-events-none"
                             src={student}
                             alt="student"
                             width={400}
                             height={400}
                         />
-                        <h1 className="text-center font-bold text-white text-3xl mb-2 mt-12">
+                        <h1 className="text-center font-bold text-white text-3xl mb-2 mt-12 select-none">
                             Welcome to Our Website!
                         </h1>
                     </div>
@@ -33,8 +33,7 @@ const LoginCard: React.FC = () => {
                 {/*right side*/}
                 <div className="mx-4 sm:mx-8 mt-20 md:mt-28 flex flex-col items-center">
                     <div className="mb-12 flex flex-row items-center sm:mr-0">
-                        {/* Your logo */}
-                        <Image src={logo} alt="logo" width={120} height={60} />
+                        <Image className="pointer-events-none select-none" src={logo} alt="logo" width={120} height={60} />
                         <div className="ml-4">
                             <h1 className="mt-2 font-bold text-3xl">Log in</h1>
                             <p className="text-sm text-gray-600">And Enjoy in Learno !</p>
