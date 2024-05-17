@@ -4,8 +4,8 @@ import { PORT, MONGO_URI } from "./config/config";
 import cors from "cors";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-// import userRouter from "./routers/userRouter";
-// import adminRouter from "./routers/adminRouter";
+import userRouter from "./Routers/userRouter";
+import adminRouter from "./Routers/adminRouter";
 import multer from "multer";
 
 
@@ -31,8 +31,8 @@ app.use(multerMid.single("file"));
 
 
 // router zone
-// app.use("/api/user", userRouter);
-// app.use("/api/admin", adminRouter);
+app.use("/api/user", userRouter);
+app.use("/api/admin", adminRouter);
 
 
 
@@ -44,3 +44,6 @@ app.listen(PORT, async () => {
         console.log("error : ", error);
     }
 });
+
+// tsc -watch
+// node --watch ./dist/server.js
