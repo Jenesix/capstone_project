@@ -14,11 +14,11 @@ interface AgendaViewProps {
 const AgendaView: React.FC<AgendaViewProps> = ({ assignments }) => {
     return (
         <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Agenda</h2>
+            <h2 className="text-xl font-bold mb-4">To do list</h2>
             <ul>
                 {assignments.map((assignment, index) => (
-                    <li key={index} className="mb-2 p-2 border rounded shadow-sm">
-                        <div className="font-semibold">{assignment.name}</div>
+                    <li key={index} className="mb-2 p-4  rounded shadow-2xl">
+                        <div className="font-bold text-primary">{assignment.name}</div>
                         <div>{assignment.dueDate}</div>
                         <div>{assignment.dueTime}</div>
                     </li>
