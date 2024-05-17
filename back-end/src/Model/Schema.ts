@@ -6,6 +6,7 @@ import {
     Major,
     Class,
     Announcement,
+    Resource,
     Post,
 } from '../interface/Model';
 
@@ -193,6 +194,22 @@ const Announcement = new Schema<Announcement>({
     }
 });
 export const AnnouncementModel = model<Announcement>("Announcement", Announcement);
+
+
+const Resource = new Schema<Resource>({
+    file_rs: String,
+    ClassID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Class"
+        }
+    ],
+    ResourceFolderID: {
+        type: Schema.Types.ObjectId,
+        ref: "ResourceFolder"
+    }
+});
+export const ResourceModel = model<Resource>("Resource", Resource);
 
 const Post = new Schema<Post>({
     title_p: String,

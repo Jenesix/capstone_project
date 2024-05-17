@@ -89,7 +89,7 @@ export interface ResourceFolder {
     ClassID: ObjectId;
 }
 export interface Resource {
-    resource_file: string;
+    file_rs: string;
     // Foreign Key
     ClassID: ObjectId[];
     ResourceFolderID: ObjectId;

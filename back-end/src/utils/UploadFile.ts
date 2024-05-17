@@ -47,7 +47,8 @@ export const uploadSyllabus = async (file: any) => {
 // any file, resource
 export const uploadFile = async (file: any) => {
     const fileExtension = file.originalname.split('.').pop().toLowerCase();
-    const fileName = `/uploads/${Date.now()}.${fileExtension}`;
+    const fileName = `/files/${Date.now()}.${fileExtension}`;
+    //const fileName = `/files/${file.originalname}`;
 
     const contentType = file.mimetype || `application/octet-stream`;
 
