@@ -29,7 +29,7 @@ yarn.lock
 .pnpm
 
 # Ignore TypeScript configuration file
-tsconfig.json
+# tsconfig.json
 
 # Ignore JavaScript source maps
 *.js.map
