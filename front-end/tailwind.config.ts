@@ -30,6 +30,7 @@ const config: Config = {
         1000: '#5D7285',
       },
       'black': '#000000',
+      'gray': '#5F5F5F',
     },
     borderRadius: {
       'none': '0',

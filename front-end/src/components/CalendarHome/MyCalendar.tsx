@@ -31,7 +31,7 @@ const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
         const dateFormat = 'MMMM yyyy';
 
         return (
-            <div className="flex justify-between items-center py-2">
+            <div className="flex justify-between items-center py-2 mb-6">
                 <button onClick={() => setCurrentMonth(addMonths(currentMonth, -1))} className="text-blue-500 hover:text-blue-700">
                     Previous
                 </button>
@@ -82,13 +82,13 @@ const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
 
                 days.push(
                     <div
-                        className={`p-2 border h-32 ${!isCurrentMonth ? 'text-gray-400' : ''}`}
+                        className={`p-2  h-32 ${!isCurrentMonth ? 'text-gray-400' : ''}`}
                         key={day.toISOString()}
                     >
                         <div className="text-center">{isCurrentMonth && isDayFromCurrentMonth ? formattedDate : ''}</div>
                         <div className="overflow-y-auto h-20 pr-2 mt-1">
                             {isCurrentMonth && isDayFromCurrentMonth && assignmentsForDay.map((assignment, idx) => (
-                                <div key={idx} className="text-xs mt-1 bg-assign border-l-primary border-l-4 p-1 rounded ">
+                                <div key={idx} className="text-xs mt-1 bg-assign border-l-primary border-l-4 p-1 rounded text-primary ">
                                     {assignment.name} <br /> {assignment.dueTime}
                                 </div>
                             ))}
@@ -100,7 +100,7 @@ const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
             }
 
             rows.push(
-                <div className="grid grid-cols-7" key={day.toISOString()}>
+                <div className="grid grid-cols-7 text-salate-600" key={day.toISOString()}>
                     {days}
                 </div>
             );
