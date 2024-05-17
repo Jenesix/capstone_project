@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isLogin = exports.validateToken = void 0;
+exports.validateToken = void 0;
 const validateToken = (req, res, next) => {
     try {
         const token = req.cookies.token;
@@ -11,19 +11,7 @@ const validateToken = (req, res, next) => {
     }
     catch (error) {
         console.log(error);
+        res.status(500).json(error);
     }
 };
 exports.validateToken = validateToken;
-const isLogin = (req, res, next) => {
-    try {
-        const token = req.cookies.token;
-        if (token) {
-            return res.status(401).json({ message: "You are logged in" });
-        }
-        next();
-    }
-    catch (error) {
-        console.log(error.message);
-    }
-};
-exports.isLogin = isLogin;
