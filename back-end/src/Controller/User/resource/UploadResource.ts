@@ -23,7 +23,7 @@ export const UploadResource = async (req: Request, res: Response) => {
         });
         await resource.save();
 
-        return res.status(200).json({ message: "Upload resource success" });
+        return res.status(200).json({ message: "Upload resource success", resource });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

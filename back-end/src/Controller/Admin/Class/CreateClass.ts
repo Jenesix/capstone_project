@@ -20,7 +20,7 @@ export const CreateClass = async (req: Request, res: Response) => {
         });
         await Class.save();
         
-        return res.status(200).json({ message: "Create class success" });
+        return res.status(200).json({ message: "Create class success", Class });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

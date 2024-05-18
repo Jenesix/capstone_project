@@ -29,7 +29,7 @@ export const CreateAnnounce = async (req: Request, res: Response) => {
         });
         await announcement.save();
 
-        return res.status(200).json({ message: "Create announcement success" });
+        return res.status(200).json({ message: "Create announcement success", announcement });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

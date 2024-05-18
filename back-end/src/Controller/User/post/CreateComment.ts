@@ -29,7 +29,7 @@ export const CreateComment = async (req: Request, res: Response) => {
 
         await findPost.updateOne({ $addToSet: { CommentID: newComment._id } });
 
-        return res.status(200).send({ message: "Create comment success" });
+        return res.status(200).send({ message: "Create comment success", newComment });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
