@@ -1,4 +1,4 @@
-import Calendar from '@/components/CalendarHome/MyCalendar';
+import Calendar from '@/components/CalendarHome/Calendar';
 import AgendaView from '@/components/CalendarHome/AgendaView';
 import React from 'react';
 import "../../globals.css";
