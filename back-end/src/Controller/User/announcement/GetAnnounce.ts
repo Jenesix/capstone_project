@@ -8,7 +8,7 @@ export const GetAnnounce = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Class not found" });
         }
         const announcement = await AnnouncementModel.find({ ClassID: classID });
-        res.status(200).json(announcement);
+        return res.status(200).json(announcement);
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

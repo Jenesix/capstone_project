@@ -22,7 +22,7 @@ export const uploadImagePost = async (file: any) => {
     return data.publicUrl;
 };
 
-// syllabus
+// syllabus, pdf
 export const uploadSyllabus = async (file: any) => {
     const fileName = `/syllabus/${Date.now()}.pdf`;
 
@@ -44,10 +44,60 @@ export const uploadSyllabus = async (file: any) => {
     return data.publicUrl;
 };
 
-// any file, resource
-export const uploadFile = async (file: any) => {
+// any file type
+export const uploadResourceFile = async (file: any) => {
     const fileExtension = file.originalname.split('.').pop().toLowerCase();
-    const fileName = `/files/${Date.now()}.${fileExtension}`;
+    const fileName = `/resource/${Date.now()}.${fileExtension}`;
+    //const fileName = `/files/${file.originalname}`;
+
+    const contentType = file.mimetype || `application/octet-stream`;
+
+    const { error } = await supabase.storage
+        .from("capstone")
+        .upload(fileName, file.buffer, {
+            cacheControl: "no-cache",
+            contentType: contentType
+        });
+
+    if (error) {
+        throw error;
+    }
+
+    const { data } = await supabase.storage
+        .from("capstone")
+        .getPublicUrl(fileName);
+
+    return data.publicUrl;
+};
+
+export const uploadAssignmentFile = async (file: any) => {
+    const fileExtension = file.originalname.split('.').pop().toLowerCase();
+    const fileName = `/assignment/${Date.now()}.${fileExtension}`;
+    //const fileName = `/files/${file.originalname}`;
+
+    const contentType = file.mimetype || `application/octet-stream`;
+
+    const { error } = await supabase.storage
+        .from("capstone")
+        .upload(fileName, file.buffer, {
+            cacheControl: "no-cache",
+            contentType: contentType
+        });
+
+    if (error) {
+        throw error;
+    }
+
+    const { data } = await supabase.storage
+        .from("capstone")
+        .getPublicUrl(fileName);
+
+    return data.publicUrl;
+};
+
+export const uploadTurninFile = async (file: any) => {
+    const fileExtension = file.originalname.split('.').pop().toLowerCase();
+    const fileName = `/assignment_turnin/${Date.now()}.${fileExtension}`;
     //const fileName = `/files/${file.originalname}`;
 
     const contentType = file.mimetype || `application/octet-stream`;

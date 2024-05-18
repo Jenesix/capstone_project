@@ -9,7 +9,7 @@ export const EditMajor = async (req: Request, res: Response) => {
         if (!result) {
             return res.status(400).json({ message: "Major not found" });
         }
-        res.status(200).json({ message: "Edit major_name success" });
+        return res.status(200).json({ message: "Edit major_name success", result });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
