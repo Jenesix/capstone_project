@@ -64,7 +64,6 @@ export interface Assignment {
     file_asm: string;
     // Foreign Key
     ClassID: ObjectId;
-    ResourceID: ObjectId;
 }
 // student
 export interface AssignmentTurnin {
