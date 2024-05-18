@@ -14,7 +14,7 @@ export const GetPost = async (req: Request, res: Response) => {
             .populate({ path: "UserID" })
             .populate({ path: "CommentID" });
 
-        res.status(200).json(posts);
+        return res.status(200).json(posts);
     } catch (error: any) {
         console.log(error.message);
     }

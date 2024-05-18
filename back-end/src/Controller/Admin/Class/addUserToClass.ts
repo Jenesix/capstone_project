@@ -20,7 +20,7 @@ export const addUserToClass = async (req: Request, res: Response) => {
             await UserModel.findByIdAndUpdate(userID, { $addToSet: { ClassID: classID } }, { new: true });
         }
 
-        res.status(200).json({ message: "Add user to class success" });
+        return res.status(200).json({ message: "Add user to class success" });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

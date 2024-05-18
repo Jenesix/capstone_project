@@ -9,7 +9,8 @@ export const UpdateUser = async (req: Request, res: Response) => {
         if (!result) {
             return res.status(400).json({ message: "User not found" });
         }
-        res.status(200).json({
+        
+        return res.status(200).json({
             message: "Update user success",
             user: result
         });

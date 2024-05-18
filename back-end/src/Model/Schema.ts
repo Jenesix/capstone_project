@@ -1,15 +1,5 @@
 import { Schema, model } from "mongoose";
-import {
-    User,
-    Faculty,
-    Department,
-    Major,
-    Class,
-    Announcement,
-    Resource,
-    Post,
-    Comment
-} from '../interface/Model';
+import { User, Faculty, Department, Major, Class, Syllabus, Announcement, Resource, Post, Comment, } from '../interface/Model';
 
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -146,6 +136,17 @@ const Class = new Schema<Class>({
     ],
 });
 export const ClassModel = model<Class>("Class", Class);
+
+
+
+const Syllabus = new Schema<Syllabus>({
+    file_syl: String,
+    ClassID: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    }
+});
+export const SyllabusModel = model<Syllabus>("Syllabus", Syllabus);
 
 
 
