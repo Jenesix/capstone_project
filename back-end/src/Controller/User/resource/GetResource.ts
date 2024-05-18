@@ -4,8 +4,8 @@ import { ResourceModel, ClassModel } from "../../../Model/Schema";
 export const GetResource = async (req: Request, res: Response) => {
     try {
         const { classID } = req.params;
-        const Class = await ClassModel.findById(classID);
-        if (!Class) {
+        const findClass = await ClassModel.findById(classID);
+        if (!findClass) {
             return res.status(400).json({ message: "Class not found" });
         }
         const result = await ResourceModel.find({ ClassID: classID });

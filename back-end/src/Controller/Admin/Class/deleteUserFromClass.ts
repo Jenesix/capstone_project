@@ -5,8 +5,8 @@ export const deleteUserClass = async (req: Request, res: Response) => {
     try {
         const { classID, userID } = req.params;
 
-        const Class = await ClassModel.findById(classID);
-        if (!Class) {
+        const findClass = await ClassModel.findById(classID);
+        if (!findClass) {
             return res.status(404).json({ message: 'Class not found' });
         }
 

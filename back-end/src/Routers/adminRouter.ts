@@ -17,6 +17,7 @@ import { EditClass } from "../Controller/Admin/Class/EditClass";
 import { DeleteClass } from "../Controller/Admin/Class/DeleteClass";
 import { addUserToClass } from "../Controller/Admin/Class/addUserToClass";
 import { deleteUserClass } from "../Controller/Admin/Class/deleteUserFromClass";
+import { UploadSyllabus } from "../Controller/Admin/Class/UploadSyllabus";
 
 const router = express.Router();
 
@@ -49,5 +50,6 @@ router.put("/editclass/:classID", EditClass);
 router.delete("/deleteclass/:classID", DeleteClass);
 router.put("/addusertoclass/:classID", addUserToClass);
 router.delete("/deleteuserclass/:classID/:userID", deleteUserClass); // delete user from class
+router.post("/uploadsyllabus/:classID", UploadSyllabus);
 
 export default router;
