@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ResourceModel, ClassModel } from "../../../Model/Schema";
-import { uploadFile } from "../../../utils/UploadFile";
+import { uploadResourceFile } from "../../../utils/UploadFile";
 
 export const UploadResource = async (req: Request, res: Response) => {
     try {
@@ -15,7 +15,7 @@ export const UploadResource = async (req: Request, res: Response) => {
         if (!file) {
             return res.status(400).json({ message: "Please upload a file" });
         }
-        const fileUrl = await uploadFile(file);
+        const fileUrl = await uploadResourceFile(file);
 
         const resource = new ResourceModel({
             file_rs: fileUrl,
