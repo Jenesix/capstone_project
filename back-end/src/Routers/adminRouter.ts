@@ -21,7 +21,7 @@ import { deleteUserClass } from "../Controller/Admin/Class/deleteUserFromClass";
 const router = express.Router();
 
 router.get("/", (req, res) => {
-    res.send({ message: "Admin router" });
+    res.send({ message: "Admin router" }); // teacher can use some routes
 });
 
 // Faculty

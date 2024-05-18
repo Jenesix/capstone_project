@@ -50,7 +50,7 @@ export interface Class {
 }
 
 export interface Syllabus {
-    syllabus_file: string;
+    file_syl: string;
     // Foreign Key
     ClassID: ObjectId;
 }
