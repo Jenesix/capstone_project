@@ -18,6 +18,10 @@ import { DeleteAnnounce } from "../Controller/User/announcement/DeleteAnnounce";
 import { UploadResource } from "../Controller/User/resource/UploadResource";
 import { DeleteResource } from "../Controller/User/resource/DeleteResource";
 import { GetResource } from "../Controller/User/resource/GetResource";
+import { CreateAssign } from "../Controller/User/assignment/CreateAssign";
+import { EditAssign } from "../Controller/User/assignment/EditAssign";
+import { DeleteAssign } from "../Controller/User/assignment/DeleteAssign";
+import { GetAssign } from "../Controller/User/assignment/GetAssign";
 
 const router = express.Router();
 
@@ -52,5 +56,14 @@ router.delete("/deleteannounce/:announceID", DeleteAnnounce);
 router.post("/uploadresource/:classID", UploadResource); // for teacher
 router.delete("/deleteresource/:resourceID", DeleteResource);
 router.get("/getresource/:classID", GetResource); // get all resources of each class
+
+// Assignment
+router.post("/createassign/:classID", CreateAssign);
+router.put("/editassign/:assignID", EditAssign);
+router.delete("/deleteassign/:assignID", DeleteAssign);
+router.get("/getassign/:classID", GetAssign); // get all assignments of each class
+
+// Assignment Turn in
+//router.put("/createturnin/:classID", EditAssign);
 
 export default router;
