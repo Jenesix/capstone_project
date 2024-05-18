@@ -2,7 +2,7 @@ import Image from "next/image";
 import banner from "../../../public/Homebanner.svg";
 import Link from "next/link";
 
-const Card = () => {
+const Card: React.FC = () => {
     return (
         <Link href="/id/Home">
             <div className="relative rounded-xl overflow-hidden shadow-lg ">
