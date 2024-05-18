@@ -1,4 +1,3 @@
-// pages/index.tsx
 import Calendar from '@/components/CalendarHome/MyCalendar';
 import AgendaView from '@/components/CalendarHome/AgendaView';
 import React from 'react';

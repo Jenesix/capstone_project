@@ -1,4 +1,3 @@
-// components/AgendaView.tsx
 import React from 'react';
 
 interface Assignment {
