@@ -4,6 +4,7 @@ import { FaHome, FaBook, FaBullhorn, FaTasks, FaFolderOpen, FaCheckSquare, FaQue
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
+
 const SideBar: React.FC = () => {
 
     const pathname = usePathname();
