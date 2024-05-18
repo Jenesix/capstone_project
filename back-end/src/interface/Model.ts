@@ -58,9 +58,10 @@ export interface Syllabus {
 // teacher
 export interface Assignment {
     assignment_name: string;
-    desc_asm: string; // description
+    description_asm: string; // description
     due_date: Date;
     fullscore: number;
+    status_asm: string; // ongoing, finished
     file_asm: string;
     // Foreign Key
     ClassID: ObjectId;
@@ -68,7 +69,7 @@ export interface Assignment {
 // student
 export interface AssignmentTurnin {
     turnin_date: Date;
-    status_asm: string;
+    status_turnin: string; // compare turnin_date & due_date from frontend
     score: number;
     file_turnin: string;
     // Foreign Key
@@ -107,7 +108,7 @@ export interface AttendanceCheck {
 
 export interface Post {
     title_p: string;
-    desc_p: string; // description
+    description_p: string; // description
     post_image: string;
     time_p: Date; // datetime created
     // Foreign Key
@@ -126,7 +127,7 @@ export interface Comment {
 
 export interface Announcement {
     title_anm: string;
-    desc_anm: string; // description
+    description_anm: string; // description
     time_anm: Date; // datetime created
     // Foreign Key
     ClassID: ObjectId;
