@@ -1,15 +1,5 @@
 import { Schema, model } from "mongoose";
-import {
-    User,
-    Faculty,
-    Department,
-    Major,
-    Class,
-    Announcement,
-    Resource,
-    Post,
-    Comment
-} from '../interface/Model';
+import { User, Faculty, Department, Major, Class, Syllabus, Announcement, Resource, Post, Comment, Assignment, AssignmentTurnin } from '../interface/Model';
 
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -149,9 +139,20 @@ export const ClassModel = model<Class>("Class", Class);
 
 
 
+const Syllabus = new Schema<Syllabus>({
+    file_syl: String,
+    ClassID: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    }
+});
+export const SyllabusModel = model<Syllabus>("Syllabus", Syllabus);
+
+
+
 const Announcement = new Schema<Announcement>({
     title_anm: String,
-    desc_anm: String,
+    description_anm: String,
     time_anm: Date,
     ClassID: {
         type: Schema.Types.ObjectId,
@@ -167,7 +168,10 @@ export const AnnouncementModel = model<Announcement>("Announcement", Announcemen
 
 
 const Resource = new Schema<Resource>({
-    file_rs: String,
+    file_rs: {
+        type: String,
+        required: true
+    },
     ClassID: {
         type: Schema.Types.ObjectId,
         ref: "Class"
@@ -183,7 +187,7 @@ export const ResourceModel = model<Resource>("Resource", Resource);
 
 const Post = new Schema<Post>({
     title_p: String,
-    desc_p: String,
+    description_p: String,
     post_image: String,
     ClassID: {
         type: Schema.Types.ObjectId,
@@ -215,3 +219,35 @@ const Comment = new Schema<Comment>({
     }
 });
 export const CommentModel = model<Comment>("Comment", Comment);
+
+
+
+const Assignment = new Schema<Assignment>({
+    assignment_name: String,
+    description_asm: String,
+    due_date: Date,
+    fullscore: Number,
+    status_asm: String,
+    file_asm: String,
+    ClassID: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    }
+});
+export const AssignmentModel = model<Assignment>("Assignment", Assignment);
+
+const AssignmentTurnin = new Schema<AssignmentTurnin>({
+    turnin_date: Date,
+    status_turnin: String,
+    score: Number,
+    file_turnin: String,
+    AssignmentID: {
+        type: Schema.Types.ObjectId,
+        ref: "Assignment"
+    },
+    UserID: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
+});
+export const AssignmentTurninModel = model<AssignmentTurnin>("AssignmentTurnin", AssignmentTurnin);

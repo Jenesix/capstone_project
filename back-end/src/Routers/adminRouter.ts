@@ -17,11 +17,14 @@ import { EditClass } from "../Controller/Admin/Class/EditClass";
 import { DeleteClass } from "../Controller/Admin/Class/DeleteClass";
 import { addUserToClass } from "../Controller/Admin/Class/addUserToClass";
 import { deleteUserClass } from "../Controller/Admin/Class/deleteUserFromClass";
+import { UploadSyllabus } from "../Controller/Admin/Class/syllabus/UploadSyllabus";
+import { DeleteSyllabus } from "../Controller/Admin/Class/syllabus/DeleteSyllabus";
+import { GetSyllabus } from "../Controller/Admin/Class/syllabus/GetSyllabus";
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-    res.send({ message: "Admin router" });
+    res.send({ message: "Admin router" }); // teacher can use some routes
 });
 
 // Faculty
@@ -49,5 +52,10 @@ router.put("/editclass/:classID", EditClass);
 router.delete("/deleteclass/:classID", DeleteClass);
 router.put("/addusertoclass/:classID", addUserToClass);
 router.delete("/deleteuserclass/:classID/:userID", deleteUserClass); // delete user from class
+
+// Syllabus
+router.post("/uploadsyllabus/:classID", UploadSyllabus);
+router.delete("/deletesyllabus/:syllabusID", DeleteSyllabus);
+router.get("/getsyllabus/:classID", GetSyllabus); // get syllabus of each class
 
 export default router;

@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { CommentModel, PostModel } from "../../../Model/Schema";
 import jwt from "jsonwebtoken";
 import { secret_jwt } from "../../../config/config";
-import { uploadImagePost } from "../../../utils/UploadFile";
 
 export const CreateComment = async (req: Request, res: Response) => {
     try {
@@ -30,7 +29,7 @@ export const CreateComment = async (req: Request, res: Response) => {
 
         await findPost.updateOne({ $addToSet: { CommentID: newComment._id } });
 
-        res.status(200).send({ message: "Create comment success" });
+        return res.status(200).send({ message: "Create comment success", newComment });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
