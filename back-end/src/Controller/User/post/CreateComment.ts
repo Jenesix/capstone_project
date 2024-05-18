@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { CommentModel, PostModel } from "../../../Model/Schema";
 import jwt from "jsonwebtoken";
 import { secret_jwt } from "../../../config/config";
-import { uploadImagePost } from "../../../utils/UploadFile";
 
 export const CreateComment = async (req: Request, res: Response) => {
     try {

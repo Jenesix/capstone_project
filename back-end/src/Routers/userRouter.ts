@@ -9,6 +9,7 @@ import { UpdateUser } from "../Controller/User/UpdateUser";
 import { DeleteUser } from "../Controller/User/DeleteUser";
 import { GetUserClass } from "../Controller/User/GetUserClass";
 import { CreatePost } from "../Controller/User/post/CreatePost";
+import { CreateComment } from "../Controller/User/post/CreateComment";
 import { CreateAnnounce } from "../Controller/User/announcement/CreateAnnounce";
 import { EditAnnounce } from "../Controller/User/announcement/EditAnnounce";
 import { GetAnnounce } from "../Controller/User/announcement/GetAnnounce";
@@ -37,6 +38,7 @@ router.get("/getuserclass/:classID", GetUserClass); // get all users of each cla
 
 // Post
 router.post("/createpost/:classID", CreatePost);
+router.post("/createcomment", CreateComment);
 
 // Announcement
 router.post("/createannounce/:classID", CreateAnnounce);
