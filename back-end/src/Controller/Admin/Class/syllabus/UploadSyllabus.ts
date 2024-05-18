@@ -12,10 +12,15 @@ export const UploadSyllabus = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Class not found" });
         }
 
-        let fileUrl = "";
-        if (file) {
-            fileUrl = await uploadSyllabus(file);
+        // let fileUrl = "";
+        // if (file) {
+        //     fileUrl = await uploadSyllabus(file);
+        // }
+
+        if (!file) {
+            return res.status(400).json({ message: "Please upload a file" });
         }
+        const fileUrl = await uploadSyllabus(file);
 
         const syllabus = new SyllabusModel({
             file_syl: fileUrl,

@@ -7,10 +7,15 @@ export const UploadResource = async (req: Request, res: Response) => {
         const { classID } = req.params;
         const file = req.file;
 
-        let fileUrl = "";
-        if (file) {
-            fileUrl = await uploadFile(file);
+        // let fileUrl = "";
+        // if (file) {
+        //     fileUrl = await uploadFile(file);
+        // }
+
+        if (!file) {
+            return res.status(400).json({ message: "Please upload a file" });
         }
+        const fileUrl = await uploadFile(file);
 
         const resource = new ResourceModel({
             file_rs: fileUrl,
