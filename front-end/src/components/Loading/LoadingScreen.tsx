@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import logo from '../../../public/logo.svg';
+import logo from '../../../public/Logo.svg';
 
 const LoadingScreen: React.FC = () => {
   const [blink, setBlink] = useState(true);
@@ -15,7 +15,7 @@ const LoadingScreen: React.FC = () => {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <Image className={`text-4xl ${blink ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`} src={logo} width={200} height={200} alt='Learno+' />
+      <Image className={`text-4xl ${blink ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`} src={logo} width={200} height={200} alt='LearnoLoad' />
     </div>
   );
 };

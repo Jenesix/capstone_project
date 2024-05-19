@@ -37,14 +37,7 @@ const AnnouncementCard: React.FC<{ announcementData: any }> = ({ announcementDat
                     </div>
                     <p className="text-salate-1000 font-bold text-sm xl:text-xl ">{announcementData.message}</p>
                     <div className="mt-2 w-full lg:max-w-md">
-                        <Image
-                            src={announcementData.announcementImage}
-                            alt="announcement"
-                            className="rounded-2xl"
-                            layout="responsive"
-                            width={384}
-                            height={216}
-                        />
+
                     </div>
                 </div>
             </div>
