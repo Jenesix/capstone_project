@@ -29,6 +29,10 @@ import { CreateFolder } from "../Controller/User/resource/CreateFolder";
 import { EditFolder } from "../Controller/User/resource/EditFolder";
 import { GetFolder } from "../Controller/User/resource/GetFolder";
 import { DeleteFolder } from "../Controller/User/resource/DeleteFolder";
+import { CreateAttend } from "../Controller/User/attendance/CreateAttend";
+import { EditAttend } from "../Controller/User/attendance/EditAttend";
+import { DeleteAttend } from "../Controller/User/attendance/DeleteAttend";
+import { GetAttend } from "../Controller/User/attendance/GetAttend";
 
 const router = express.Router();
 
@@ -80,5 +84,11 @@ router.get("/getassign/:classID", GetAssign); // get all assignments of each cla
 router.post("/createturnin/:assignID", CreateTurnin); // for student
 router.put("/editturnin/:assignID/:turninID", EditTurnin); // teacher edit score, student edit file
 router.get("/getturnin/:assignID", GetTurnin); // get all submissions of each assignment
+
+// Attendance
+router.post("/createattend/:classID", CreateAttend);
+router.put("/editattend/:attendID", EditAttend);
+router.delete("/deleteattend/:attendID", DeleteAttend);
+router.get("/getattend/:classID", GetAttend);
 
 export default router;
