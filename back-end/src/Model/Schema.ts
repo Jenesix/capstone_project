@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { User, Faculty, Department, Major, Class, Syllabus, Announcement, Resource, Post, Comment, Assignment, AssignmentTurnin } from '../interface/Model';
+import { User, Faculty, Department, Major, Class, Syllabus, Announcement, Resource, Post, Comment, Assignment, AssignmentTurnin, ResourceFolder } from '../interface/Model';
 
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -166,6 +166,15 @@ const Announcement = new Schema<Announcement>({
 export const AnnouncementModel = model<Announcement>("Announcement", Announcement);
 
 
+
+const ResourceFolder = new Schema<ResourceFolder>({
+    folder_name: String,
+    ClassID: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    }
+});
+export const ResourceFolderModel = model<ResourceFolder>("ResourceFolder", ResourceFolder);
 
 const Resource = new Schema<Resource>({
     file_rs: {

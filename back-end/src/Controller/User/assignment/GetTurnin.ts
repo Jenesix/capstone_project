@@ -11,7 +11,6 @@ export const GetTurnin = async (req: Request, res: Response) => {
         }
 
         const findTurnin = await AssignmentTurninModel.find({ AssignmentID: assignID });
-   
         return res.status(200).json(findTurnin);
     } catch (error) {
         console.log(error);
