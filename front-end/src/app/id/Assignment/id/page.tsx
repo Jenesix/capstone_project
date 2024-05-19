@@ -2,7 +2,7 @@ import AssignmentDetailPage from "@/components/Assignment/id/AssignmentDetailPag
 
 
 
-export default function Home() {
+export default function AssignmentDetail() {
     return (
         <>
             <AssignmentDetailPage />

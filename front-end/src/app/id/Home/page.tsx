@@ -11,7 +11,7 @@ const assignments = [
     { name: 'CSS234-Assignment 5', dueDate: '2024-05-15', dueTime: '15:00' },
 ];
 
-const Home: React.FC = () => {
+const Main: React.FC = () => {
     return (
         <div className="w-full mt-6 pb-20">
             <div className="hidden lg:block">
@@ -24,4 +24,4 @@ const Home: React.FC = () => {
     );
 };
 
-export default Home;
+export default Main;

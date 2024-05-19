@@ -7,7 +7,7 @@ const syllabus = [
     { subjectID: 'CSS234', pdffile: '/pdftest.pdf' }
 ];
 
-const Home: React.FC = () => {
+const Syllabus: React.FC = () => {
     const currentSyllabus = syllabus[0];
 
     return (
@@ -17,4 +17,4 @@ const Home: React.FC = () => {
     );
 };
 
-export default Home;
+export default Syllabus;
