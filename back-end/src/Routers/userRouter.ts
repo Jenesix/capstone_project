@@ -51,7 +51,7 @@ router.get("/getuserclass/:classID", GetUserClass); // get all users of each cla
 // Post
 router.post("/createpost/:classID", CreatePost);
 router.get("/getpost/:classID", GetPost); // get all posts of each class
-router.post("/createcomment", CreateComment);
+router.post("/createcomment/:postID", CreateComment);
 
 // Announcement
 router.post("/createannounce/:classID", CreateAnnounce);

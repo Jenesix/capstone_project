@@ -5,7 +5,8 @@ import { secret_jwt } from "../../../config/config";
 
 export const CreateComment = async (req: Request, res: Response) => {
     try {
-        const { comment, postID } = req.body;
+        const { postID } = req.params;
+        const { comment } = req.body;
 
         const token = req.cookies.token;
         const validToken = jwt.verify(token, String(secret_jwt));
