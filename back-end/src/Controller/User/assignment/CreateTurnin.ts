@@ -21,7 +21,7 @@ export const CreateTurnin = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Assignment not found" });
         }
         const due_date = findAssign.due_date
-        const status = new Date() < new Date(due_date) ? "Submitted" : "Late Submitted";
+        const status = new Date() < new Date(due_date) ? "On time" : "Late";
 
         let fileUrl = "";
         if (file) {
@@ -29,6 +29,7 @@ export const CreateTurnin = async (req: Request, res: Response) => {
         }
 
         const turnin = new AssignmentTurninModel({
+            turnin_date: new Date(),
             status_turnin: status,
             score: 0,
             file_turnin: fileUrl,
