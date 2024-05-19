@@ -1,6 +1,8 @@
-import Image from "next/image";
+
 import React from "react";
 import { format, isToday, isYesterday, parseISO } from 'date-fns';
+import Image from "next/legacy/image";
+
 
 const AnnouncementCard: React.FC<{ announcementData: any }> = ({ announcementData }) => {
     const formattedDate = formatDate(announcementData.Date);
