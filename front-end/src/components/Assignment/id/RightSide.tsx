@@ -1,6 +1,7 @@
-import Image from 'next/legacy/image';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { FiTrash2, FiUpload } from 'react-icons/fi'; // Assuming you use react-icons for icons
+import { FiTrash2, FiUpload } from 'react-icons/fi';
+import { AiOutlineFilePdf, AiOutlineFileImage, AiOutlineFile } from 'react-icons/ai';
+import Image from 'next/legacy/image';
 
 interface Submission {
     name: string;
@@ -15,7 +16,7 @@ interface RightSideProps {
 }
 
 const RightSide: React.FC<RightSideProps> = ({ submissions }) => {
-    const [uploadedFiles, setUploadedFiles] = useState<File[]>([]); // 
+    const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
     const formatFileSize = (sizeInBytes: number): string => {
         if (sizeInBytes < 1024) {
@@ -57,6 +58,21 @@ const RightSide: React.FC<RightSideProps> = ({ submissions }) => {
         setUploadedFiles([]);
     };
 
+    const getFileIcon = (fileName: string) => {
+        const fileExtension = fileName.split('.').pop()?.toLowerCase();
+        switch (fileExtension) {
+            case 'pdf':
+                return <AiOutlineFilePdf className="text-lg mr-2" />;
+            case 'jpg':
+            case 'jpeg':
+            case 'png':
+            case 'gif':
+                return <AiOutlineFileImage className="text-lg mr-2" />;
+            default:
+                return <AiOutlineFile className="text-lg mr-2" />;
+        }
+    };
+
     return (
         <div className="flex flex-col pt-6 xl:pt-0 xl:mx-12">
             <h2 className="font-bold text-xl text-salate-1000 mb-2">Submission</h2>
@@ -83,13 +99,15 @@ const RightSide: React.FC<RightSideProps> = ({ submissions }) => {
                         </div>
                     </div>
 
-                    <h3 className="font-bold text-salate-1000 mt-2 ">Attachments</h3>
+                    <h3 className="font-bold text-salate-1000 mt-2">Attachments</h3>
                     {submission.submissionFiles.map((file, fileIndex) => (
-                        <div key={fileIndex} className="mb-2 border-2 border-salate-1000 ">
+                        <div key={fileIndex} className="mb-2 flex items-center">
+                            {getFileIcon(file.name)}
                             <a
                                 href={`/path/to/submissions/${file.name}`}
-                                className="text-blue-500 hover:underline"
+                                className="text-blue-500 hover:underline truncate"
                                 download
+                                title={file.name}
                             >
                                 {file.name}
                             </a>
@@ -103,8 +121,11 @@ const RightSide: React.FC<RightSideProps> = ({ submissions }) => {
                     <div className="mb-4">
                         <ul className="list-disc list-inside ml-4">
                             {uploadedFiles.map((file, index) => (
-                                <li key={index} className="text-primary text-sm lg:text-md">
-                                    {file.name} - {formatFileSize(file.size)}
+                                <li key={index} className="text-primary text-sm lg:text-md flex items-center">
+                                    {getFileIcon(file.name)}
+                                    <span className="truncate" title={file.name}>
+                                        {file.name} - {formatFileSize(file.size)}
+                                    </span>
                                     <button
                                         onClick={() => handleDeleteFile(index)}
                                         className="ml-2 text-bookmark1">
@@ -127,7 +148,6 @@ const RightSide: React.FC<RightSideProps> = ({ submissions }) => {
                         <FiUpload className="mr-2" />
                         <span className="text-center">Upload File</span>
                     </label>
-
 
                     <button
                         type="submit"
