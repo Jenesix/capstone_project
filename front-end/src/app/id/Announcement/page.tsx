@@ -1,7 +1,7 @@
 
 import Announcementpage from "@/components/Announcement/AnnouncementPage";
 
-export default function Home() {
+export default function Announcement() {
     return (
         <>
             <Announcementpage />
