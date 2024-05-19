@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { AiOutlineFilePdf } from 'react-icons/ai'; // PDF icon
 
 interface Assignment {
     title: string;
@@ -46,16 +47,18 @@ const LeftSide: React.FC<LeftSideProps> = ({ assignment }) => {
     return (
         <div className="flex flex-col xl:border-r-2 border-salate-100 xl:border-b-0 border-b-2 pb-6">
             <h2 className="font-bold text-xl text-salate-1000 mb-2">Due Date</h2>
-            <p className=" text-salate-1000 mb-4">{assignment.dueDate}</p>
+            <p className="text-salate-1000 mb-4">{assignment.dueDate}</p>
             <h2 className="font-bold text-xl text-salate-1000 mb-2">Description</h2>
             <p className="text-salate-1000 mb-4">{assignment.description}</p>
             <h2 className="font-bold text-xl text-salate-1000 mb-2">Attachments</h2>
             {assignment.pdfFile && (
-                <div className="mb-4">
+                <div className="mb-4 flex items-center">
+                    <AiOutlineFilePdf className="text-red-500 mr-2" />
                     <a
                         href={assignment.pdfFile}
-                        className="text-primary font-semibold hover:underline"
+                        className="text-primary font-semibold hover:underline truncate"
                         download
+                        title={assignment.pdfFile.split('/').pop()}
                     >
                         {assignment.pdfFile.split('/').pop()}
                     </a>
@@ -68,7 +71,6 @@ const LeftSide: React.FC<LeftSideProps> = ({ assignment }) => {
                     <span className="text-lg font-bold">{assignment.fullScore}</span>
                     <span className="">Point</span>
                 </div>
-
             </div>
         </div>
     );

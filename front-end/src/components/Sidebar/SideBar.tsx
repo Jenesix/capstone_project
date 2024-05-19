@@ -34,8 +34,8 @@ const SideBar: React.FC = () => {
                             <FaTasks className="mr-3 cursor-pointer text-2xl md:text-32xl" /> <span className="hidden cursor-pointer md:inline">Assignment</span>
                         </li>
                     </Link>
-                    <Link href="/id/File-Content">
-                        <li className={`p-4 flex items-center hover:text-primary transition-colors duration-200 ${isActive('/id/File-Content')}`}>
+                    <Link href="/id/File_Content">
+                        <li className={`p-4 flex items-center hover:text-primary transition-colors duration-200 ${isActive('/id/File_Content')}`}>
                             <FaFolderOpen className="mr-3 cursor-pointer text-2xl md:text-32xl" /> <span className="hidden cursor-pointer md:inline">File & Content</span>
                         </li>
                     </Link>
