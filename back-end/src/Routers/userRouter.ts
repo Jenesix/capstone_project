@@ -25,6 +25,10 @@ import { GetAssign } from "../Controller/User/assignment/GetAssign";
 import { CreateTurnin } from "../Controller/User/assignment/CreateTurnin";
 import { EditTurnin } from "../Controller/User/assignment/EditTurnin";
 import { GetTurnin } from "../Controller/User/assignment/GetTurnin";
+import { CreateFolder } from "../Controller/User/resource/CreateFolder";
+import { EditFolder } from "../Controller/User/resource/EditFolder";
+import { GetFolder } from "../Controller/User/resource/GetFolder";
+import { DeleteFolder } from "../Controller/User/resource/DeleteFolder";
 
 const router = express.Router();
 
@@ -60,6 +64,12 @@ router.post("/uploadresource/:classID", UploadResource); // for teacher
 router.delete("/deleteresource/:resourceID", DeleteResource);
 router.get("/getresource/:classID", GetResource); // get all resources of each class
 
+// Resource Folder
+router.post("/createfolder/:classID", CreateFolder);
+router.put("/editfolder/:folderID", EditFolder);
+router.get("/getfolder/:classID", GetFolder); // get all folders of each class
+router.delete("/deletefolder/:folderID", DeleteFolder);
+
 // Assignment, for teacher
 router.post("/createassign/:classID", CreateAssign);
 router.put("/editassign/:assignID", EditAssign);
@@ -68,7 +78,7 @@ router.get("/getassign/:classID", GetAssign); // get all assignments of each cla
 
 // Assignment Turn in
 router.post("/createturnin/:assignID", CreateTurnin); // for student
-router.put("/editturnin/:assignID/:turninID", EditTurnin); // for teacher
+router.put("/editturnin/:assignID/:turninID", EditTurnin); // teacher edit score, student edit file
 router.get("/getturnin/:assignID", GetTurnin); // get all submissions of each assignment
 
 export default router;
