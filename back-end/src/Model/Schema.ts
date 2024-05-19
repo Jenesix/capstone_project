@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { User, Faculty, Department, Major, Class, Syllabus, Announcement, Resource, Post, Comment, Assignment, AssignmentTurnin, ResourceFolder } from '../interface/Model';
+import { User, Faculty, Department, Major, Class, Syllabus, Announcement, Resource, Post, Comment, Assignment, AssignmentTurnin, ResourceFolder, Attendance, AttendanceCheck } from '../interface/Model';
 
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -236,7 +236,6 @@ const Assignment = new Schema<Assignment>({
     description_asm: String,
     due_date: Date,
     fullscore: Number,
-    status_asm: String,
     file_asm: String,
     ClassID: {
         type: Schema.Types.ObjectId,
@@ -260,3 +259,29 @@ const AssignmentTurnin = new Schema<AssignmentTurnin>({
     }
 });
 export const AssignmentTurninModel = model<AssignmentTurnin>("AssignmentTurnin", AssignmentTurnin);
+
+
+
+const Attendance = new Schema<Attendance>({
+    date_atd: Date,
+    time_start: String,
+    ClassID: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    }
+});
+export const AttendanceModel = model<Attendance>("Attendance", Attendance);
+
+const AttendanceCheck = new Schema<AttendanceCheck>({
+    time_check: Date,
+    status_atd: String,
+    UserID: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    AttendanceID: {
+        type: Schema.Types.ObjectId,
+        ref: "Attendance"
+    }
+});
+export const AttendanceCheckModel = model<AttendanceCheck>("AttendanceCheck", AttendanceCheck);
