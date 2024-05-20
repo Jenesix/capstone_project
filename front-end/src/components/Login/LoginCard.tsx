@@ -30,13 +30,13 @@ const LoginCard: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         axioslib
-            .post('/api/user/register', user)
+            .post('/api/user/login', user)
             .then(async () => {
                 await router.push('/', { scroll: false });
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.log(error);
-            }); 
+            });
     };
 
     return (
@@ -121,7 +121,7 @@ const LoginCard: React.FC = () => {
                         </div>
 
                         <center>
-                            <button className="bg-primary-light text-white rounded-3xl py-4 w-56 font-bold mb-12">
+                            <button type="submit" className="bg-primary-light text-white rounded-3xl py-4 w-56 font-bold mb-12">
                                 Login
                             </button>
                         </center>

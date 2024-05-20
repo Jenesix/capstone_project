@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../../../public/Logo.svg';
 import Link from 'next/link';
 import { FaUser } from "react-icons/fa";
@@ -9,21 +9,37 @@ import { axioslib } from '@/lib/axioslib';
 import { User } from '@/interface/interface';
 
 const Navbar: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<User | undefined>(undefined)
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUser(undefined);
-  };
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const fetchUser = async () => {
     try {
-      const response = await axioslib.get('/api/getuserbyid');
+      const response = await axioslib.get('/api/user/getuserbyid');
       const { data, status } = response;
       if (status === 200 && data?.message !== "Unauthorized") {
         setUser(data);
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+        setUser(undefined);
       }
+    } catch (error: any) {
+      console.log(error.response?.data?.message || error.message);
+      setIsLogin(false);
+      setUser(undefined);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await axioslib.post("/api/user/logout");
+      setIsLogin(false);
+      setUser(undefined);
+      window.location.href = "/login";
     } catch (error) {
       console.log(error);
     }
@@ -39,11 +55,11 @@ const Navbar: React.FC = () => {
           <span className="text-xl md:text-2xl font-bold text-primary">LEARNO+</span>
         </Link>
       </div>
-      {isLoggedIn ? (
+      {isLogin ? (
         <div className='ml-3 sm:ml-0 mx-2 md:mx-10 flex space-x-2 sm:space-x-4'>
           <div className='border-primary-light border-2 rounded-full pr-4 flex space-x-2'>
             <FaUser className="h-12 w-12 text-white bg-primary-light rounded-full p-3" />
-            <span className="text-black font-bold mt-3">{user?._id}</span>
+            <span className="text-black font-bold mt-3">{user?.user_id}</span>
           </div>
           <button onClick={handleLogout} className="text-black flex items-center">
             <FiLogOut className="h-12 w-12 mr-2 text-white bg-primary-light rounded-full p-3 " />
