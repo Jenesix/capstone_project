@@ -8,6 +8,7 @@ import { GetUserByID } from "../Controller/User/GetUserByID";
 import { UpdateUser } from "../Controller/User/UpdateUser";
 import { DeleteUser } from "../Controller/User/DeleteUser";
 import { GetUserClass } from "../Controller/User/GetUserClass";
+import { GetEnrollment } from "../Controller/User/GetEnrollment";
 import { CreatePost } from "../Controller/User/post/CreatePost";
 import { GetPost } from "../Controller/User/post/GetPost";
 import { DeleletPost } from "../Controller/User/post/DeletePost";
@@ -57,6 +58,7 @@ router.get("/getuserbyid", GetUserByID); // must login
 router.put("/updateuser/:userID", UpdateUser);
 router.delete("/deleteuser/:userID", DeleteUser);
 router.get("/getuserclass/:classID", GetUserClass); // get all users of each class
+router.get("/getenrollment/:userID", GetEnrollment); // get all classes of each user
 
 // Post
 router.post("/createpost/:classID", CreatePost);
