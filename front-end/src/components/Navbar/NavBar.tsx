@@ -6,23 +6,26 @@ import Link from 'next/link';
 import { FaUser } from "react-icons/fa";
 import { FiLogOut } from 'react-icons/fi';
 import { axioslib } from '@/lib/axioslib';
+import { User } from '@/interface/interface';
 
 const Navbar: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState('65090500447');
+  const [user, setUser] = useState<User | undefined>(undefined)
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setUserName('');
+    setUser(undefined);
   };
-  
+
   const fetchUser = async () => {
     try {
       const response = await axioslib.get('/api/getuserbyid');
-      setUserName(response.data.username);
-      setIsLoggedIn(true);
+      const { data, status } = response;
+      if (status === 200 && data?.message !== "Unauthorized") {
+        setUser(data);
+      }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -40,7 +43,7 @@ const Navbar: React.FC = () => {
         <div className='ml-3 sm:ml-0 mx-2 md:mx-10 flex space-x-2 sm:space-x-4'>
           <div className='border-primary-light border-2 rounded-full pr-4 flex space-x-2'>
             <FaUser className="h-12 w-12 text-white bg-primary-light rounded-full p-3" />
-            <span className="text-black font-bold mt-3">{userName}</span>
+            <span className="text-black font-bold mt-3">{user?._id}</span>
           </div>
           <button onClick={handleLogout} className="text-black flex items-center">
             <FiLogOut className="h-12 w-12 mr-2 text-white bg-primary-light rounded-full p-3 " />
