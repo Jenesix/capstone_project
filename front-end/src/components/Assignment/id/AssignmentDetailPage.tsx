@@ -24,7 +24,7 @@ const AssignmentDetailPage: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col mt-12 w-full px-4 sm:px-8 pb-72">
+        <div className="flex flex-col mt-12 w-full px-4 sm:px-8 ">
             <div className="flex items-center mb-8">
                 <Link href="/id/Assignment">
                     <button className="  text-salate-1000 font-bold py-2 px-4 rounded">
@@ -41,8 +41,8 @@ const AssignmentDetailPage: React.FC = () => {
                 </div>
                 <div className="flex-grow border-b border-2 border-salate-100 mb-4"></div>
             </div>
-            <div className="mx-12 grid grid-cols-1 xl:grid-cols-2 gap-8">
-                <LeftSide assignment={assignment} />
+            <div className=" min-h-screen mx-12 grid grid-cols-1 xl:grid-cols-2 gap-8 pb-6">
+                <LeftSide assignment={assignment} />    
                 <RightSide submissions={assignment.submissions} />
             </div>
         </div>
