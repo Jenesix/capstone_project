@@ -33,6 +33,10 @@ import { CreateAttend } from "../Controller/User/attendance/CreateAttend";
 import { EditAttend } from "../Controller/User/attendance/EditAttend";
 import { DeleteAttend } from "../Controller/User/attendance/DeleteAttend";
 import { GetAttend } from "../Controller/User/attendance/GetAttend";
+import { CreateAttendCheck } from "../Controller/User/attendance/CreateAttendCheck";
+import { EditAttendCheck } from "../Controller/User/attendance/EditAttendCheck";
+import { DeleteAttendCheck } from "../Controller/User/attendance/DeleteAttendCheck";
+import { GetAttendCheck } from "../Controller/User/attendance/GetAttendCheck";
 
 const router = express.Router();
 
@@ -90,5 +94,11 @@ router.post("/createattend/:classID", CreateAttend);
 router.put("/editattend/:attendID", EditAttend);
 router.delete("/deleteattend/:attendID", DeleteAttend);
 router.get("/getattend/:classID", GetAttend);
+
+// Attendance Checked
+router.post("/createattendcheck/:attendID", CreateAttendCheck);
+router.put("/editattendcheck/:checkID", EditAttendCheck);
+router.delete("/deleteattendcheck/:checkID", DeleteAttendCheck);
+router.get("/getattendcheck/:attendID", GetAttendCheck); // get all checked of each attendances
 
 export default router;
