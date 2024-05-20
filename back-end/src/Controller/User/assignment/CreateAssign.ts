@@ -24,7 +24,7 @@ export const CreateAssign = async (req: Request, res: Response) => {
             fileUrl = await uploadAssignmentFile(file);
         }
 
-        const due_date = `${date}T${time}Z`;
+        const due_date = `${date}T${time}`;
 
         const assignment = new AssignmentModel({
             assignment_name,
