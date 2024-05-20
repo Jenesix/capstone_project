@@ -16,7 +16,7 @@ const LoginCard: React.FC = () => {
     };
 
     const [user, setUser] = useState({
-        username: '',
+        user_id: '',
         password: '',
     });
 
@@ -27,15 +27,16 @@ const LoginCard: React.FC = () => {
         });
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         axioslib
             .post('/api/user/register', user)
-            .then(() => {
-                router.push('/', { scroll: false });
+            .then(async () => {
+                await router.push('/', { scroll: false });
             })
             .catch((error) => {
                 console.log(error);
-            });
+            }); 
     };
 
     return (
@@ -73,6 +74,7 @@ const LoginCard: React.FC = () => {
                                 <input
                                     type="text"
                                     id="username"
+                                    name="user_id"
                                     required
                                     className="h-10 w-full px-4 py-2 text-md peer bg-white outline-none border-b-2 border-salate-500 focus:border-primary"
                                     onChange={handleChange}
@@ -91,6 +93,7 @@ const LoginCard: React.FC = () => {
                                 <input
                                     type={passwordVisible ? 'text' : 'password'}
                                     id="password"
+                                    name="password"
                                     required
                                     className="h-10 w-full px-4 py-2 text-md peer bg-white outline-none border-b-2 border-salate-500 focus:border-primary "
                                     onChange={handleChange}
