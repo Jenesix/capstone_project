@@ -66,7 +66,7 @@ router.get("/getenrollment/:userID", GetEnrollment); // get all classes of each 
 // Post
 router.post("/createpost/:classID", CreatePost);
 router.get("/getpost/:classID", GetPost); // get all posts+comments of each class
-router.get("/getpostbyid/:postID", GetPostByID);
+router.get("/getpostbyid/:postID", GetPostByID); // get a post by id + comments
 router.delete("/deletepost/:postID", DeleletPost);
 
 router.post("/createcomment/:postID", CreateComment);
@@ -79,13 +79,13 @@ router.get("/getannounce/:classID", GetAnnounce); // get all announcements of ea
 router.delete("/deleteannounce/:announceID", DeleteAnnounce);
 
 // Resource
-router.post("/uploadresource", UploadResource); // for teacher, query
+router.post("/uploadresource", UploadResource); // query classID and folderID
 router.delete("/deleteresource/:resourceID", DeleteResource);
 router.get("/getresource/:classID", GetResource); // get all resources of each class
 
 // Resource Folder
 router.post("/createfolder/:classID", CreateFolder);
-router.put("/editfolder/:folderID", EditFolder);
+router.put("/editfolder/:folderID", EditFolder); // edit name
 router.get("/getfolder/:classID", GetFolder); // get all folders of each class
 router.delete("/deletefolder/:folderID", DeleteFolder);
 
