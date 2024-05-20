@@ -5,7 +5,7 @@ import "./globals.css";
 export default function Home() {
   return (
     <>
-      <Homepage />
+      <Homepage role="teacher" />
     </>
   );
 }
