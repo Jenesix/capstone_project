@@ -73,7 +73,7 @@ router.get("/getannounce/:classID", GetAnnounce); // get all announcements of ea
 router.delete("/deleteannounce/:announceID", DeleteAnnounce);
 
 // Resource
-router.post("/uploadresource/:classID", UploadResource); // for teacher
+router.post("/uploadresource", UploadResource); // for teacher, query
 router.delete("/deleteresource/:resourceID", DeleteResource);
 router.get("/getresource/:classID", GetResource); // get all resources of each class
 
