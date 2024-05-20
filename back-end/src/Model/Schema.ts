@@ -216,7 +216,10 @@ const Post = new Schema<Post>({
 export const PostModel = model<Post>("Post", Post);
 
 const Comment = new Schema<Comment>({
-    comment: String,
+    comment: {
+        type: String,
+        required: true
+    },
     time_cm: Date,
     UserID: {
         type: Schema.Types.ObjectId,

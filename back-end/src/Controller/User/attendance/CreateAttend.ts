@@ -11,8 +11,10 @@ export const CreateAttend = async (req: Request, res: Response) => {
             return res.status(404).json({ message: "Class not found" });
         }
 
+        const datetime = `${date_atd}T${time_start}`;
+
         const attendance = new AttendanceModel({
-            date_atd,
+            date_atd: datetime,
             time_start,
             ClassID: classID,
         });
