@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "../globals.css";
+import "../../globals.css";
 import SideBar from "@/components/Sidebar/SideBar";
 
 
@@ -20,7 +20,7 @@ export default function ClassLayout({
     return (
         <section>
             <div className="flex flex-row">
-                <SideBar role="student" />
+                <SideBar role="teacher" />
                 {children}
             </div>
         </section>
