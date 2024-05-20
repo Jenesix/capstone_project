@@ -13,7 +13,7 @@ const assignments = [
 
 const Main: React.FC = () => {
     return (
-        <div className="w-full mt-6 pb-20">
+        <div className="min-h-screen w-full mt-6 pb-6">
             <div className="hidden lg:block">
                 <Calendar assignments={assignments} />
             </div>
