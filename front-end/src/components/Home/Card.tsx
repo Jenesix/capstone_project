@@ -1,8 +1,8 @@
-import Image from "next/image";
+import Image from "next/legacy/image";
 import banner from "../../../public/Homebanner.svg";
 import Link from "next/link";
 
-const Card = () => {
+const Card: React.FC = () => {
     return (
         <Link href="/id/Home">
             <div className="relative rounded-xl overflow-hidden shadow-lg ">
@@ -15,7 +15,8 @@ const Card = () => {
                         alt="banner"
                         className="rounded-xl"
                         width={500}
-                        height={500}
+                        height={300}
+                        priority
                     />
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white rounded-b-xl bg-gradient-to-t from-black via-transparent to-transparent">
