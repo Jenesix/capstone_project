@@ -19,12 +19,12 @@ export const CreateAssign = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Class not found" });
         }
 
+        const due_date = `${date}T${time}`;
+
         let fileUrl = "";
         if (file) {
             fileUrl = await uploadAssignmentFile(file);
         }
-
-        const due_date = `${date}T${time}`;
 
         const assignment = new AssignmentModel({
             assignment_name,
