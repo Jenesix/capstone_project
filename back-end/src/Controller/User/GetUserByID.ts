@@ -5,19 +5,21 @@ import { secret_jwt } from "../../config/config";
 
 export const GetUserByID = async (req: Request, res: Response) => {
     try {
-        const token = req.cookies.token;
-        if (!token) {
-            res.json({ message: "Unauthorized" });
-            return false;
-        }
-        const validToken = jwt.verify(token, String(secret_jwt));
-        if (!validToken) {
-            res.json({ message: "Invalid token" });
-            return false;
-        }
-        const UserID = (validToken as { UserID: any }).UserID;
+        const { userID } = req.params;
+        
+        // const token = req.cookies.token;
+        // if (!token) {
+        //     res.json({ message: "Unauthorized" });
+        //     return false;
+        // }
+        // const validToken = jwt.verify(token, String(secret_jwt));
+        // if (!validToken) {
+        //     res.json({ message: "Invalid token" });
+        //     return false;
+        // }
+        // const UserID = (validToken as { UserID: any }).UserID;
 
-        const user = await UserModel.findById(UserID);
+        const user = await UserModel.findById(userID);
         if (!user) {
             res.json({ message: "User not found" });
             return false;

@@ -38,6 +38,8 @@ export const CreateTurnin = async (req: Request, res: Response) => {
         });
         await turnin.save();
 
+        await AssignmentModel.findByIdAndUpdate(assignID, { $addToSet: { TurninID: turnin._id } }, { new: true });
+
         return res.status(200).json({ message: "Turn in assignment success", turnin });
     } catch (error) {
         console.log(error);

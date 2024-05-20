@@ -243,7 +243,13 @@ const Assignment = new Schema<Assignment>({
     ClassID: {
         type: Schema.Types.ObjectId,
         ref: "Class"
-    }
+    },
+    TurninID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "AssignmentTurnin"
+        }
+    ]
 });
 export const AssignmentModel = model<Assignment>("Assignment", Assignment);
 
@@ -271,7 +277,13 @@ const Attendance = new Schema<Attendance>({
     ClassID: {
         type: Schema.Types.ObjectId,
         ref: "Class"
-    }
+    },
+    CheckID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "AttendanceCheck"
+        }
+    ]
 });
 export const AttendanceModel = model<Attendance>("Attendance", Attendance);
 

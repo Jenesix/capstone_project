@@ -64,6 +64,7 @@ export interface Assignment {
     file_asm: string;
     // Foreign Key
     ClassID: ObjectId;
+    TurninID: ObjectId[];
 }
 // student
 export interface AssignmentTurnin {
@@ -94,6 +95,7 @@ export interface Attendance {
     time_start: string;
     // Foreign Key
     ClassID: ObjectId;
+    CheckID: ObjectId[];
 }
 // student
 export interface AttendanceCheck {

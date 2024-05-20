@@ -11,6 +11,7 @@ import { GetUserClass } from "../Controller/User/GetUserClass";
 import { GetEnrollment } from "../Controller/User/GetEnrollment";
 import { CreatePost } from "../Controller/User/post/CreatePost";
 import { GetPost } from "../Controller/User/post/GetPost";
+import { GetPostByID } from "../Controller/User/post/GetPostByID";
 import { DeleletPost } from "../Controller/User/post/DeletePost";
 import { CreateComment } from "../Controller/User/post/CreateComment";
 import { DeleletComment } from "../Controller/User/post/DeleteComment";
@@ -25,6 +26,7 @@ import { CreateAssign } from "../Controller/User/assignment/CreateAssign";
 import { EditAssign } from "../Controller/User/assignment/EditAssign";
 import { DeleteAssign } from "../Controller/User/assignment/DeleteAssign";
 import { GetAssign } from "../Controller/User/assignment/GetAssign";
+import { GetAssignByID } from "../Controller/User/assignment/GetAssignByID";
 import { CreateTurnin } from "../Controller/User/assignment/CreateTurnin";
 import { EditTurnin } from "../Controller/User/assignment/EditTurnin";
 import { GetTurnin } from "../Controller/User/assignment/GetTurnin";
@@ -50,11 +52,12 @@ router.get("/", (req, res) => {
 // auth
 router.post("/register", Register);
 router.post("/login", Login);
-router.get("/logout", Logout);
+router.post("/logout", Logout);
 
 // User
 router.get("/getuser", validateToken, GetUser); // get all users, must login
-router.get("/getuserbyid", GetUserByID); // must login
+//router.get("/getuserbyid", GetUserByID); // must login
+router.get("/getuserbyid/:userID", GetUserByID);
 router.put("/updateuser/:userID", UpdateUser);
 router.delete("/deleteuser/:userID", DeleteUser);
 router.get("/getuserclass/:classID", GetUserClass); // get all users of each class
@@ -63,6 +66,7 @@ router.get("/getenrollment/:userID", GetEnrollment); // get all classes of each 
 // Post
 router.post("/createpost/:classID", CreatePost);
 router.get("/getpost/:classID", GetPost); // get all posts+comments of each class
+router.get("/getpostbyid/:postID", GetPostByID);
 router.delete("/deletepost/:postID", DeleletPost);
 
 router.post("/createcomment/:postID", CreateComment);
@@ -90,6 +94,7 @@ router.post("/createassign/:classID", CreateAssign);
 router.put("/editassign/:assignID", EditAssign);
 router.delete("/deleteassign/:assignID", DeleteAssign);
 router.get("/getassign/:classID", GetAssign); // get all assignments of each class
+router.get("/getassignbyid/:assignID", GetAssignByID); // get assignment and all submissions
 
 // Assignment Turn in
 router.post("/createturnin/:assignID", CreateTurnin); // for student
