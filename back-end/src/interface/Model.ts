@@ -61,10 +61,10 @@ export interface Assignment {
     description_asm: string; // description
     due_date: Date;
     fullscore: number;
-    status_asm: string; // ongoing, finished
     file_asm: string;
     // Foreign Key
     ClassID: ObjectId;
+    TurninID: ObjectId[];
 }
 // student
 export interface AssignmentTurnin {
@@ -92,9 +92,10 @@ export interface Resource {
 // teacher
 export interface Attendance {
     date_atd: Date;
-    time_expire: Date;
+    time_start: string;
     // Foreign Key
     ClassID: ObjectId;
+    CheckID: ObjectId[];
 }
 // student
 export interface AttendanceCheck {

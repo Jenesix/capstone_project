@@ -8,8 +8,8 @@ export const CreateAssign = async (req: Request, res: Response) => {
         const {
             assignment_name,
             description_asm,
-            due_date,
-            status_asm,
+            date,
+            time,
             fullscore,
         } = req.body;
         const file = req.file;
@@ -18,6 +18,8 @@ export const CreateAssign = async (req: Request, res: Response) => {
         if (!findClass) {
             return res.status(400).json({ message: "Class not found" });
         }
+
+        const due_date = `${date}T${time}`;
 
         let fileUrl = "";
         if (file) {
@@ -28,14 +30,13 @@ export const CreateAssign = async (req: Request, res: Response) => {
             assignment_name,
             description_asm,
             due_date,
-            status_asm: status_asm || "Ongoing",
             fullscore,
             file_asm: fileUrl,
             ClassID: classID,
         });
         await assignment.save();
 
-        return res.status(200).send("Create assignment success");
+        return res.status(200).send({ message: "Create assignment success", assignment });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

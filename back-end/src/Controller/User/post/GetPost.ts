@@ -7,14 +7,14 @@ export const GetPost = async (req: Request, res: Response) => {
 
         const findClass = await ClassModel.findById(classID);
         if (!findClass) {
-            return res.status(404).json({ message: "Class not found" });
+            return res.status(400).json({ message: "Class not found" });
         }
 
-        const posts = await PostModel.find({ ClassID: classID })
+        const post = await PostModel.find({ ClassID: classID })
             .populate({ path: "UserID" })
             .populate({ path: "CommentID" });
 
-        return res.status(200).json(posts);
+        return res.status(200).json(post);
     } catch (error: any) {
         console.log(error.message);
     }

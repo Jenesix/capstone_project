@@ -8,7 +8,7 @@ export const DeleteAssign = async (req: Request, res: Response) => {
         if (!result) {
             return res.status(400).json({ message: "Assignment not found" });
         }
-        return res.status(200).json({ message: "Delete assignment success", result });
+        return res.status(200).json({ message: "Delete assignment success" });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);      

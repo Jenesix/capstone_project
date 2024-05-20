@@ -26,7 +26,8 @@ app.get("/", async (req, res) => {
 const multerMid = multer({
     storage: multer.memoryStorage(),
 });
-app.use(multerMid.single("file"));
+// app.use(multerMid.single("file"));
+app.use(multerMid.array("files"));
 
 
 

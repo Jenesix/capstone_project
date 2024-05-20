@@ -31,6 +31,7 @@ export const CreatePost = async (req: Request, res: Response) => {
             time_p: new Date(),
         });
         await post.save();
+        
         return res.status(200).send({ message: "Create post success", post });
     } catch (error) {
         console.log(error);

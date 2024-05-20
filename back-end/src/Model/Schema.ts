@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { User, Faculty, Department, Major, Class, Syllabus, Announcement, Resource, Post, Comment, Assignment, AssignmentTurnin } from '../interface/Model';
+import { User, Faculty, Department, Major, Class, Syllabus, Announcement, Resource, Post, Comment, Assignment, AssignmentTurnin, ResourceFolder, Attendance, AttendanceCheck } from '../interface/Model';
 
 // _id = real ID number
 // ID = ObjectId in mongo
@@ -167,6 +167,15 @@ export const AnnouncementModel = model<Announcement>("Announcement", Announcemen
 
 
 
+const ResourceFolder = new Schema<ResourceFolder>({
+    folder_name: String,
+    ClassID: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    }
+});
+export const ResourceFolderModel = model<ResourceFolder>("ResourceFolder", ResourceFolder);
+
 const Resource = new Schema<Resource>({
     file_rs: {
         type: String,
@@ -207,7 +216,10 @@ const Post = new Schema<Post>({
 export const PostModel = model<Post>("Post", Post);
 
 const Comment = new Schema<Comment>({
-    comment: String,
+    comment: {
+        type: String,
+        required: true
+    },
     time_cm: Date,
     UserID: {
         type: Schema.Types.ObjectId,
@@ -227,12 +239,17 @@ const Assignment = new Schema<Assignment>({
     description_asm: String,
     due_date: Date,
     fullscore: Number,
-    status_asm: String,
     file_asm: String,
     ClassID: {
         type: Schema.Types.ObjectId,
         ref: "Class"
-    }
+    },
+    TurninID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "AssignmentTurnin"
+        }
+    ]
 });
 export const AssignmentModel = model<Assignment>("Assignment", Assignment);
 
@@ -251,3 +268,35 @@ const AssignmentTurnin = new Schema<AssignmentTurnin>({
     }
 });
 export const AssignmentTurninModel = model<AssignmentTurnin>("AssignmentTurnin", AssignmentTurnin);
+
+
+
+const Attendance = new Schema<Attendance>({
+    date_atd: Date,
+    time_start: String,
+    ClassID: {
+        type: Schema.Types.ObjectId,
+        ref: "Class"
+    },
+    CheckID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "AttendanceCheck"
+        }
+    ]
+});
+export const AttendanceModel = model<Attendance>("Attendance", Attendance);
+
+const AttendanceCheck = new Schema<AttendanceCheck>({
+    time_check: Date,
+    status_atd: String,
+    UserID: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+    AttendanceID: {
+        type: Schema.Types.ObjectId,
+        ref: "Attendance"
+    }
+});
+export const AttendanceCheckModel = model<AttendanceCheck>("AttendanceCheck", AttendanceCheck);
