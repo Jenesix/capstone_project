@@ -5,6 +5,7 @@ import logo from '../../../public/Logo.svg';
 import Link from 'next/link';
 import { FaUser } from "react-icons/fa";
 import { FiLogOut } from 'react-icons/fi';
+import { axioslib } from '@/lib/axioslib';
 
 const Navbar: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,6 +14,16 @@ const Navbar: React.FC = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserName('');
+  };
+  
+  const fetchUser = async () => {
+    try {
+      const response = await axioslib.get('/api/getuserbyid');
+      setUserName(response.data.username);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
