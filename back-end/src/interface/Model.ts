@@ -61,7 +61,7 @@ export interface Assignment {
     description_asm: string; // description
     due_date: Date;
     fullscore: number;
-    file_asm: string;
+    file_asm: string[];
     // Foreign Key
     ClassID: ObjectId;
     TurninID: ObjectId[];
