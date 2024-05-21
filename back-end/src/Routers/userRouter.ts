@@ -56,8 +56,8 @@ router.post("/logout", Logout);
 
 // User
 router.get("/getuser", validateToken, GetUser); // get all users, must login
-//router.get("/getuserbyid", GetUserByID); // must login
-router.get("/getuserbyid/:userID", GetUserByID);
+router.get("/getuserbyid", GetUserByID); // must login
+// router.get("/getuserbyid/:userID", GetUserByID);
 router.put("/updateuser/:userID", UpdateUser);
 router.delete("/deleteuser/:userID", DeleteUser);
 router.get("/getuserclass/:classID", GetUserClass); // get all users of each class

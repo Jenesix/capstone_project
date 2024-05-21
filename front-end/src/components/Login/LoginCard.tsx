@@ -4,13 +4,42 @@ import student from "../../../public/StudentBanner.png";
 import logo from "../../../public/Logo.svg";
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { axioslib } from "@/lib/axioslib";
+import { useRouter } from "next/navigation";
 
 const LoginCard: React.FC = () => {
+    const router = useRouter();
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
+
+    const [user, setUser] = useState({
+        user_id: '',
+        password: '',
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUser({
+            ...user,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault();
+            axioslib
+                .post('/api/user/login', user)
+                .then(() => {
+                    window.location.href = "/";
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 mx-4 sm:mx-8 md:mx-12 md:rounded-bl-10xl lg:mx-20 xl:mx-52 mb-4 mt-12 border-0 border-primary-light md:border-2 rounded-5xl md:rounded-tr-10xl md:rounded-9xl">
@@ -39,15 +68,17 @@ const LoginCard: React.FC = () => {
                             <p className="text-sm text-gray-600">And Enjoy in Learno !</p>
                         </div>
                     </div>
-                    <form className="w-full max-w-lg">
+                    <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                         {/* input username */}
                         <div className="relative mb-6">
                             <div className="w-full relative group">
                                 <input
                                     type="text"
                                     id="username"
+                                    name="user_id"
                                     required
                                     className="h-10 w-full px-4 py-2 text-md peer bg-white outline-none border-b-2 border-salate-500 focus:border-primary"
+                                    onChange={handleChange}
                                 />
                                 <label
                                     htmlFor="username"
@@ -63,8 +94,10 @@ const LoginCard: React.FC = () => {
                                 <input
                                     type={passwordVisible ? 'text' : 'password'}
                                     id="password"
+                                    name="password"
                                     required
                                     className="h-10 w-full px-4 py-2 text-md peer bg-white outline-none border-b-2 border-salate-500 focus:border-primary "
+                                    onChange={handleChange}
                                 />
                                 <label
                                     htmlFor="password"
@@ -89,7 +122,7 @@ const LoginCard: React.FC = () => {
                         </div>
 
                         <center>
-                            <button className="bg-primary-light text-white rounded-3xl py-4 w-56 font-bold mb-12">
+                            <button type="submit" className="bg-primary-light text-white rounded-3xl py-4 w-56 font-bold mb-12">
                                 Login
                             </button>
                         </center>

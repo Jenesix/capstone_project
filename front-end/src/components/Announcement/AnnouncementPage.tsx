@@ -14,7 +14,7 @@ const Announcement = [
 
 const Announcementpage: React.FC = () => {
     return (
-        <div className="flex flex-col mt-12 w-full px-4 sm:px-8 pb-96">
+        <div className="flex flex-col mt-12 w-full px-4 sm:px-8 min-h-screen pb-6">
             <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Announcement</h1>
             <div className='mt-6 2xl:mx-20'>
                 {Announcement.map((announcement, index) => (

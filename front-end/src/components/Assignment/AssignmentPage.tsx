@@ -45,7 +45,7 @@ const Assignmentpage: React.FC = () => {
     const toDoAssignments = assignments.filter(assignment => assignment.status === "To Do");
     const submittedAssignments = assignments.filter(assignment => assignment.status === "Submitted" || assignment.status === "Late Submitted");
     return (
-        <div className="flex flex-col mt-12 w-full px-4 sm:px-8 pb-80">
+        <div className="flex flex-col mt-12 w-full px-4 sm:px-8 min-h-screen pb-6">
             <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Assignment</h1>
             <div className="flex flex-col md:flex-row mx-12">
                 <div className="mb-4 md:mb-0 md:mr-4">

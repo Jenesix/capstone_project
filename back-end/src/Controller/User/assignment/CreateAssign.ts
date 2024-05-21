@@ -12,7 +12,7 @@ export const CreateAssign = async (req: Request, res: Response) => {
             time,
             fullscore,
         } = req.body;
-        const file = req.file;
+        const files = req.files as Express.Multer.File[];
 
         const findClass = await ClassModel.findById(classID);
         if (!findClass) {
@@ -21,9 +21,14 @@ export const CreateAssign = async (req: Request, res: Response) => {
 
         const due_date = `${date}T${time}`;
 
-        let fileUrl = "";
-        if (file) {
-            fileUrl = await uploadAssignmentFile(file);
+        let fileUrl: string[] = [];
+        if (!files || files.length === 0) {
+            fileUrl = [];
+        } else {
+            for (const file of files) {
+                const url = await uploadAssignmentFile(file);
+                fileUrl.push(url);
+            }
         }
 
         const assignment = new AssignmentModel({
