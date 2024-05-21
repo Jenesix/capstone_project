@@ -2,33 +2,34 @@ import React from 'react';
 import QnACard from './QnACard';
 import profile from '../../../public/profile.svg';
 import Announcementtest from '../../../public/Announcementtest.jpg';
+import cristiano from '../../../public/cristiano.jpg';
 
 
 const Post = [
     {
-        boardID: "141515",
+        boardID: "id",
         user_id: "65090500414",
         firstname: "Natthapon",
         lastname: "Tanateeraanan",
         profileImage: profile,
         title_p: "This is Board's Title",
         description_p: "Detail",
-        post_image: Announcementtest,
+        post_image: cristiano,
         time_p: "15 Jan 2024 16:00",
     },
     {
-        boardID: "135243",
+        boardID: "id",
         user_id: "65090500415",
         firstname: "Nagfdhhn",
         lastname: "Twerewraanan",
         profileImage: profile,
         title_p: "This is Board's Title2",
-        description_p: "Detail2",
+        description_p: "Detail2 asfdfsdd adfsdfdfsdfsadsdsadfsadsdsasf fd s  sads fds  sadfadfadfsfs  adfssafffs ad sadfsdadfsf adsadfs  dfadsfs adf sfdsadsadf ",
         post_image: Announcementtest,
         time_p: "16 Jan 2024 16:00",
     },
     {
-        boardID: "143456",
+        boardID: "id",
         user_id: "65090500416",
         firstname: "Nadfgson",
         lastname: "Tanateertyyan",
@@ -59,14 +60,14 @@ const QnABoardPage: React.FC = () => {
                             postimage={post.post_image}
                             time={post.time_p}
                             size_card="min-h-60"
-                            height_detail="min-h-24"
-                            size_image="h-24 w-40"
+                            height_detail="min-h-8"
+                            size_image="h-32 w-52"
                             user_id={post.user_id}
                             profileImage={post.profileImage}
                             firstname={post.firstname}
                             lastname={post.lastname}
                             size_profile="size-16"
-                            size_divtext="min-w-20"
+                            size_divtext=""
                             size_nameuser="text-base"
                             size_iduser="text-sm"
                         />
