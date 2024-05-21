@@ -1,11 +1,18 @@
+import React from "react";
 import Image from "next/legacy/image";
-import banner from "../../../public/Homebanner.svg";
 import Link from "next/link";
+import banner from "../../../public/Homebanner.svg";
 
-const Card: React.FC = () => {
+interface CardProps {
+    role: 'teacher' | 'student';
+}
+
+const Card: React.FC<CardProps> = ({ role }) => {
+    const linkHref = role === 'teacher' ? '/Teacher/id/Home' : '/id/Home';
+
     return (
-        <Link href="/id/Home">
-            <div className="relative rounded-xl overflow-hidden shadow-lg ">
+        <Link href={linkHref}>
+            <div className="relative rounded-xl overflow-hidden shadow-lg">
                 <div className="rounded-xl overflow-hidden">
                     <Image
                         src={banner}
