@@ -28,15 +28,16 @@ const LoginCard: React.FC = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        axioslib
-            .post('/api/user/login', user)
-            .then(async () => {
-                await router.push('/', { scroll: false });
-            })
-            .catch((error: any) => {
-                console.log(error);
-            });
+        try {
+            e.preventDefault();
+            axioslib
+                .post('/api/user/login', user)
+                .then(() => {
+                    window.location.href = "/";
+                });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

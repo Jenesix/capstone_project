@@ -18,21 +18,22 @@ const Navbar: React.FC = () => {
       const { data, status } = response;
       if (status === 200 && data?.message !== "Unauthorized") {
         setUser(data);
-        setIsLogin(true);
       } else {
         setIsLogin(false);
         setUser(undefined);
       }
     } catch (error: any) {
-      console.log(error.response?.data?.message || error.message);
-      setIsLogin(false);
-      setUser(undefined);
+      console.log(error.response?.status);
     }
   };
 
   useEffect(() => {
     fetchUser();
   }, []);
+
+  useEffect(() => {
+    setIsLogin(user !== undefined)
+  }, [user]);
 
   const handleLogout = async () => {
     try {
