@@ -37,7 +37,7 @@ const AnnouncementCard: React.FC<{ announcementData: any }> = ({ announcementDat
                         <p className="text-salate-1000 font-semibold text-xs lg:text-sm">{formattedDate} at</p>
                         <p className="text-salate-1000 font-semibold text-xs lg:text-sm ml-2">{announcementData.Time}</p>
                     </div>
-                    <p className="text-salate-1000 font-bold text-sm xl:text-xl ">{announcementData.message}</p>
+                    <p className="text-salate-1000 font-bold text-sm xl:text-lg ">{announcementData.message}</p>
                     <div className="mt-2 w-full lg:max-w-md">
 
                     </div>
