@@ -50,8 +50,8 @@ const SideBar: React.FC<SideBarProps> = ({ role }) => {
                             <FaCheckSquare className="mr-3 cursor-pointer text-2xl md:text-32xl" /> <span className="hidden cursor-pointer md:inline">Attendance</span>
                         </li>
                     </Link>
-                    <Link href={`${basePath}/QA-board`}>
-                        <li className={`p-4 flex items-center hover:text-primary transition-colors duration-200 ${isActive(`${basePath}/QA-board`)}`}>
+                    <Link href={`${basePath}/QnABoard`}>
+                        <li className={`p-4 flex items-center hover:text-primary transition-colors duration-200 ${isActive(`${basePath}/QnABoard`)}`}>
                             <FaQuestionCircle className="mr-3 cursor-pointer text-2xl md:text-32xl" /> <span className="hidden cursor-pointer md:inline">Q&A Board</span>
                         </li>
                     </Link>
