@@ -16,7 +16,7 @@ interface AttendanceCheckEntry {
 
 const Attendance: AttendanceEntry[] = [
     {
-        date_atd: "19 Jan 2024",
+        date_atd: "19 January 2024",
         time_start: "9:30",
     },
     {
