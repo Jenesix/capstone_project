@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { StaticImageData } from 'next/image';
 
 
+
 interface QnACardProps {
     bg_post : string,
     boardID : string,
@@ -60,11 +61,10 @@ const QnACard: React.FC<QnACardProps> = ({bg_post, boardID, board_title, board_d
 
 
                 <div className='ml-auto mt-auto flex flex-col items-end'>
-                    <div className={`font-semibold ${size_image} relative mb-2`}>
-                    <Image
+                    <div className={` relative mb-2 ${size_image}`}>
+                    <Image className={` ${size_image}`}
                             src={postimage}
-                            layout="fill"
-                            object-fill
+                            layout='fill'
                             alt="postimage"
                         />
                     </div>
