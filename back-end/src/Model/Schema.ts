@@ -239,7 +239,11 @@ const Assignment = new Schema<Assignment>({
     description_asm: String,
     due_date: Date,
     fullscore: Number,
-    file_asm: String,
+    file_asm: [
+        {
+            type: String
+        }
+    ],
     ClassID: {
         type: Schema.Types.ObjectId,
         ref: "Class"
