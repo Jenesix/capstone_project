@@ -1,39 +1,16 @@
 "use client";
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import logo from '../../../public/Logo.svg';
 import Link from 'next/link';
 import { FaUser } from "react-icons/fa";
 import { FiLogOut } from 'react-icons/fi';
+import { useUser } from '@/context/UserContext';
 import { axioslib } from '@/lib/axioslib';
-import { User } from '@/interface/interface';
+
 
 const Navbar: React.FC = () => {
-  const [user, setUser] = useState<User | undefined>(undefined);
-  const [isLogin, setIsLogin] = useState<boolean>(false);
-
-  const fetchUser = async () => {
-    try {
-      const response = await axioslib.get('/api/user/getuserbyid');
-      const { data, status } = response;
-      if (status === 200 && data?.message !== "Unauthorized") {
-        setUser(data);
-      } else {
-        setIsLogin(false);
-        setUser(undefined);
-      }
-    } catch (error: any) {
-      console.log(error.response?.status);
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    setIsLogin(user !== undefined)
-  }, [user]);
+  const { user, isLogin, setIsLogin, setUser } = useUser();
 
   const handleLogout = async () => {
     try {
