@@ -5,7 +5,7 @@ import { GoXCircleFill } from "react-icons/go";
 
 const Attendance = [
     {
-        date_atd: "19 Jan 2024",
+        date_atd: "19 January 2024",
         time_start: "9:30",
     },
     {

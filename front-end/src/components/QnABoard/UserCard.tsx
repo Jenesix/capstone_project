@@ -1,8 +1,9 @@
 import React from 'react';
 import Image from 'next/legacy/image';
+import { StaticImageData } from 'next/image';
 
 interface UserCardProps {
-    profileImage: string;
+    profileImage: string | StaticImageData;
     user_id: string;
     firstname: string;
     lastname: string;
