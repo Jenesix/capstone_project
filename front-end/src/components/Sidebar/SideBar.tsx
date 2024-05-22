@@ -6,15 +6,16 @@ import Link from 'next/link';
 
 interface SideBarProps {
     role: 'teacher' | 'student';
+    classID: string;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ role }) => {
+const SideBar: React.FC<SideBarProps> = ({ role, classID }) => {
     const pathname = usePathname();
     const isActive = (path: string) => {
         return pathname.startsWith(path) ? 'text-primary' : '';
     };
 
-    const basePath = role === 'teacher' ? '/Teacher/id' : '/id';
+    const basePath = role === 'teacher' ? `/Teacher/${classID}` : `/${classID}`;
 
     return (
         <div className="flex h-100% flex-rown">

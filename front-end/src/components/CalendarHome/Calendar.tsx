@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import {
     format,
     startOfMonth,
@@ -25,7 +25,7 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
-    const [currentMonth, setCurrentMonth] = React.useState(new Date());
+    const [currentMonth, setCurrentMonth] = useState(new Date());
 
     const renderHeader = () => {
         const dateFormat = 'MMMM yyyy';
@@ -45,7 +45,6 @@ const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
                 >
                     Next
                 </button>
-
             </div>
         );
     };
