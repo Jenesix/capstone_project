@@ -15,8 +15,6 @@ const Home: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!(router as any).isReady) return;
-
     if (!user) {
       router.push('/login');
     }
