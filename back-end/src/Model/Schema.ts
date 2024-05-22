@@ -261,7 +261,11 @@ const AssignmentTurnin = new Schema<AssignmentTurnin>({
     turnin_date: Date,
     status_turnin: String,
     score: Number,
-    file_turnin: String,
+    file_turnin: [
+        {
+            type: String
+        }
+    ],
     AssignmentID: {
         type: Schema.Types.ObjectId,
         ref: "Assignment"
