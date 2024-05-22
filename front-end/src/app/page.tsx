@@ -22,7 +22,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("User ID:", user._id);
       setRole(user.role as 'teacher' | 'student');
       fetchEnrolledClasses(user._id);
     }
@@ -31,7 +30,6 @@ const Home: React.FC = () => {
   const fetchEnrolledClasses = async (userID: string) => {
     try {
       const response = await axioslib.get(`/api/user/getenrollment/${userID}`);
-      console.log("Enrolled classes:", response.data || { classes: [] });
       setEnrolledClasses(response.data || { classes: [] });
     } catch (error) {
       console.error("Error fetching enrolled classes:", error);

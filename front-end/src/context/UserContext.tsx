@@ -6,6 +6,7 @@ import { User } from '@/interface/interface';
 interface UserContextProps {
     user: User | undefined;
     isLogin: boolean;
+    loading: boolean;
     setUser: React.Dispatch<React.SetStateAction<User | undefined>>;
     setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -15,6 +16,7 @@ const UserContext = createContext<UserContextProps | undefined>(undefined);
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | undefined>(undefined);
     const [isLogin, setIsLogin] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const fetchUser = async () => {
         try {
@@ -30,6 +32,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         } catch (error: any) {
             console.log(error.response?.status);
             setIsLogin(false);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -38,7 +42,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, isLogin, setUser, setIsLogin }}>
+        <UserContext.Provider value={{ user, isLogin, loading, setUser, setIsLogin }}>
             {children}
         </UserContext.Provider>
     );

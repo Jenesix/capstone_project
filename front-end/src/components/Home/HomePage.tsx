@@ -32,8 +32,6 @@ const Homepage: React.FC<HomepageProps> = ({ role, enrolledClasses }) => {
     localStorage.setItem('selectedOption', selectedOption);
   }, [selectedOption]);
 
-  console.log("Homepage received classes:", classes);
-  console.log("Filtered classes:", filteredClasses);
 
   return (
     <>
@@ -56,7 +54,6 @@ const Homepage: React.FC<HomepageProps> = ({ role, enrolledClasses }) => {
       <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:mt-6 mt-12 gap-2 md:gap-5 xl:gap-8 mx-16 2xl:mx-36'>
         {filteredClasses.length > 0 ? (
           filteredClasses.map((classData, index) => {
-            console.log(`Rendering Card for class ${index + 1}:`, classData);
             return (
               <Card key={classData._id} classData={classData} role={role} />
             );

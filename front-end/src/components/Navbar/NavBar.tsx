@@ -1,5 +1,5 @@
 "use client";
-import Image from 'next/image';
+
 import React from 'react';
 import logo from '../../../public/Logo.svg';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import { FaUser } from "react-icons/fa";
 import { FiLogOut } from 'react-icons/fi';
 import { useUser } from '@/context/UserContext';
 import { axioslib } from '@/lib/axioslib';
+import Image from 'next/legacy/image';
 
 
 const Navbar: React.FC = () => {
