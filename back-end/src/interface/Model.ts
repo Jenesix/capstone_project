@@ -71,7 +71,7 @@ export interface AssignmentTurnin {
     turnin_date: Date;
     status_turnin: string; // compare turnin_date & due_date from frontend
     score: number;
-    file_turnin: string;
+    file_turnin: string[];
     // Foreign Key
     AssignmentID: ObjectId;
     UserID: ObjectId;

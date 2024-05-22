@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import { AssignmentModel, AssignmentTurninModel } from '../../../Model/Schema';
-import { uploadAssignmentFile } from "../../../utils/UploadFile";
+import { uploadTurninFile } from "../../../utils/UploadFile";
 import jwt from "jsonwebtoken";
 import { secret_jwt } from "../../../config/config";
 
 export const CreateTurnin = async (req: Request, res: Response) => {
     try {
         const { assignID } = req.params;
-        const file = req.file;
+        const files = req.files as Express.Multer.File[];
 
         const token = req.cookies.token;
         const validToken = jwt.verify(token, String(secret_jwt));
@@ -23,9 +23,14 @@ export const CreateTurnin = async (req: Request, res: Response) => {
         const due_date = findAssign.due_date
         const status = new Date() < new Date(due_date) ? "On time" : "Late";
 
-        let fileUrl = "";
-        if (file) {
-            fileUrl = await uploadAssignmentFile(file);
+        let fileUrl: string[] = [];
+        if (!files || files.length === 0) {
+            fileUrl = [];
+        } else {
+            for (const file of files) {
+                const url = await uploadTurninFile(file);
+                fileUrl.push(url);
+            }
         }
 
         const turnin = new AssignmentTurninModel({
