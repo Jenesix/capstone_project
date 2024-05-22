@@ -1,5 +1,6 @@
 import React from 'react';
 import profile from '../../../public/profile.svg';
+import { IoChatbubbleEllipses } from "react-icons/io5";
 import Announcementtest from '../../../public/Announcementtest.jpg';
 import cristiano from '../../../public/cristiano.jpg';
 import Link from 'next/link';
@@ -113,6 +114,11 @@ const QnADetailPage: React.FC = () => {
                             </div>
                         </div>
                     ))}
+                    <div className='ml-12 bg-content-light rounded-3xl flex flex-row p-2 fixed w-1/3'>
+                    <IoChatbubbleEllipses className='ml-4 size-10 content-center'/>
+                    <input placeholder='Message Here...' type='text' className='pl-4 ml-4 bg-content-light rounded-3xl w-full'/>
+                    </div>
+                    
                 </div>
                 
 
