@@ -31,7 +31,7 @@ const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
         const dateFormat = 'MMMM yyyy';
 
         return (
-            <div className="flex justify-between items-center py-2 mb-6">
+            <div className="flex justify-between items-center py-2 mb-6 mx-12">
                 <button
                     onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}
                     className="text-white bg-primary-light font-bold px-4 py-2 rounded-full transform transition-transform duration-300 hover:bg-blue-600 hover:scale-105"

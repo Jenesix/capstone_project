@@ -2,7 +2,7 @@ import { supabase } from "../lib/supabase";
 
 // post
 export const uploadImagePost = async (file: any) => {
-    const fileName = `/post/${Date.now()}.jpg`;
+    const fileName = `/post/${Date.now()+file.originalname}.jpg`;
 
     const { error } = await supabase.storage
         .from("capstone")
@@ -24,7 +24,7 @@ export const uploadImagePost = async (file: any) => {
 
 // syllabus, pdf
 export const uploadSyllabus = async (file: any) => {
-    const fileName = `/syllabus/${Date.now()}.pdf`;
+    const fileName = `/syllabus/${Date.now()+file.originalname}.pdf`;
 
     const { error } = await supabase.storage
         .from("capstone")
@@ -47,7 +47,7 @@ export const uploadSyllabus = async (file: any) => {
 // any file type
 export const uploadResourceFile = async (file: any) => {
     const fileExtension = file.originalname.split('.').pop().toLowerCase();
-    const fileName = `/resource/${Date.now()}.${fileExtension}`;
+    const fileName = `/resource/${Date.now()+file.originalname}.${fileExtension}`;
     //const fileName = `/files/${file.originalname}`;
 
     const contentType = file.mimetype || `application/octet-stream`;
@@ -72,7 +72,7 @@ export const uploadResourceFile = async (file: any) => {
 
 export const uploadAssignmentFile = async (file: any) => {
     const fileExtension = file.originalname.split('.').pop().toLowerCase();
-    const fileName = `/assignment/${Date.now()}.${fileExtension}`;
+    const fileName = `/assignment/${Date.now()+file.originalname}.${fileExtension}`;
     //const fileName = `/files/${file.originalname}`;
 
     const contentType = file.mimetype || `application/octet-stream`;
@@ -97,7 +97,7 @@ export const uploadAssignmentFile = async (file: any) => {
 
 export const uploadTurninFile = async (file: any) => {
     const fileExtension = file.originalname.split('.').pop().toLowerCase();
-    const fileName = `/assignment_turnin/${Date.now()}.${fileExtension}`;
+    const fileName = `/assignment_turnin/${Date.now()+file.originalname}.${fileExtension}`;
     //const fileName = `/files/${file.originalname}`;
 
     const contentType = file.mimetype || `application/octet-stream`;

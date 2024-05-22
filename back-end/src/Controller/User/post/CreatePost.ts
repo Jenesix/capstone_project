@@ -8,7 +8,7 @@ export const CreatePost = async (req: Request, res: Response) => {
     try {
         const { classID } = req.params;
         const { title_p, description_p } = req.body;
-        const file = req.file;
+        const files = req.files as Express.Multer.File[];
 
         const token = req.cookies.token;
         const validToken = jwt.verify(token, String(secret_jwt));
@@ -18,8 +18,8 @@ export const CreatePost = async (req: Request, res: Response) => {
         const UserID = (validToken as { UserID: any }).UserID;
 
         let imageUrl = "";
-        if (file) {
-            imageUrl = await uploadImagePost(file);
+        if (files) {
+            imageUrl = await uploadImagePost(files[0]);
         }
         
         const post = new PostModel({
