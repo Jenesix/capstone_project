@@ -34,6 +34,7 @@ import { CreateFolder } from "../Controller/User/resource/CreateFolder";
 import { EditFolder } from "../Controller/User/resource/EditFolder";
 import { GetFolder } from "../Controller/User/resource/GetFolder";
 import { DeleteFolder } from "../Controller/User/resource/DeleteFolder";
+import { GetFolderByID } from "../Controller/User/resource/GetFolderByID";
 import { CreateAttend } from "../Controller/User/attendance/CreateAttend";
 import { EditAttend } from "../Controller/User/attendance/EditAttend";
 import { DeleteAttend } from "../Controller/User/attendance/DeleteAttend";
@@ -88,6 +89,7 @@ router.post("/createfolder/:classID", CreateFolder);
 router.put("/editfolder/:folderID", EditFolder); // edit name
 router.get("/getfolder/:classID", GetFolder); // get all folders of each class
 router.delete("/deletefolder/:folderID", DeleteFolder);
+router.get("/getfolderbyid/:folderID", GetFolderByID); // get folder and all resources
 
 // Assignment, for teacher
 router.post("/createassign/:classID", CreateAssign);
