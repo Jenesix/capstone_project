@@ -172,7 +172,13 @@ const ResourceFolder = new Schema<ResourceFolder>({
     ClassID: {
         type: Schema.Types.ObjectId,
         ref: "Class"
-    }
+    },
+    ResourceID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Resource"
+        }
+    ]
 });
 export const ResourceFolderModel = model<ResourceFolder>("ResourceFolder", ResourceFolder);
 

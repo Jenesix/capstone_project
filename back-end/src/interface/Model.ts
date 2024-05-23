@@ -81,6 +81,7 @@ export interface ResourceFolder {
     folder_name: string;
     // Foreign Key
     ClassID: ObjectId;
+    ResourceID: ObjectId[];
 }
 export interface Resource {
     file_rs: string;
