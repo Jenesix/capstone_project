@@ -1,8 +1,14 @@
+"use client";
+
 import React from 'react';
 import QnACard from './QnACard';
 import profile from '../../../public/profile.svg';
 import Announcementtest from '../../../public/Announcementtest.jpg';
 import cristiano from '../../../public/cristiano.jpg';
+import QnACard_Owner from './QnACard_Owner';
+import Link from 'next/link';
+import { IoMdAddCircle } from "react-icons/io";
+
 
 
 const Post = [
@@ -51,9 +57,8 @@ const QnABoardPage: React.FC = () => {
             <h2 className="text-salate-1000 text-center font-bold text-2xl max-w-48 mb-5">{countPost} Board</h2>
             <div className='grid grid-cols-2'>
             {Post.map(post => (
-                        <QnACard
+                        <QnACard_Owner
                             key={post.boardID}
-                            bg_post="bg-white"
                             boardID={post.boardID}
                             board_title={post.title_p}
                             board_desc={post.description_p}
@@ -72,9 +77,40 @@ const QnABoardPage: React.FC = () => {
                             size_iduser="text-sm"
                         />
                     ))}
+                    {Post.map(post => (
+                        <QnACard
+                            key={post.boardID}
+                            boardID={post.boardID}
+                            board_title={post.title_p}
+                            board_desc={post.description_p}
+                            postimage={post.post_image}
+                            time={post.time_p}
+                            size_card="min-h-60"
+                            height_detail="min-h-8"
+                            size_image="h-32 w-52"
+                            user_id={post.user_id}
+                            profileImage={post.profileImage}
+                            firstname={post.firstname}
+                            lastname={post.lastname}
+                            size_profile="size-16"
+                            size_divtext=""
+                            size_nameuser="text-base"
+                            size_iduser="text-sm"
+                        />
+                    ))}
+                    
+                    
             </div>
+
             </div>
+            <Link href="/classID/QnABoard/NewBoard">
+                    <div className='mb-5 pl-20 pr-20 bottom-0 left-2/4 bg-content-light rounded-3xl flex flex-row items-center justify-center justify-center p-4 fixed text-salate-1000'>
+                        <IoMdAddCircle className=' size-10 '/>
+                        <p className='pl-2 font-bold text-xl'>New Board</p>
+                    </div>
+            </Link>
         </div>
+        
         
     );
 };
