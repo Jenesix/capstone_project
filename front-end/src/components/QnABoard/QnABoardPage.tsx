@@ -103,8 +103,8 @@ const QnABoardPage: React.FC = () => {
             </div>
 
             </div>
-            <Link href="/classID/QnABoard/NewBoard">
-                    <div className='mb-5 pl-20 pr-20 bottom-0 left-2/4 bg-content-light rounded-3xl flex flex-row items-center justify-center justify-center p-4 fixed text-salate-1000'>
+            <Link href="/classID/QnABoard/New">
+                    <div className='mb-5 pl-20 pr-20 bottom-0 ml-4 bg-content-light rounded-3xl flex flex-row items-center justify-center p-4 fixed text-salate-1000'>
                         <IoMdAddCircle className=' size-10 '/>
                         <p className='pl-2 font-bold text-xl'>New Board</p>
                     </div>
