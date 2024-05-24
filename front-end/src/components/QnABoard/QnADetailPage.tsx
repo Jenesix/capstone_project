@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import profile from '../../../public/profile.svg';
+import profile from '../../../public/profile.svg'
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import Announcementtest from '../../../public/Announcementtest.jpg';
 import cristiano from '../../../public/cristiano.jpg';
@@ -64,7 +64,7 @@ const QnADetailPage: React.FC = () => {
             </Link>
             <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Q&A Board</h1>
 
-            <div className='grid grid-cols-2 mt-12 2xl:mx-20 text-salate-1000 min-h-screen'>
+            <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 mt-12 2xl:mx-20 text-salate-1000'>
                 {Post.map((post, index) => (
                     <div key={index} className='border-r pr-10'>
                         <div className='flex flex-row'>
@@ -83,11 +83,11 @@ const QnADetailPage: React.FC = () => {
                         <h1 className='text-primary font-bold text-2xl mt-4'>{post.title_p}</h1>
                         <p className='mt-4'>{post.description_p}</p>
 
-                        <Image className='mt-8 object-contain h-96' src={post.post_image} alt="postimage" />
+                        <Image className='mt-8 object-contain h-96 sm:h-auto' src={post.post_image} alt="postimage" />
                     </div>
                 ))}
 
-                <div className='pl-10'>
+                <div className='xl:pl-10'>
                     <h2 className="text-salate-1000 text-center font-bold text-2xl max-w-48 mb-5">{countComment} Comment</h2>
 
                     {Comment.map((comment, index) => (
@@ -110,7 +110,7 @@ const QnADetailPage: React.FC = () => {
                             </div>
                         </div>
                     ))}
-                    <div className='ml-12 bg-content-light rounded-3xl flex flex-row p-2 fixed w-1/3'>
+                    <div className='ml-12 bg-content-light rounded-3xl flex flex-row p-2 fixed w-full sm:w-1/3 bottom-0 left-0'>
                         <IoChatbubbleEllipses className='ml-4 size-10 content-center' />
                         <input placeholder='Message Here...' type='text' className='pl-4 ml-4 bg-content-light rounded-3xl w-full' />
                     </div>
