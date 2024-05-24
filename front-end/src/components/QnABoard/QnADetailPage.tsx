@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import profile from '../../../public/profile.svg';
 import { IoChatbubbleEllipses } from "react-icons/io5";
@@ -6,6 +7,7 @@ import cristiano from '../../../public/cristiano.jpg';
 import Link from 'next/link';
 import UserCard from './UserCard';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 
 const Post = [
     {
@@ -51,9 +53,11 @@ const Comment = [
 const countComment = Comment.length;
 
 const QnADetailPage: React.FC = () => {
+    const { classID } = useParams();
+
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
-            <Link href="/classID/QnABoard">
+            <Link href={`/${classID}/QnABoard`}>
                 <button className="text-salate-1000 font-bold py-2 px-4 rounded">
                     &lt; Back
                 </button>
