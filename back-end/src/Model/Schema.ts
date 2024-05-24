@@ -31,19 +31,9 @@ const User = new Schema<User>({
             ref: "Class"
         }
     ],
-    FacultyID: {
-        type: Schema.Types.ObjectId,
-        ref: "Faculty",
-        // required: true
-    },
-    DepartmentID: {
-        type: Schema.Types.ObjectId,
-        ref: "Department"
-    },
-    MajorID: {
-        type: Schema.Types.ObjectId,
-        ref: "Major"
-    }
+    faculty: String,
+    department: String,
+    major: String
 });
 export const UserModel = model<User>("User", User);
 
