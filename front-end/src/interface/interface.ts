@@ -72,7 +72,7 @@ export interface Assignment {
     description_asm: string; // description
     due_date: Date;
     fullscore: number;
-    file_asm: string;
+    file_asm: string[];
     // Foreign Key
     ClassID: string;
     TurninID: string[];
@@ -84,7 +84,7 @@ export interface AssignmentTurnin {
     turnin_date: Date;
     status_turnin: string; // compare turnin_date & due_date from frontend
     score: number;
-    file_turnin: string;
+    file_turnin: string[];
     // Foreign Key
     AssignmentID: string;
     UserID: string;
@@ -155,10 +155,10 @@ export interface Comment {
 export interface Announcement {
     _id: string;
     title_anm: string;
-    description_anm: string; // description
+    desc_anm: string; // description
     time_anm: Date; // datetime created
     // Foreign Key
     ClassID: string;
-    UserID: string;
+    UserID: string[];
     __v: number;
 }
