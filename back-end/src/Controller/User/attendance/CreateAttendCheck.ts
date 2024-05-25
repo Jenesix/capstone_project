@@ -21,7 +21,7 @@ export const CreateAttendCheck = async (req: Request, res: Response) => {
 
         const time_start = findAttend.time_start;
         let status = "";
-        
+
         const [hour, minute] = time_start.split(':').map(Number);
         const now = new Date();
         const start = new Date(now);
@@ -45,7 +45,9 @@ export const CreateAttendCheck = async (req: Request, res: Response) => {
             AttendanceID: attendID,
             UserID,
         });
-        await attendCheck.save();    
+        await attendCheck.save();
+
+        await findAttend.updateOne({ $addToSet: { CheckID: attendCheck._id } });
 
         return res.status(200).json({ message: "Create attendance checked success", attendCheck });
     } catch (error) {

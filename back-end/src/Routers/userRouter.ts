@@ -46,6 +46,7 @@ import { CreateAttendCheck } from "../Controller/User/attendance/CreateAttendChe
 import { EditAttendCheck } from "../Controller/User/attendance/EditAttendCheck";
 import { DeleteAttendCheck } from "../Controller/User/attendance/DeleteAttendCheck";
 import { GetAttendCheck } from "../Controller/User/attendance/GetAttendCheck";
+import { GetAttendCheckUser } from "../Controller/User/attendance/GetAttendCheckUser";
 
 const router = express.Router();
 
@@ -113,12 +114,13 @@ router.delete("/deletefileturnin/:turninID", DeleteFileTurnin); // delete file f
 router.post("/createattend/:classID", CreateAttend);
 router.put("/editattend/:attendID", EditAttend);
 router.delete("/deleteattend/:attendID", DeleteAttend);
-router.get("/getattend/:classID", GetAttend);
+router.get("/getattend/:classID", GetAttend); // get all attendances of each class
 
 // Attendance Checked
 router.post("/createattendcheck/:attendID", CreateAttendCheck);
 router.put("/editattendcheck/:checkID", EditAttendCheck);
 router.delete("/deleteattendcheck/:checkID", DeleteAttendCheck);
 router.get("/getattendcheck/:attendID", GetAttendCheck); // get all checked of each attendances
+router.get("/getattendcheckuser/:userID", GetAttendCheckUser); // get all checked of each students by id
 
 export default router;
