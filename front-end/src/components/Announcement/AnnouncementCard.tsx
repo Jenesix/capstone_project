@@ -1,10 +1,18 @@
-
-import React from "react";
+import React from 'react';
 import { format, isToday, isYesterday, parseISO } from 'date-fns';
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 
+interface AnnouncementCardProps {
+    announcementData: {
+        username: string;
+        Date: string;
+        Time: string;
+        message: string;
+        profileImage: string;
+    };
+}
 
-const AnnouncementCard: React.FC<{ announcementData: any }> = ({ announcementData }) => {
+const AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcementData }) => {
     const formattedDate = formatDate(announcementData.Date);
 
     function formatDate(date: string) {
@@ -19,7 +27,7 @@ const AnnouncementCard: React.FC<{ announcementData: any }> = ({ announcementDat
     }
 
     return (
-        <div className="p-4 sm:p-6 lg:p-8 rounded-lg shadow-2xl bg-white mb-12 ">
+        <div className="p-4 sm:p-6 lg:p-8 rounded-lg shadow-2xl bg-white mb-12">
             <div className="flex lg:flex-row items-start">
                 <div className="w-16 h-16 lg:w-20 lg:h-20 relative mb-4 lg:mb-0">
                     <Image
@@ -37,10 +45,7 @@ const AnnouncementCard: React.FC<{ announcementData: any }> = ({ announcementDat
                         <p className="text-salate-1000 font-semibold text-xs lg:text-sm">{formattedDate} at</p>
                         <p className="text-salate-1000 font-semibold text-xs lg:text-sm ml-2">{announcementData.Time}</p>
                     </div>
-                    <p className="text-salate-1000 font-bold text-sm xl:text-lg ">{announcementData.message}</p>
-                    <div className="mt-2 w-full lg:max-w-md">
-
-                    </div>
+                    <p className="text-salate-1000 font-bold text-sm xl:text-lg">{announcementData.message}</p>
                 </div>
             </div>
         </div>

@@ -155,10 +155,10 @@ export interface Comment {
 export interface Announcement {
     _id: string;
     title_anm: string;
-    description_anm: string; // description
+    desc_anm: string; // description
     time_anm: Date; // datetime created
     // Foreign Key
     ClassID: string;
-    UserID: string;
+    UserID: string[];
     __v: number;
 }
