@@ -31,19 +31,9 @@ const User = new Schema<User>({
             ref: "Class"
         }
     ],
-    FacultyID: {
-        type: Schema.Types.ObjectId,
-        ref: "Faculty",
-        // required: true
-    },
-    DepartmentID: {
-        type: Schema.Types.ObjectId,
-        ref: "Department"
-    },
-    MajorID: {
-        type: Schema.Types.ObjectId,
-        ref: "Major"
-    }
+    faculty: String,
+    department: String,
+    major: String
 });
 export const UserModel = model<User>("User", User);
 
@@ -172,7 +162,13 @@ const ResourceFolder = new Schema<ResourceFolder>({
     ClassID: {
         type: Schema.Types.ObjectId,
         ref: "Class"
-    }
+    },
+    ResourceID: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Resource"
+        }
+    ]
 });
 export const ResourceFolderModel = model<ResourceFolder>("ResourceFolder", ResourceFolder);
 

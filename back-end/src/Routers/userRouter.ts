@@ -13,6 +13,7 @@ import { CreatePost } from "../Controller/User/post/CreatePost";
 import { GetPost } from "../Controller/User/post/GetPost";
 import { GetPostByID } from "../Controller/User/post/GetPostByID";
 import { DeleletPost } from "../Controller/User/post/DeletePost";
+import { EditPost } from "../Controller/User/post/EditPost";
 import { CreateComment } from "../Controller/User/post/CreateComment";
 import { DeleletComment } from "../Controller/User/post/DeleteComment";
 import { CreateAnnounce } from "../Controller/User/announcement/CreateAnnounce";
@@ -26,14 +27,17 @@ import { CreateAssign } from "../Controller/User/assignment/CreateAssign";
 import { EditAssign } from "../Controller/User/assignment/EditAssign";
 import { DeleteAssign } from "../Controller/User/assignment/DeleteAssign";
 import { GetAssign } from "../Controller/User/assignment/GetAssign";
+import { DeleteFileAssign } from "../Controller/User/assignment/DeleteFileAssign";
 import { GetAssignByID } from "../Controller/User/assignment/GetAssignByID";
 import { CreateTurnin } from "../Controller/User/assignment/CreateTurnin";
 import { EditTurnin } from "../Controller/User/assignment/EditTurnin";
 import { GetTurnin } from "../Controller/User/assignment/GetTurnin";
+import { DeleteFileTurnin } from "../Controller/User/assignment/DeleteFileTurnin";
 import { CreateFolder } from "../Controller/User/resource/CreateFolder";
 import { EditFolder } from "../Controller/User/resource/EditFolder";
 import { GetFolder } from "../Controller/User/resource/GetFolder";
 import { DeleteFolder } from "../Controller/User/resource/DeleteFolder";
+import { GetFolderByID } from "../Controller/User/resource/GetFolderByID";
 import { CreateAttend } from "../Controller/User/attendance/CreateAttend";
 import { EditAttend } from "../Controller/User/attendance/EditAttend";
 import { DeleteAttend } from "../Controller/User/attendance/DeleteAttend";
@@ -42,6 +46,7 @@ import { CreateAttendCheck } from "../Controller/User/attendance/CreateAttendChe
 import { EditAttendCheck } from "../Controller/User/attendance/EditAttendCheck";
 import { DeleteAttendCheck } from "../Controller/User/attendance/DeleteAttendCheck";
 import { GetAttendCheck } from "../Controller/User/attendance/GetAttendCheck";
+import { GetAttendCheckUser } from "../Controller/User/attendance/GetAttendCheckUser";
 
 const router = express.Router();
 
@@ -68,6 +73,7 @@ router.post("/createpost/:classID", CreatePost);
 router.get("/getpost/:classID", GetPost); // get all posts+comments of each class
 router.get("/getpostbyid/:postID", GetPostByID); // get a post by id + comments
 router.delete("/deletepost/:postID", DeleletPost);
+router.put("/editpost/:postID", EditPost);
 
 router.post("/createcomment/:postID", CreateComment);
 router.delete("/deletecomment/:commentID", DeleletComment);
@@ -88,6 +94,7 @@ router.post("/createfolder/:classID", CreateFolder);
 router.put("/editfolder/:folderID", EditFolder); // edit name
 router.get("/getfolder/:classID", GetFolder); // get all folders of each class
 router.delete("/deletefolder/:folderID", DeleteFolder);
+router.get("/getfolderbyid/:folderID", GetFolderByID); // get folder and all resources
 
 // Assignment, for teacher
 router.post("/createassign/:classID", CreateAssign);
@@ -95,22 +102,25 @@ router.put("/editassign/:assignID", EditAssign);
 router.delete("/deleteassign/:assignID", DeleteAssign);
 router.get("/getassign/:classID", GetAssign); // get all assignments of each class
 router.get("/getassignbyid/:assignID", GetAssignByID); // get assignment and all submissions
+router.delete("/deletefileassign/:assignID", DeleteFileAssign); // delete file from array **body: array
 
 // Assignment Turn in
 router.post("/createturnin/:assignID", CreateTurnin); // for student
-router.put("/editturnin/:assignID/:turninID", EditTurnin); // teacher edit score, student edit file
+router.put("/editturnin/:turninID", EditTurnin); // teacher edit score, student edit file
 router.get("/getturnin/:assignID", GetTurnin); // get all submissions of each assignment
+router.delete("/deletefileturnin/:turninID", DeleteFileTurnin); // delete file from array **body: array
 
 // Attendance
 router.post("/createattend/:classID", CreateAttend);
 router.put("/editattend/:attendID", EditAttend);
 router.delete("/deleteattend/:attendID", DeleteAttend);
-router.get("/getattend/:classID", GetAttend);
+router.get("/getattend/:classID", GetAttend); // get all attendances of each class
 
 // Attendance Checked
 router.post("/createattendcheck/:attendID", CreateAttendCheck);
 router.put("/editattendcheck/:checkID", EditAttendCheck);
 router.delete("/deleteattendcheck/:checkID", DeleteAttendCheck);
 router.get("/getattendcheck/:attendID", GetAttendCheck); // get all checked of each attendances
+router.get("/getattendcheckuser/:userID", GetAttendCheckUser); // get all checked of each students by id
 
 export default router;

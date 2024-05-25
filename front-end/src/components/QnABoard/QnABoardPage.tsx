@@ -1,19 +1,16 @@
 "use client";
 
 import React from 'react';
-import QnACard from './QnACard';
+import QnACard_Owner from './QnACard_Owner';
 import profile from '../../../public/profile.svg';
 import Announcementtest from '../../../public/Announcementtest.jpg';
 import cristiano from '../../../public/cristiano.jpg';
-import QnACard_Owner from './QnACard_Owner';
 import Link from 'next/link';
 import { IoMdAddCircle } from "react-icons/io";
 
-
-
 const Post = [
     {
-        boardID: "id",
+        boardID: "id1",
         user_id: "65090500414",
         firstname: "Natthapon",
         lastname: "Tanateeraanan",
@@ -24,7 +21,7 @@ const Post = [
         time_p: "15 Jan 2024 16:00",
     },
     {
-        boardID: "id",
+        boardID: "id2",
         user_id: "65090500415",
         firstname: "Nagfdhhn",
         lastname: "Twerewraanan",
@@ -35,7 +32,7 @@ const Post = [
         time_p: "16 Jan 2024 16:00",
     },
     {
-        boardID: "id",
+        boardID: "id3",
         user_id: "65090500416",
         firstname: "Nadfgson",
         lastname: "Tanateertyyan",
@@ -45,18 +42,18 @@ const Post = [
         post_image: Announcementtest,
         time_p: "17 Jan 2024 16:00",
     },
-    
 ];
-const countPost = Post.length
+
+const countPost = Post.length;
 
 const QnABoardPage: React.FC = () => {
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
             <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Q&A Board</h1>
-            <div className=' justify-center mt-12 2xl:mx-20'>
-            <h2 className="text-salate-1000 text-center font-bold text-2xl max-w-48 mb-5">{countPost} Board</h2>
-            <div className='grid grid-cols-2'>
-            {Post.map(post => (
+            <div className="justify-center mt-12 2xl:mx-20">
+                <h2 className="text-salate-1000 text-center font-bold text-2xl max-w-48 mb-5">{countPost} Board</h2>
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                    {Post.map(post => (
                         <QnACard_Owner
                             key={post.boardID}
                             boardID={post.boardID}
@@ -77,31 +74,7 @@ const QnABoardPage: React.FC = () => {
                             size_iduser="text-sm"
                         />
                     ))}
-                    {Post.map(post => (
-                        <QnACard
-                            key={post.boardID}
-                            boardID={post.boardID}
-                            board_title={post.title_p}
-                            board_desc={post.description_p}
-                            postimage={post.post_image}
-                            time={post.time_p}
-                            size_card="min-h-60"
-                            height_detail="min-h-8"
-                            size_image="h-32 w-52"
-                            user_id={post.user_id}
-                            profileImage={post.profileImage}
-                            firstname={post.firstname}
-                            lastname={post.lastname}
-                            size_profile="size-16"
-                            size_divtext=""
-                            size_nameuser="text-base"
-                            size_iduser="text-sm"
-                        />
-                    ))}
-                    
-                    
-            </div>
-
+                </div>
             </div>
             <Link href="/classID/QnABoard/New">
                     <div className='mb-5 pl-20 pr-20 bottom-0 ml-4 bg-content-light rounded-3xl flex flex-row items-center justify-center p-4 fixed text-salate-1000'>
@@ -110,8 +83,6 @@ const QnABoardPage: React.FC = () => {
                     </div>
             </Link>
         </div>
-        
-        
     );
 };
 

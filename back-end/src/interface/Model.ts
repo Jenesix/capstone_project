@@ -13,9 +13,9 @@ export interface User {
     phonenumber: string;
     // Foreign Key
     ClassID: ObjectId[];
-    FacultyID: ObjectId;
-    DepartmentID: ObjectId;
-    MajorID: ObjectId;
+    faculty: string; // get name from dropdown
+    department: string;
+    major: string;
 }
 
 export interface Faculty {
@@ -81,6 +81,7 @@ export interface ResourceFolder {
     folder_name: string;
     // Foreign Key
     ClassID: ObjectId;
+    ResourceID: ObjectId[];
 }
 export interface Resource {
     file_rs: string;

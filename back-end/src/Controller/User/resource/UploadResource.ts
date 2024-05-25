@@ -16,7 +16,7 @@ export const UploadResource = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Please upload files" });
         }
 
-        const uploadPromises = files.map(async (file: any) => {
+        const uploadPromises = files.map(async (file: Express.Multer.File) => {
             const fileUrl = await uploadResourceFile(file);
             const resourceData = {
                 file_rs: fileUrl,
@@ -24,6 +24,12 @@ export const UploadResource = async (req: Request, res: Response) => {
                 ...(folderID && { ResourceFolderID: folderID })
             };
             const resource = new ResourceModel(resourceData);
+            
+            const resourceFolder = await ResourceFolderModel.findById(folderID);
+            if (resourceFolder) {
+                await resourceFolder.updateOne({ $addToSet: { ResourceID: resource._id } });
+            }
+
             return resource.save();
         });
 
