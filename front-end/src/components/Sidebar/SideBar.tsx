@@ -4,6 +4,9 @@ import { FaHome, FaBook, FaBullhorn, FaTasks, FaFolderOpen, FaCheckSquare, FaQue
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
+import { Class } from '@/interface/interface';
+import { useState, useEffect } from 'react';
+import { axioslib } from '@/lib/axioslib';
 
 interface SideBarProps {
     role: 'teacher' | 'student';
@@ -18,15 +21,26 @@ const SideBar: React.FC<SideBarProps> = ({ role, classID }) => {
 
     const basePath = role === 'teacher' ? `/Teacher/${classID}` : `/${classID}`;
 
-    const class_code = "CSS222"
-    const class_name = "Web Programingsaddd ddddasasa sasasasd adssadads asasdsad d as"
+    const [classData, setClassData] = useState<Class | undefined>(undefined);
+    const fetchClassData = async () => {
+        try {
+            const response = await axioslib.get(`/api/admin/getclassbyid/${classID}`);
+            setClassData(response.data);
+        } catch (error) {
+            console.error('Error fetching class data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchClassData();
+    }, []);
 
     return (
         <div className="flex flex-col bg-white md:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)]">
             <div className="sticky top-0">
         <div className='flex flex-col content-center bg-gradient-to-r w-24 md:w-64 lg:w-72 h-28 md:h-36 lg:h-40 from-primary to-primary-light text-white font-black rounded-br-7xl pt-4 md:pt-8 pl-4 md:pl-6 pr-4 pd-4 md:pb-10'>
-            <p className='text-xs md:text-2xl lg:text-3xl  truncate overflow-hidden whitespace-nowrap '>{class_code}</p>
-            <p className='text-xs md:text-base  lg:text-lg mt-2 truncate overflow-hidden whitespace-nowrap '>{class_name}</p>
+            <p className='text-xs md:text-2xl lg:text-3xl  truncate overflow-hidden whitespace-nowrap '>{classData?.class_code}</p>
+            <p className='text-xs md:text-base  lg:text-lg mt-2 truncate overflow-hidden whitespace-nowrap '>{classData?.class_name}</p>
         </div>
         <div className="w-auto md:pr-12 flex-shrink-0 pl-4 pt-4 text-salate-1000">
             <ul className="space-y-2">
