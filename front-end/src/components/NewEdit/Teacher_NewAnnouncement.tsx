@@ -36,13 +36,13 @@ const Teacher_NewAnnouncement: React.FC = () => {
                     &lt;  Back
                 </button>
             </Link>
-            <div className='flex justify-center'>
+            <div className='flex md:justify-center'>
                     <div className='w-1/3 flex flex-col text-salate-1000'>
                         <form onSubmit={handleSubmit}>
-                            <div className='w-36 md:w-72 lg:w-auto bg-content-light rounded-t-2xl text-center border-b border-salate-1000 pt-6 p-4 md:p-8 lg:p-12 text-sm md:text-xl lg:text-2xl font-extrabold'>
+                            <div className='w-60 md:w-72 lg:w-96 2xl:w-auto bg-content-light rounded-t-2xl text-center border-b border-salate-1000 pt-6 p-4 md:p-8 lg:p-12 text-sm md:text-xl lg:text-2xl font-extrabold'>
                                 New Announcement
                             </div>
-                            <div className='w-36 md:w-72 lg:w-auto bg-content-light rounded-b-2xl text-xs md:text-base lg:text-lg pt-4 p-4 md:p-8 lg:p-12'>
+                            <div className='w-60 md:w-72 lg:w-96 2xl:w-auto bg-content-light rounded-b-2xl text-xs md:text-base lg:text-lg pt-4 p-4 md:p-8 lg:p-12'>
                                 <p>Announcement Title</p>
                                 <input
                                     value={title}
