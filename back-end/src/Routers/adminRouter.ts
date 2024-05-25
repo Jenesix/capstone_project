@@ -13,6 +13,7 @@ import { DeleteMajor } from "../Controller/Admin/major/DeleteMajor";
 import { GetMajor } from "../Controller/Admin/major/GetMajor";
 import { CreateClass } from "../Controller/Admin/Class/CreateClass";
 import { GetClass } from "../Controller/Admin/Class/GetClass";
+import { GetClassByID } from "../Controller/Admin/Class/GetClassByID";
 import { EditClass } from "../Controller/Admin/Class/EditClass";
 import { DeleteClass } from "../Controller/Admin/Class/DeleteClass";
 import { addUserToClass } from "../Controller/Admin/Class/addUserToClass";
@@ -52,6 +53,7 @@ router.put("/editclass/:classID", EditClass);
 router.delete("/deleteclass/:classID", DeleteClass);
 router.put("/addusertoclass/:classID", addUserToClass);
 router.delete("/deleteuserclass/:classID/:userID", deleteUserClass); // delete user from class
+router.get("/getclassbyid/:classID", GetClassByID);
 
 // Syllabus
 router.post("/uploadsyllabus/:classID", UploadSyllabus);
