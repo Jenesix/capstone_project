@@ -6,11 +6,16 @@ export const EditAssign = async (req: Request, res: Response) => {
     try {
         const { assignID } = req.params;
         const updateFields = req.body;
-        const file = req.file;
+        const files = req.files as Express.Multer.File[];
 
-        if (file) {
-            const fileUrl = await uploadAssignmentFile(file);
-            updateFields.file_asm = fileUrl;
+        if (files) {
+            const assignment = await AssignmentModel.findById(assignID).select("file_asm");
+            const currentFiles = assignment?.file_asm || [];
+            for (const file of files) {
+                const url = await uploadAssignmentFile(file);
+                currentFiles.push(url);
+            }
+            updateFields.file_asm = currentFiles;
         }
 
         const result = await AssignmentModel.findByIdAndUpdate(assignID, updateFields, { new: true });
