@@ -64,10 +64,10 @@ const User_EditBoard: React.FC = () => {
             <div className='flex justify-center'>
                     <div className='w-1/3 flex flex-col text-salate-1000'>
                         <form onSubmit={handleSubmit}>
-                            <div className='bg-content-light rounded-t-2xl text-center border-b border-salate-1000 pb-6 pt-8 pl-12 pr-12 text-2xl font-extrabold'>
+                        <div className='w-36 md:w-72 lg:w-auto bg-content-light rounded-t-2xl text-center border-b border-salate-1000 pt-6 p-4 md:p-8 lg:p-12 text-sm md:text-xl lg:text-2xl font-extrabold'>
                                 Edit Q&A Board
                             </div>
-                            <div className='bg-content-light rounded-b-2xl p-6 pl-12 pr-12 pb-12'>
+                            <div className='w-36 md:w-72 lg:w-auto bg-content-light rounded-b-2xl text-xs md:text-base lg:text-lg pt-4 p-4 md:p-8 lg:p-12'>
                                 <p>Board Title</p>
                                 <input
                                     value={title}
@@ -113,7 +113,7 @@ const User_EditBoard: React.FC = () => {
                                 )}
                                 <button
                                     type="submit"
-                                    className="bg-bookmark2 text-white font-bold py-4 px-24 rounded block mx-auto transition-all duration-300 transform hover:scale-105 mt-4"
+                                    className="text-xs md:text-base bg-bookmark2 text-white font-bold py-4 px-4 md:px-12 lg:px-14 rounded block mx-auto transition-all duration-300 transform hover:scale-105 mt-4"
                                 >
                                     Submit
                                 </button>
