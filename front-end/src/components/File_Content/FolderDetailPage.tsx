@@ -24,8 +24,6 @@ const FolderDetailPage: FC = () => {
             const response = await axioslib.get(`/api/user/getfolderbyid/${folderID}`);
             setFolders(response.data);
             setFiles(response.data.ResourceID);
-            console.log(response.data);
-            console.log(response.data.ResourceID);
         } catch (error) {
             console.log(error);
         }
