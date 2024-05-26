@@ -1,7 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { FiTrash2, FiUpload } from 'react-icons/fi';
 import { AiOutlineFilePdf, AiOutlineFileImage, AiOutlineFile } from 'react-icons/ai';
 import Image from 'next/legacy/image';
+
+import { axioslib } from '@/lib/axioslib';
+import { User, AssignmentTurnin } from '@/interface/interface';
 
 interface Submission {
     name: string;
@@ -72,6 +75,20 @@ const RightSide: React.FC<RightSideProps> = ({ submissions }) => {
                 return <AiOutlineFile className="text-lg mr-2" />;
         }
     };
+
+    const [user, setUser] = useState<User | undefined>();
+    const fetchUser = async () => {
+        try {
+            const response = await axioslib.get('/api/user/getuserbyid');
+            setUser(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    useEffect(() => {
+        fetchUser();
+    }, []);
+
 
     return (
         <div className="flex flex-col pt-6 xl:pt-0 xl:mx-12">

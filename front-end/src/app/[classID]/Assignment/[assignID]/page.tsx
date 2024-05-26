@@ -1,10 +1,13 @@
 "use client";
+
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { axioslib } from '@/lib/axioslib';
 import { Assignment } from '@/interface/interface';
+import AssignmentDetailPage from '@/components/Assignment/AssignmentDetailPage';
 
-const AssignmentDetailPage: React.FC = () => {
+const AssignmentDetail: React.FC = () => {
     const { classID, assignID } = useParams();
     const [assignment, setAssignment] = useState<Assignment | null>(null);
     const [loading, setLoading] = useState(true);
@@ -31,16 +34,17 @@ const AssignmentDetailPage: React.FC = () => {
     }
 
     if (!assignment) {
-        return <p>No assignment found.</p>;
+        return <p>No assignments found.</p>;
     }
 
     return (
         <div>
-            <h1>{assignment.assignment_name}</h1>
+            {/* <h1>{assignment.assignment_name}</h1>
             <p>{assignment.description_asm}</p>
-            <p>Due Date: {new Date(assignment.due_date).toLocaleDateString()}</p>
+            <p>Due Date: {new Date(assignment.due_date).toLocaleDateString()}</p> */}
+            <AssignmentDetailPage />
         </div>
     );
 };
 
-export default AssignmentDetailPage;
+export default AssignmentDetail;

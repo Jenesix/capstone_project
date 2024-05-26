@@ -32,7 +32,6 @@ const FileContentPage: FC = () => {
         try {
             const response = await axioslib.get(`/api/user/getfolder/${classID}`);
             setFolders(response.data);
-            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
