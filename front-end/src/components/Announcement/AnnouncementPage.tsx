@@ -15,14 +15,10 @@ const AnnouncementPage: React.FC = () => {
             try {
                 if (classID) {
                     const response = await axioslib.get(`/api/user/getannounce/${classID}`);
-                    // console.log('Fetched Announcements:', response.data);
-
-
                     const fetchedAnnouncements = response.data.map((announcement: any) => ({
                         ...announcement,
                         time_anm: new Date(announcement.time_anm),
                     }));
-
                     setAnnouncements(fetchedAnnouncements);
                 }
             } catch (error) {
@@ -41,12 +37,12 @@ const AnnouncementPage: React.FC = () => {
                     <p>No announcements to display.</p>
                 ) : (
                     announcements.map((announcement) => {
-                        console.log('Announcement Data:', announcement);
+                        const username = `${announcement.UserID.firstname} ${announcement.UserID.lastname}`;
                         return (
                             <AnnouncementCard
                                 key={announcement._id}
                                 announcementData={{
-                                    username: 'Username',
+                                    username,
                                     Date: announcement.time_anm.toISOString(),
                                     Time: format(new Date(announcement.time_anm), 'HH:mm'),
                                     message: announcement.desc_anm || 'No description available',
