@@ -15,17 +15,17 @@ interface RightSideProps {
 const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetails }) => {
     const { user } = useUser();
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        if (isEditing && submissions.length > 0) {
+        if (submissions.length > 0) {
             const filesFromSubmissions = submissions[0].file_turnin.map(fileUrl => {
                 const fileName = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
                 return new File([fileUrl], fileName);
             });
             setUploadedFiles(filesFromSubmissions);
         }
-    }, [isEditing, submissions]);
+    }, [submissions]);
 
     const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
         if (!event.target.files) return;
@@ -37,10 +37,6 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
         setUploadedFiles(prevFiles => prevFiles.filter((_, idx) => idx !== index));
     };
 
-    const handleEdit = () => {
-        setIsEditing(true);
-    };
-
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log("Submitting form...");
@@ -50,7 +46,15 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
             const formData = new FormData();
             uploadedFiles.forEach(file => formData.append('files', file));
             formData.append('timestamp', new Date().toISOString());
-            await axioslib.put(`/api/user/updateassign/${submissions[0].AssignmentID}`, formData);
+
+            if (submissions.length > 0) {
+                // Edit 
+                await axioslib.put(`/api/user/editattend/${submissions[0]._id}`, formData);
+            } else {
+                // First time submitted kub
+                await axioslib.post(`/api/user/createattend/${submissions[0].AssignmentID}`, formData);
+            }
+
             fetchAssignmentDetails();
         } catch (error) {
             console.error('Error submitting files:', error);
@@ -101,7 +105,37 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
                 </div>
             </div>
 
-            {isEditing && (
+            {submissions.length > 0 && !isEditing ? (
+                <div>
+                    <h3 className="font-bold text-salate-1000 mt-2 mb-2">Attachments</h3>
+                    <div className="mb-2">
+                        {submissions.map((submission, index) => (
+                            <div key={index}>
+                                {submission.file_turnin.map((file, fileIndex) => (
+                                    <div key={fileIndex} className="mb-2 flex items-center">
+                                        {getFileIcon(file)}
+                                        <a
+                                            href={file}
+                                            className="text-blue-500 hover:underline truncate"
+                                            target='_blank'
+                                            rel="noopener noreferrer"
+                                            title={file}
+                                        >
+                                            {file.substring(file.lastIndexOf('/') + 1)}
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                    <button
+                        onClick={() => setIsEditing(true)}
+                        className="bg-bookmark2 text-white font-bold py-2 px-8 rounded transition-all duration-300 transform hover:scale-105 mt-4 mx-auto block"
+                    >
+                        Edit Submission
+                    </button>
+                </div>
+            ) : (
                 <form onSubmit={handleSubmit} className="mb-4">
                     <h3 className="font-bold text-salate-1000 mt-2 mb-2">Upload Files</h3>
                     {uploadedFiles.length > 0 && (
@@ -137,47 +171,13 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
                         </label>
                     </div>
 
-
-
                     <button
                         type="submit"
                         className="bg-bookmark2 text-white font-bold py-2 px-8 rounded block mx-auto transition-all duration-300 transform hover:scale-105 mt-4"
                     >
-                        Submit
+                        {submissions.length > 0 ? 'Update Submission' : 'Submit'}
                     </button>
                 </form>
-            )}
-
-            {!isEditing && submissions.length > 0 && (
-                <div>
-                    <h3 className="font-bold text-salate-1000 mt-2 mb-2">Attachments</h3>
-                    <div className="mb-2">
-                        {submissions.map((submission, index) => (
-                            <div key={index}>
-                                {submission.file_turnin.map((file, fileIndex) => (
-                                    <div key={fileIndex} className="mb-2 flex items-center">
-                                        {getFileIcon(file)}
-                                        <a
-                                            href={file}
-                                            className="text-blue-500 hover:underline truncate"
-                                            target='_blank'
-                                            rel="noopener noreferrer"
-                                            title={file}
-                                        >
-                                            {file.substring(file.lastIndexOf('/') + 1)}
-                                        </a>
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-                    <button
-                        onClick={handleEdit}
-                        className="bg-bookmark2 text-white font-bold py-2 px-8 rounded block mx-auto transition-all duration-300 transform hover:scale-105 mt-4"
-                    >
-                        Edit
-                    </button>
-                </div>
             )}
         </div>
     );
