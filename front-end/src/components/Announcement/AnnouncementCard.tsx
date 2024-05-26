@@ -45,7 +45,6 @@ const AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcementData })
                         <p className="text-salate-1000 font-semibold text-xs lg:text-sm">{formattedDate} at</p>
                         <p className="text-salate-1000 font-semibold text-xs lg:text-sm ml-2">{announcementData.Time}</p>
                     </div>
-                    <p className="text-salate-1000 font-bold text-lg xl:text-xl ">{announcementData.message}</p> {/*-----------แก้เป็น Title ด้วยๆ----------*/}
                     <p className="text-salate-1000 font-bold text-sm xl:text-lg ">{announcementData.message}</p>
 
                 </div>
