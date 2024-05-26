@@ -159,6 +159,6 @@ export interface Announcement {
     time_anm: Date; // datetime created
     // Foreign Key
     ClassID: string;
-    UserID: string[];
+    UserID: User;
     __v: number;
 }
