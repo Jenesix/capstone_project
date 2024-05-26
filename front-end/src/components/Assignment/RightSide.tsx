@@ -85,7 +85,7 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
                 <div className="mb-2">
                     {submissions.map((submission, index) => (
                         <div key={index}>
-                            {submission.file_turnin.map((file, fileIndex) => (
+                            {submission.file_turnin && submission.file_turnin.map((file, fileIndex) => (
                                 <div key={fileIndex} className="mb-2 flex items-center">
                                     {getFileIcon(file)}
                                     <a
