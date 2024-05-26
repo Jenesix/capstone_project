@@ -194,6 +194,7 @@ const Post = new Schema<Post>({
     title_p: String,
     description_p: String,
     post_image: String,
+    time_p: Date,
     ClassID: {
         type: Schema.Types.ObjectId,
         ref: "Class"

@@ -10,7 +10,7 @@ export const GetTurnin = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Assignment not found" });
         }
 
-        const findTurnin = await AssignmentTurninModel.find({ AssignmentID: assignID });
+        const findTurnin = await AssignmentTurninModel.find({ AssignmentID: assignID }).populate("UserID");
         return res.status(200).json(findTurnin);
     } catch (error) {
         console.log(error);
