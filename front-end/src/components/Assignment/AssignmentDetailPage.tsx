@@ -22,6 +22,13 @@ const assignmentmock = {
             studentNo: "65090500447",
             score: 0,
             submissionFiles: []
+        },
+        {
+            profileImage: profile,
+            name: "PATTANAPOL SAELIM",
+            studentNo: "65090500447",
+            score: 0,
+            submissionFiles: []
         }
     ],
 };
@@ -34,7 +41,6 @@ const AssignmentDetailPage: React.FC = () => {
         try {
             const response = await axioslib.get(`/api/user/getassignbyid/${assignID}`);
             setAssignment(response.data);
-            console.log(response.data);
         } catch (error) {
             console.error('Error fetching assignment details:', error);
         }
