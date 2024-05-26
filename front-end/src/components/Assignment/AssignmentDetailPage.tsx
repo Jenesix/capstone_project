@@ -1,60 +1,74 @@
 "use client";
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import LeftSide from './LeftSide';
 import RightSide from './RightSide';
-import profile from '../../../public/profile.svg';
-
 import { axioslib } from '@/lib/axioslib';
 import { useParams } from 'next/navigation';
 import { Assignment, AssignmentTurnin } from '@/interface/interface';
-
-const assignmentmock = {
-    title: "Math Homework",
-    dueDate: "2024-05-21 15:00",
-    description: "เฟรมเวิร์คและไลบรารีสำหรับการพัฒนาโปรแกรมเว็บ เช่น React.js Bootstrap และ Node.js เฟรมเวิร์ค Model-View-Controller เฟรมเวิร์คและการพัฒนาฟรอนต์เอนด์ และแบ็คเอนด์ โครงงานขนาดกลาง",
-    fullScore: 100,
-    pdfFile: "/pdftest.pdf",
-    submissions: [
-        {
-            profileImage: profile,
-            name: "PATTANAPOL SAELIM",
-            studentNo: "65090500447",
-            score: 0,
-            submissionFiles: []
-        },
-        {
-            profileImage: profile,
-            name: "PATTANAPOL SAELIM",
-            studentNo: "65090500447",
-            score: 0,
-            submissionFiles: []
-        }
-    ],
-};
+import { useUser } from '@/context/UserContext';
 
 const AssignmentDetailPage: React.FC = () => {
-    const { classID, assignID } = useParams();
-    const [assignment, setAssignment] = useState<Assignment>();
+    const { assignID } = useParams();
+    const { user, loading } = useUser();
+    const [assignment, setAssignment] = useState<Assignment | undefined>(undefined);
+    const [submissions, setSubmissions] = useState<AssignmentTurnin[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
-    const fetchAssignmentDetails = async () => {
+    const fetchAssignmentDetails = useCallback(async () => {
+        if (!user?._id) {
+            console.error('User ID is not available');
+            return;
+        }
+
+        setIsLoading(true);
+        setError(null);
         try {
-            const response = await axioslib.get(`/api/user/getassignbyid/${assignID}`);
-            setAssignment(response.data);
+            const assignmentResponse = await axioslib.get(`/api/user/getassignbyid/${assignID}`);
+            setAssignment(assignmentResponse.data);
+
+            const submissionsResponse = await axioslib.get(`/api/user/getturnin/${assignID}`);
+            console.log("Full submissions response:", submissionsResponse.data);
+
+            const userSubmissions = submissionsResponse.data.filter(
+                (submission: AssignmentTurnin) => submission.UserID._id === user._id
+            );
+
+            console.log("Assignment response:", assignmentResponse.data);
+            console.log("Submissions response:", submissionsResponse.data);
+            console.log("User ID:", user._id);
+            console.log("Filtered user submissions:", userSubmissions);
+
+            setSubmissions(userSubmissions);
         } catch (error) {
             console.error('Error fetching assignment details:', error);
+            setError('Error fetching assignment details');
+        } finally {
+            setIsLoading(false);
         }
-    };
+    }, [assignID, user]);
 
     useEffect(() => {
-        fetchAssignmentDetails();
-    }, []);
+        if (!loading && user?._id) {
+            fetchAssignmentDetails();
+        }
+    }, [fetchAssignmentDetails, loading, user]);
+
+    if (isLoading || loading) {
+
+        return <div className="text-center mt-12">Loading...</div>;
+    }
+
+    if (error) {
+        return <div className="text-center mt-12 text-red-500">{error}</div>;
+    }
 
     return (
-        <div className="flex flex-col mt-12 w-full px-4 sm:px-8 ">
+        <div className="flex flex-col mt-12 w-full px-4 sm:px-8 2xl 2xl:ml-32">
             <div className="flex items-center mb-8">
                 <Link href="/id/Assignment">
-                    <button className="  text-salate-1000 font-bold py-2 px-4 rounded">
+                    <button className="text-salate-1000 font-bold py-2 px-4 rounded">
                         &lt;  Back
                     </button>
                 </Link>
@@ -68,9 +82,9 @@ const AssignmentDetailPage: React.FC = () => {
                 </div>
                 <div className="flex-grow border-b border-2 border-salate-100 mb-4"></div>
             </div>
-            <div className=" min-h-screen mx-12 grid grid-cols-1 xl:grid-cols-2 gap-8 pb-6">
-                <LeftSide assignment={assignment} />    
-                <RightSide submissions={assignmentmock.submissions} />
+            <div className="min-h-screen mx-12 grid grid-cols-1 lg:grid-cols-2 gap-8 pb-6">
+                {assignment && <LeftSide assignment={assignment} />}
+                <RightSide submissions={submissions} fetchAssignmentDetails={fetchAssignmentDetails} />
             </div>
         </div>
     );

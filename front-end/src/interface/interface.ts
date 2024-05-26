@@ -84,7 +84,22 @@ export interface AssignmentTurnin {
     file_turnin: string[];
     // Foreign Key
     AssignmentID: string;
-    UserID: string;
+    UserID: {
+        _id: string;
+        user_id: string;
+        password: string;
+        role: string; // student, teacher, admin
+        email: string;
+        firstname: string;
+        lastname: string;
+        birthdate: Date;
+        phonenumber: string;
+        __v: number;
+        ClassID: string[];
+        faculty: string; // get name from dropdown
+        department: string;
+        major: string;
+    };
     __v: number;
 }
 

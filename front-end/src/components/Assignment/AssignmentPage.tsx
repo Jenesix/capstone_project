@@ -75,6 +75,9 @@ const AssignmentPage: React.FC = () => {
                 <div className="mb-4 md:mb-0 md:mr-4">
                     <AssignBanner color="text-bookmark2" text="Submitted" />
                 </div>
+                <div className="mb-4 md:mb-0 md:mr-4">
+                    <AssignBanner color="text-bookmark3" text="Late Submitted" />
+                </div>
             </div>
             <div className="mx-12 mt-5">
                 <div className="flex flex-row items-center mb-4">
