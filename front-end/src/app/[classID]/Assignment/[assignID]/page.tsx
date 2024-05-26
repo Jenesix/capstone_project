@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { axioslib } from '@/lib/axioslib';
 import { Assignment } from '@/interface/interface';
+import AssignmentDetailPage from '@/components/Assignment/AssignmentDetailPage';
 
 const AssignmentDetail: React.FC = () => {
     const { classID, assignID } = useParams();
@@ -38,9 +39,10 @@ const AssignmentDetail: React.FC = () => {
 
     return (
         <div>
-            <h1>{assignment.assignment_name}</h1>
+            {/* <h1>{assignment.assignment_name}</h1>
             <p>{assignment.description_asm}</p>
-            <p>Due Date: {new Date(assignment.due_date).toLocaleDateString()}</p>
+            <p>Due Date: {new Date(assignment.due_date).toLocaleDateString()}</p> */}
+            <AssignmentDetailPage />
         </div>
     );
 };
