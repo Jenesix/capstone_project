@@ -10,7 +10,12 @@ export const GetAttend = async (req: Request, res: Response) => {
             return res.status(404).json({ message: "Class not found" });
         }
 
-        const attend = await AttendanceModel.find({ ClassID: classID });
+        const attend = await AttendanceModel.find({ ClassID: classID })
+            .populate({
+                path: "CheckID",
+                // populate: { path: "UserID" }
+            });
+
         return res.status(200).json(attend);
     } catch (error) {
         console.log(error);
