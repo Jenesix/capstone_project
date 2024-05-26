@@ -37,7 +37,7 @@ export const CreateTurnin = async (req: Request, res: Response) => {
             turnin_date: new Date(),
             status_turnin: status,
             score: 0,
-            file_turnin: fileUrl,
+            file_turnin: fileUrl || [],
             AssignmentID: assignID,
             UserID
         });
