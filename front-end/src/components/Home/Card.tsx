@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ role, classData }) => {
 
     return (
         <Link href={linkHref}>
-            <div className="relative rounded-xl overflow-hidden shadow-lg">
+            <div className="relative rounded-xl overflow-hidden shadow-lg hover:-translate-y-1 transition duration-300">
                 <div className="rounded-xl overflow-hidden">
                     <Image
                         src={banner}
