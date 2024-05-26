@@ -53,24 +53,24 @@ const PdfViewer: React.FC<PdfViewerProps> = ({ file, fileName }) => {
                         <button
                             onClick={() => setPageNumber(prevPage => Math.max(prevPage - 1, 1))}
                             disabled={pageNumber <= 1}
-                            className="px-2 md:px-4 py-2 text-gray-700 bg-gray-300 hover:bg-gray-400 rounded-l disabled:bg-gray-300"
+                            className="px-2 md:px-4 py-2 text-primary font-bold text-xl  rounded-l disabled:text-salate-100"
                         >
                             &lt;
                         </button>
                         <button
                             onClick={() => setPageNumber(prevPage => (numPages ? Math.min(prevPage + 1, numPages) : prevPage))}
                             disabled={pageNumber >= (numPages || 0)}
-                            className="px-2 md:px-4 py-2 text-gray-700 bg-gray-300 hover:bg-gray-400 rounded-r disabled:bg-gray-300"
+                            className="px-2 md:px-4 py-2 text-primary font-bold text-xl rounded-r disabled:text-salate-100"
                         >
                             &gt;
                         </button>
-                        <span className="text-sm md:text-lg text-gray-700 font-bold">
+                        <span className="text-sm md:text-lg text-gray-700 font-bold text-salate-1000">
                             Page {pageNumber} of {numPages}
                         </span>
                     </div>
                     <MdDownload
                         onClick={downloadPdf}
-                        className="text-2xl text-gray-700 cursor-pointer"
+                        className="text-2xl text-salate-1000 hover:text-primary cursor-pointer"
                     />
                 </div>
             </div>

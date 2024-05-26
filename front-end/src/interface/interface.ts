@@ -12,18 +12,15 @@ export interface User {
     phonenumber: string;
     // Foreign Key
     ClassID: string[];
-    FacultyID: string;
-    DepartmentID: string;
-    MajorID: string;
+    faculty: string; // get name from dropdown
+    department: string;
+    major: string;
     __v: number;
 }
 
 export interface Faculty {
     _id: string;
     faculty_name: string;
-    // Foreign Key
-    // DepartmentID: string[];
-    // MajorID: string[];
     __v: number;
 }
 
@@ -32,7 +29,6 @@ export interface Department {
     department_name: string;
     // Foreign Key
     FacultyID: string;
-    // MajorID: string[];
     __v: number;
 }
 
@@ -72,22 +68,38 @@ export interface Assignment {
     description_asm: string; // description
     due_date: Date;
     fullscore: number;
-    file_asm: string;
+    file_asm: string[];
     // Foreign Key
     ClassID: string;
     TurninID: string[];
     __v: number;
 }
+
 // student
 export interface AssignmentTurnin {
     _id: string;
     turnin_date: Date;
     status_turnin: string; // compare turnin_date & due_date from frontend
     score: number;
-    file_turnin: string;
+    file_turnin: string[];
     // Foreign Key
     AssignmentID: string;
-    UserID: string;
+    UserID: {
+        _id: string;
+        user_id: string;
+        password: string;
+        role: string; // student, teacher, admin
+        email: string;
+        firstname: string;
+        lastname: string;
+        birthdate: Date;
+        phonenumber: string;
+        __v: number;
+        ClassID: string[];
+        faculty: string; // get name from dropdown
+        department: string;
+        major: string;
+    };
     __v: number;
 }
 
@@ -96,8 +108,10 @@ export interface ResourceFolder {
     folder_name: string;
     // Foreign Key
     ClassID: string;
+    ResourceID: string[];
     __v: number;
 }
+
 export interface Resource {
     _id: string;
     file_rs: string;
@@ -117,6 +131,7 @@ export interface Attendance {
     CheckID: string[];
     __v: number;
 }
+
 // student
 export interface AttendanceCheck {
     _id: string;
@@ -155,10 +170,10 @@ export interface Comment {
 export interface Announcement {
     _id: string;
     title_anm: string;
-    description_anm: string; // description
+    desc_anm: string; // description
     time_anm: Date; // datetime created
     // Foreign Key
     ClassID: string;
-    UserID: string;
+    UserID: User;
     __v: number;
 }

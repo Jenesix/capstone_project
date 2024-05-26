@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation'; // Import useParams instead of useRouter
+import { useParams } from 'next/navigation';
 import { Assignment, AssignmentTurnin } from '@/interface/interface';
 import AssignBanner from './AssignBanner';
 import AssignmentCard from './AssignmentCard';
 import { axioslib } from '@/lib/axioslib';
 import { useUser } from '@/context/UserContext';
+import LoadingScreen from '../Loading/LoadingScreen';
 
 const AssignmentPage: React.FC = () => {
-    const { classID } = useParams(); // Use useParams instead of useRouter
+    const { classID } = useParams();
     const { user, loading: userLoading } = useUser();
     const [assignments, setAssignments] = useState<(Assignment & { status: string })[]>([]);
     const [loading, setLoading] = useState(true);
@@ -35,13 +36,8 @@ const AssignmentPage: React.FC = () => {
                     const userTurnin = turnins.find(turnin => turnin.UserID === userId);
 
                     if (userTurnin) {
-                        const dueDate = new Date(assignment.due_date);
-                        const turninDate = new Date(userTurnin.turnin_date);
-                        if (turninDate > dueDate) {
-                            status = 'Late Submitted';
-                        } else {
-                            status = 'Submitted';
-                        }
+                        status = userTurnin.status_turnin === 'On time' ? 'Submitted' : 'Late Submitted';
+                        // status = userTurnin.status_turnin === 'Late' ? 'Late Submitted' : 'Submitted';
                     }
 
                     return {
@@ -63,7 +59,7 @@ const AssignmentPage: React.FC = () => {
     }, [classID, user, userLoading]);
 
     if (loading || userLoading) {
-        return <p>Loading...</p>;
+        return <LoadingScreen />;
     }
 
     const toDoAssignments = assignments.filter(assignment => assignment.status === "To Do");
@@ -79,7 +75,7 @@ const AssignmentPage: React.FC = () => {
                 <div className="mb-4 md:mb-0 md:mr-4">
                     <AssignBanner color="text-bookmark2" text="Submitted" />
                 </div>
-                <div>
+                <div className="mb-4 md:mb-0 md:mr-4">
                     <AssignBanner color="text-bookmark3" text="Late Submitted" />
                 </div>
             </div>
@@ -116,12 +112,12 @@ const AssignmentPage: React.FC = () => {
                             title={assignment.assignment_name}
                             description={assignment.description_asm}
                             dueDate={new Date(assignment.due_date).toLocaleDateString()}
-                            status={assignment.status} />
+                            status={assignment.status}
+                        />
                     ))}
                 </div>
             </div>
         </div>
     );
 };
-
 export default AssignmentPage;

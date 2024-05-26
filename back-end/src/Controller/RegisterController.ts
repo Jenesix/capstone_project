@@ -20,19 +20,6 @@ export const Register = async (req: Request, res: Response) => {
             major
         } = req.body;
 
-        const findFaculty = await FacultyModel.findOne({ faculty_name: faculty });
-        if (!findFaculty) {
-            return res.status(400).json({ message: "Faculty not found" });
-        }
-        const findDepartment = await DepartmentModel.findOne({ department_name: department, FacultyID: findFaculty._id });
-        if (!findDepartment) {
-            return res.status(400).json({ message: "Invalid department" });
-        }
-        const findMajor = await MajorModel.findOne({ major_name: major, FacultyID: findFaculty._id, DepartmentID: findDepartment._id });
-        if (!findMajor) {
-            return res.status(400).json({ message: "Invalid major" });
-        }
-
         const user = new UserModel({
             user_id,
             password: await hashPassword(password),

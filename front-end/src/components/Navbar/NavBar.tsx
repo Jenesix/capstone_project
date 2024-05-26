@@ -54,14 +54,7 @@ const Navbar: React.FC = () => {
               Log in
             </button>
           </Link>
-          <Link href='/signup'>
-            <button className="
-              bg-primary-light transition-all duration-300 transform hover:scale-105 
-              text-white md:mr-4 xl:mr-6 text-sm lg:text-base font-bold 
-              whitespace-nowrap rounded-3xl px-4 sm:px-8 h-12">
-              Sign Up
-            </button>
-          </Link>
+
         </div>
       )}
     </nav>
