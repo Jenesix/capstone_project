@@ -1,20 +1,20 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaHome, FaBook, FaBullhorn, FaTasks, FaFolderOpen, FaCheckSquare, FaQuestionCircle, FaUsers } from 'react-icons/fa';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-
-import { Class } from '@/interface/interface';
-import { useState, useEffect } from 'react';
+import { useParams, usePathname } from 'next/navigation';
 import { axioslib } from '@/lib/axioslib';
+import { Class } from '@/interface/interface';
 
 interface SideBarProps {
     role: 'teacher' | 'student';
-    classID: string;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ role, classID }) => {
+const SideBar: React.FC<SideBarProps> = ({ role }) => {
+    const params = useParams();
     const pathname = usePathname();
+    const { classID } = params;
+
     const isActive = (path: string) => {
         return pathname.startsWith(path) ? 'text-primary' : '';
     };
@@ -22,25 +22,32 @@ const SideBar: React.FC<SideBarProps> = ({ role, classID }) => {
     const basePath = role === 'teacher' ? `/Teacher/${classID}` : `/${classID}`;
 
     const [classData, setClassData] = useState<Class | undefined>(undefined);
-    const fetchClassData = async () => {
+
+    const fetchClassData = useCallback(async () => {
         try {
             const response = await axioslib.get(`/api/admin/getclassbyid/${classID}`);
             setClassData(response.data);
         } catch (error) {
             console.error('Error fetching class data:', error);
         }
-    };
+    }, [classID]);
 
     useEffect(() => {
-        fetchClassData();
-    }, []);
+        if (classID) {
+            fetchClassData();
+        }
+    }, [classID, fetchClassData]);
 
     return (
         <div className="flex flex-col bg-white md:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)]">
             <div className="sticky top-0">
                 <div className="flex flex-col content-center bg-gradient-to-r w-24 md:w-64 lg:w-72 h-28 md:h-36 lg:h-40 from-primary to-primary-light text-white font-black rounded-br-7xl pt-4 md:pt-8 pl-4 md:pl-6 pr-4 pd-4 md:pb-10 transition-all duration-300">
-                    <p className='text-xs md:text-2xl lg:text-3xl mt-2 md:mt-0  truncate overflow-hidden whitespace-nowrap '>{classData?.class_code}</p>
-                    <p className='text-xs md:text-base  lg:text-lg mt-2 truncate overflow-hidden whitespace-nowrap'>{classData?.class_name}</p>
+                    <p className="text-xs md:text-2xl lg:text-3xl mt-2 md:mt-0 truncate overflow-hidden whitespace-nowrap">
+                        {classData?.class_code}
+                    </p>
+                    <p className="text-xs md:text-base lg:text-lg mt-2 truncate overflow-hidden whitespace-nowrap">
+                        {classData?.class_name}
+                    </p>
                 </div>
                 <div className="w-auto md:pr-12 flex-shrink-0 pl-4 pt-4 text-salate-1000">
                     <ul className="space-y-2">
@@ -88,7 +95,6 @@ const SideBar: React.FC<SideBarProps> = ({ role, classID }) => {
                 </div>
             </div>
         </div>
-
     );
 };
 
