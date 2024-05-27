@@ -42,7 +42,7 @@ const QnABoardPage: React.FC = () => {
                             key={post._id}
                             boardID={post._id}
                             board_title={post.title_p}
-                            editLink={`/classID/QnABoard/${post._id}/Edit`}
+                            editLink={`/${classID}/QnABoard/${post._id}/Edit`}
                             board_desc={post.description_p}
                             postimage={post.post_image}
                             time={new Date(post.time_p).toLocaleString()}
@@ -54,7 +54,7 @@ const QnABoardPage: React.FC = () => {
                     ))}
                 </div>
             </div>
-            <Link href={`/classID/QnABoard/New`}>
+            <Link href={`/${classID}/QnABoard/New`}>
                 <div className='mb-5 pl-20 pr-20 bottom-0 ml-4 bg-content-light rounded-3xl flex flex-row items-center justify-center p-4 fixed text-salate-1000'>
                     <IoMdAddCircle className=' size-10 ' />
                     <p className='pl-2 font-bold text-xl'>New Board</p>
