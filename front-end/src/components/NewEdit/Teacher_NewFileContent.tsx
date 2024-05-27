@@ -3,7 +3,12 @@ import { FiTrash2, FiUpload } from 'react-icons/fi';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Link from "next/link";
 
+import { axioslib } from '@/lib/axioslib';
+import { useParams } from 'next/navigation';
+
 const Teacher_NewFileContent: React.FC = () => {
+
+    const { classID, folderID } = useParams();
     const [files, setFiles] = useState<File[]>([]);
 
 
@@ -18,9 +23,9 @@ const Teacher_NewFileContent: React.FC = () => {
         setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        
+    const handleSubmit = async (e: React.FormEvent) => {
+        // e.preventDefault();
+
         const formData = new FormData();
         files.forEach(file => {
             formData.append('files', file);
@@ -29,6 +34,17 @@ const Teacher_NewFileContent: React.FC = () => {
         console.log('Form submitted:', {
             files,
         });
+
+        const endpoint = folderID
+            ? `/api/user/uploadresource?classID=${classID}&folderID=${folderID}`
+            : `/api/user/uploadresource?classID=${classID}`;
+
+        try {
+            const response = await axioslib.post(endpoint, files);
+            console.log('File uploaded successfully:', response.data);
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
     };
 
     return (
@@ -45,14 +61,14 @@ const Teacher_NewFileContent: React.FC = () => {
                             New File & Content
                         </div>
                         <div className='w-60 md:w-72 lg:w-96 2xl:w-auto bg-content-light rounded-b-2xl text-xs md:text-base lg:text-lg pt-4 p-4 md:p-8 lg:p-12'>
-                            
+
                             <p>Added File</p>
                             <ul className="mt-2 bg-white h-auto min-h-60 rounded-3xl border p-2">
                                 {files.map((file, index) => (
                                     <li key={index} className="flex items-center justify-between text-sm text-bookmark1 p-2 rounded-lg mb-2">
                                         <span className='text-primary truncate ...'>{file.name}</span>
                                         <button type="button" onClick={() => handleFileDelete(index)} className="">
-                                            <FiTrash2/>
+                                            <FiTrash2 />
                                         </button>
                                     </li>
                                 ))}
