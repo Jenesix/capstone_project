@@ -5,12 +5,12 @@ import Link from "next/link";
 
 import { axioslib } from '@/lib/axioslib';
 import { useParams } from 'next/navigation';
+import { Resource, ResourceFolder } from '@/interface/interface';
 
 const Teacher_NewFileContent: React.FC = () => {
 
     const { classID, folderID } = useParams();
     const [files, setFiles] = useState<File[]>([]);
-
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = e.target.files;
@@ -19,20 +19,17 @@ const Teacher_NewFileContent: React.FC = () => {
         }
     };
 
-    const handleFileDelete = (index: number) => {
+    const handleFileDelete = async (index: number) => {
         setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
+        // await axioslib.delete(`/api/user/deleteresource/${files[index]}`);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        // e.preventDefault();
+        e.preventDefault();
 
         const formData = new FormData();
         files.forEach(file => {
             formData.append('files', file);
-        });
-
-        console.log('Form submitted:', {
-            files,
         });
 
         const endpoint = folderID
@@ -40,8 +37,13 @@ const Teacher_NewFileContent: React.FC = () => {
             : `/api/user/uploadresource?classID=${classID}`;
 
         try {
-            const response = await axioslib.post(endpoint, files);
-            console.log('File uploaded successfully:', response.data);
+            await axioslib.post(endpoint, formData)
+                .then((response) => {
+                    console.log('File uploaded successfully:', response.data);
+                })
+                .then(() => {
+                    window.location.href = `/Teacher/${classID}/File_Content`;
+                });
         } catch (error) {
             console.error('Error uploading file:', error);
         }

@@ -122,7 +122,7 @@ const Teacher_AssignmentPage: React.FC = () => {
                 </div>
             </div>
             <Teacher_NewButton
-                newLink="/Teacher/classID/Assignment/New"
+                newLink={`/Teacher/${classID}/Assignment/New`}
                 text="New Assignment"
             />
         </div>

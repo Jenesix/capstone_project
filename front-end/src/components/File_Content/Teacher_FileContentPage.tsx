@@ -135,7 +135,7 @@ const Teacher_FileContentPage: FC = () => {
             <div className=''>
 
                 <Teacher_NewButton
-                    newLink='/Teacher/classID/File_Content/New'
+                    newLink={`/Teacher/${classID}/File_Content/New`}
                     text='New File'
                     />
 
