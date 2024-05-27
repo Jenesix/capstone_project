@@ -36,7 +36,7 @@ const ClassLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             }
         } catch (error: any) {
             console.error("Error checking class membership:", error.response?.data);
-            router.push('/not-authorized');
+            router.push('/');
         } finally {
             setLoadingMembership(false);
         }
@@ -52,6 +52,12 @@ const ClassLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         }
     }, [user, loading, classID, router, checkClassMembership]);
 
+    useEffect(() => {
+        if (role && role !== 'student') {
+            router.push('/');
+        }
+    }, [role, router]);
+
     if (loading || loadingMembership || role === null || (role !== 'teacher' && role !== 'student')) {
         return <LoadingScreen />;
     }
@@ -63,7 +69,7 @@ const ClassLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (
         <section>
             <div className="flex flex-row">
-                <SideBar role={role} classID={classID} />
+                <SideBar role={role} />
                 {children}
             </div>
         </section>

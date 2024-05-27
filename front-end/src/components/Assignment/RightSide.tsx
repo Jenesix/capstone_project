@@ -7,6 +7,8 @@ import profile from '../../../public/profile.svg';
 import { useUser } from '@/context/UserContext';
 import { axioslib } from '@/lib/axioslib';
 import { useParams } from 'next/navigation';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 interface RightSideProps {
     submissions: AssignmentTurnin[];
@@ -42,12 +44,41 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
         if (submissions.length > 0) {
             try {
                 await axioslib.delete(`/api/user/deleteturnin/${submissions[0]._id}`);
-                console.log(submissions[0]._id);
                 fetchAssignmentDetails();
             } catch (error) {
                 console.error('Error deleting submission:', error);
             }
         }
+    };
+
+    const showDeleteConfirmation = () => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className="bg-white p-8 rounded shadow-md max-w-sm w-full mx-auto">
+                        <h1 className="text-lg font-bold mb-4">Confirm to delete</h1>
+                        <p className="mb-4">Are you sure you want to delete this submission?</p>
+                        <div className="flex justify-between">
+                            <button
+                                onClick={onClose}
+                                className="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded"
+                            >
+                                No
+                            </button>
+                            <button
+                                onClick={() => {
+                                    handleDeleteSubmission();
+                                    onClose();
+                                }}
+                                className="bg-bookmark1 text-white font-bold py-2 px-4 rounded"
+                            >
+                                Yes
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+        });
     };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -132,7 +163,7 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
                         ))}
                     </div>
                     <button
-                        onClick={handleDeleteSubmission}
+                        onClick={showDeleteConfirmation}
                         className="bg-bookmark1 text-white font-bold py-2 px-8 rounded transition-all duration-300 transform hover:scale-105 mt-4 mx-auto block"
                     >
                         Delete Submission
