@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 const LoginCard: React.FC = () => {
     const router = useRouter();
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [passwordError, setPasswordError] = useState('');
+    const [loginError, setLoginError] = useState('');
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -20,23 +22,44 @@ const LoginCard: React.FC = () => {
         password: '',
     });
 
+    const validatePassword = (password: string) => {
+        const minLength = 5;
+        if (password.length < minLength) {
+            return 'Password must be at least 5 characters long';
+        }
+
+        return '';
+    };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
         setUser({
             ...user,
-            [e.target.name]: e.target.value
+            [name]: value
         });
+
+        if (name === 'password') {
+            const validationError = validatePassword(value);
+            setPasswordError(validationError);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoginError('');
+        if (passwordError) return;
+
         try {
-            e.preventDefault();
-            axioslib
-                .post('/api/user/login', user)
-                .then(() => {
-                    window.location.href = "/";
-                });
-        } catch (error) {
-            console.log(error);
+            const response = await axioslib.post('/api/user/login', user);
+            if (response.status === 200) {
+                window.location.href = "/";
+            }
+        } catch (error: any) {
+            if (error.response && error.response.status === 401) {
+                setLoginError('Invalid username or password');
+            } else {
+                setLoginError('Invalid username or password.');
+            }
         }
     };
 
@@ -59,7 +82,7 @@ const LoginCard: React.FC = () => {
                     </div>
                 </div>
 
-                {/*right side*/}
+                {/* Right Side */}
                 <div className="mx-4 sm:mx-8 mt-20 md:mt-28 flex flex-col items-center">
                     <div className="mb-12 flex flex-row items-center sm:mr-0">
                         <Image className="pointer-events-none select-none" src={logo} alt="logo" width={120} height={60} />
@@ -69,7 +92,7 @@ const LoginCard: React.FC = () => {
                         </div>
                     </div>
                     <form className="w-full max-w-lg" onSubmit={handleSubmit}>
-                        {/* input username */}
+                        {/* Input Username */}
                         <div className="relative mb-6">
                             <div className="w-full relative group">
                                 <input
@@ -88,7 +111,7 @@ const LoginCard: React.FC = () => {
                                 </label>
                             </div>
                         </div>
-                        {/* input password naja */}
+                        {/* Input Password */}
                         <div className="relative mb-6">
                             <div className="w-full relative group">
                                 <input
@@ -105,7 +128,7 @@ const LoginCard: React.FC = () => {
                                 >
                                     Password
                                 </label>
-                                {/* icon eye */}
+                                {/* Icon Eye */}
                                 <button
                                     type="button"
                                     onClick={togglePasswordVisibility}
@@ -118,11 +141,20 @@ const LoginCard: React.FC = () => {
                                     )}
                                 </button>
                             </div>
+                            {passwordError && (
+                                <p className="ml-2 text-sm text-bookmark1 mt-2">{passwordError}</p>
+                            )}
                             <p className="ml-2 text-sm text-salate-500 mt-2 text-right">Forgot password?</p>
                         </div>
-
+                        {loginError && (
+                            <p className="text-sm text-bookmark1 mb-4">{loginError}</p>
+                        )}
                         <center>
-                            <button type="submit" className="bg-primary-light text-white rounded-3xl py-4 w-56 font-bold mb-12">
+                            <button
+                                type="submit"
+                                className="bg-primary-light text-white rounded-3xl py-4 w-56 font-bold mb-12"
+                                disabled={Boolean(passwordError)}
+                            >
                                 Login
                             </button>
                         </center>

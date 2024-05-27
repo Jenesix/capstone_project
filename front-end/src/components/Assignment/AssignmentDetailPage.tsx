@@ -9,7 +9,7 @@ import { Assignment, AssignmentTurnin } from '@/interface/interface';
 import { useUser } from '@/context/UserContext';
 
 const AssignmentDetailPage: React.FC = () => {
-    const { assignID } = useParams();
+    const { classID, assignID } = useParams();
     const { user, loading } = useUser();
     const [assignment, setAssignment] = useState<Assignment | undefined>(undefined);
     const [submissions, setSubmissions] = useState<AssignmentTurnin[]>([]);
@@ -51,7 +51,6 @@ const AssignmentDetailPage: React.FC = () => {
     }, [fetchAssignmentDetails, loading, user]);
 
     if (isLoading || loading) {
-
         return <div className="text-center mt-12">Loading...</div>;
     }
 
@@ -62,9 +61,9 @@ const AssignmentDetailPage: React.FC = () => {
     return (
         <div className="flex flex-col mt-12 w-full px-4 sm:px-8 2xl 2xl:ml-32">
             <div className="flex items-center mb-8">
-                <Link href="/id/Assignment">
+                <Link href={`/${classID}/Assignment`}>
                     <button className="text-salate-1000 font-bold py-2 px-4 rounded">
-                        &lt;  Back
+                        &lt; Back
                     </button>
                 </Link>
                 <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl flex-grow mr-20 mb-2">
