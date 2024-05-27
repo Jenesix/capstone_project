@@ -35,11 +35,6 @@ const AssignmentDetailPage: React.FC = () => {
                 (submission: AssignmentTurnin) => submission.UserID._id === user._id
             );
 
-            console.log("Assignment response:", assignmentResponse.data);
-            console.log("Submissions response:", submissionsResponse.data);
-            console.log("User ID:", user._id);
-            console.log("Filtered user submissions:", userSubmissions);
-
             setSubmissions(userSubmissions);
         } catch (error) {
             console.error('Error fetching assignment details:', error);

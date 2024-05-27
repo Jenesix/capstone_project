@@ -17,7 +17,6 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
     const { user } = useUser();
     const { assignID } = useParams();
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         if (submissions.length > 0) {
@@ -39,34 +38,32 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
         setUploadedFiles(prevFiles => prevFiles.filter((_, idx) => idx !== index));
     };
 
+    const handleDeleteSubmission = async () => {
+        if (submissions.length > 0) {
+            try {
+                await axioslib.delete(`/api/user/deletefileturnin/${submissions[0]._id}`);
+                console.log(submissions[0]._id);
+                fetchAssignmentDetails();
+            } catch (error) {
+                console.error('Error deleting submission:', error);
+            }
+        }
+    };
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("Submitting form...");
-        console.log('Files to submit:', uploadedFiles);
-        console.log('Assignment ID:', assignID);
-        console.log('Submissions:', submissions);
-
-
 
         try {
             const formData = new FormData();
             uploadedFiles.forEach(file => formData.append('files', file));
 
-            if (submissions.length > 0) {
-                // Edit 
-                await axioslib.put(`/api/user/editturnin/${submissions[0]?._id}`, formData);
-            } else {
-                // First time submitted kub
-                await axioslib.post(`/api/user/createturnin/${assignID}`, formData);
-            }
-            console.log('Form submitted:', formData);
+            await axioslib.post(`/api/user/createturnin/${assignID}`, formData);
 
             fetchAssignmentDetails();
         } catch (error) {
             console.error('Error submitting files:', error);
         } finally {
             setUploadedFiles([]);
-            setIsEditing(false);
         }
     };
 
@@ -89,7 +86,7 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
         <div className="flex flex-col pt-6 xl:pt-0 xl:mx-12 min-w-96 max-w-96">
             <h2 className="font-bold text-xl text-salate-1000 mb-2">Submission</h2>
             <div className="mb-2">
-                <div className="flex justify-between items-start lg:items-center flex-col lg:flex-row ">
+                <div className="flex justify-between items-start lg:items-center flex-col lg:flex-row">
                     <div className="flex items-center">
                         <div className="relative w-16 h-16 rounded-full overflow-hidden">
                             <Image
@@ -111,7 +108,7 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
                 </div>
             </div>
 
-            {submissions.length > 0 && !isEditing ? (
+            {submissions.length > 0 ? (
                 <div>
                     <h3 className="font-bold text-salate-1000 mt-2 mb-2">Attachments</h3>
                     <div className="mb-2">
@@ -135,10 +132,10 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
                         ))}
                     </div>
                     <button
-                        onClick={() => setIsEditing(true)}
-                        className="bg-bookmark2 text-white font-bold py-2 px-8 rounded transition-all duration-300 transform hover:scale-105 mt-4 mx-auto block"
+                        onClick={handleDeleteSubmission}
+                        className="bg-bookmark1 text-white font-bold py-2 px-8 rounded transition-all duration-300 transform hover:scale-105 mt-4 mx-auto block"
                     >
-                        Edit Submission
+                        Delete Submission
                     </button>
                 </div>
             ) : (
@@ -181,7 +178,7 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
                         type="submit"
                         className="bg-bookmark2 text-white font-bold py-2 px-8 rounded block mx-auto transition-all duration-300 transform hover:scale-105 mt-4"
                     >
-                        {submissions.length > 0 ? 'Update Submission' : 'Submit'}
+                        Submit
                     </button>
                 </form>
             )}
