@@ -5,6 +5,8 @@ import { MdWatchLater } from "react-icons/md";
 import { GoXCircleFill } from "react-icons/go";
 import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
 
+import { useParams } from 'next/navigation';
+
 interface AttendanceEntry {
     date_atd: string;
     time_start: string;
@@ -97,6 +99,7 @@ const isWithinJoinTime = (date_atd: string, time_start: string): boolean => {
 };
 
 const Teacher_AttendancePage: React.FC = () => {
+    const { classID } = useParams();
     const [updatedAttendance, setUpdatedAttendance] = useState<AttendanceCheckEntry[]>([]);
 
     useEffect(() => {
@@ -145,7 +148,7 @@ const Teacher_AttendancePage: React.FC = () => {
                 </table>
             </div>
             <Teacher_NewButton
-            newLink='/Teacher/classID/Attendance/New'
+            newLink={`/Teacher/${classID}/Attendance/New`}
             text='New Attendance'
             />
         </div>
