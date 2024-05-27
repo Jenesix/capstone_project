@@ -2,8 +2,11 @@
 import { FiTrash2, FiUpload } from 'react-icons/fi';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Link from "next/link";
+import { useParams } from 'next/navigation';
 
 const Teacher_EditAssignment: React.FC = () => {
+    const { classID } = useParams();
+    
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [dueDate, setDueDate] = useState<string>('');
@@ -70,7 +73,7 @@ const Teacher_EditAssignment: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
-            <Link href="/id/QnABoard">
+            <Link href={`/Teacher/${classID}/Assignment`}>
                 <button className="text-salate-1000 font-bold py-2 px-4 rounded">
                     &lt;  Back
                 </button>

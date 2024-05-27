@@ -9,21 +9,10 @@ import { Announcement } from '@/interface/interface';
 
 const Teacher_NewAnnouncement: React.FC = () => {
     const { classID } = useParams();
-
-    const [title, setTitle] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
     const [anm, setAnm] = useState({
         title_anm: '',
         description_anm: '',
     });
-
-    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.target.value);
-    };
-
-    const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setDescription(e.target.value);
-    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         setAnm({
@@ -62,7 +51,7 @@ const Teacher_NewAnnouncement: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
-            <Link href="/id/QnABoard">
+            <Link href={`/Teacher/${classID}/Announcement`}>
                 <button className="  text-salate-1000 font-bold py-2 px-4 rounded">
                     &lt;  Back
                 </button>

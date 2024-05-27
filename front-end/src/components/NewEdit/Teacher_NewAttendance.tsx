@@ -1,9 +1,12 @@
 "use client";
 import { FiTrash2, FiUpload } from 'react-icons/fi';
+import { useParams } from 'next/navigation';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Link from "next/link";
 
 const Teacher_NewAttendance: React.FC = () => {
+    const { classID } = useParams();
+
     const [dueDate, setDueDate] = useState<string>('');
     const [dueTime, setDueTime] = useState<string>('');
 
@@ -31,7 +34,7 @@ const Teacher_NewAttendance: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
-            <Link href="/id/QnABoard">
+            <Link href={`/Teacher/${classID}/Attendance`}>
                 <button className="text-salate-1000 font-bold py-2 px-4 rounded">
                     &lt;  Back
                 </button>

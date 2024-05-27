@@ -1,10 +1,10 @@
-import User_NewBoard from "@/components/NewEdit/User_NewBoard";
+import Teacher_NewBoard from "@/components/NewEdit/Teacher_NewBoard";
 
 
 export default function Home() {
     return (
         <>
-            <User_NewBoard />
+            <Teacher_NewBoard />
         </>
     );
 }

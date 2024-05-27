@@ -66,7 +66,7 @@ const Teacher_QnADetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
-      <Link href={`/${classID}/QnABoard`}>
+      <Link href={`/Teacher/${classID}/QnABoard`}>
         <button className="text-salate-1000 font-bold py-2 px-4 rounded">&lt; Back</button>
       </Link>
       <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Q&A Board</h1>

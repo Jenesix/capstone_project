@@ -86,9 +86,9 @@ const Teacher_MembersPage: React.FC = () => {
                                                 onClick={() => handleRemoveUser(index)}
                                             />
                                         </td>
-                                        <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.FacultyID}</td>
-                                        <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.DepartmentID}</td>
-                                        <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.MajorID}</td>
+                                        <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.faculty}</td>
+                                        <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.department}</td>
+                                        <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.major}</td>
                                     </tr>
                                 ))
                             ) : (

@@ -3,9 +3,10 @@ import { FC } from 'react';
 import { FaFile, FaFilePdf, FaFileImage } from 'react-icons/fa';
 import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
-
+import Link from 'next/link';
 import { axioslib } from '@/lib/axioslib';
 import { Resource, ResourceFolder } from '@/interface/interface';
+import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
 
 const folderFiles = [
     { name: 'Document1.pdf', type: 'pdf' },
@@ -15,6 +16,8 @@ const folderFiles = [
 ];
 
 const Teacher_FolderDetailPage: FC = () => {
+    const { classID } = useParams();
+
     const [folders, setFolders] = useState<ResourceFolder[]>([]);
     const [files, setFiles] = useState<Resource[]>([]);
     const { folderID } = useParams();
@@ -37,6 +40,11 @@ const Teacher_FolderDetailPage: FC = () => {
 
     return (
         <div className="container mx-auto p-6 min-h-screen">
+            <Link href={`/Teacher/${classID}/File_Content`}>
+                <button className="text-salate-1000 font-bold py-2 px-4 rounded">
+                    &lt; Back
+                </button>
+            </Link>
             <h1 className="text-3xl font-bold text-center text-primary mb-6">Folder</h1>
 
             <div>
@@ -60,6 +68,10 @@ const Teacher_FolderDetailPage: FC = () => {
                     ))}
                 </div>
             </div>
+            <Teacher_NewButton
+            newLink={`/Teacher/${classID}/File_Content/${folderID}/New`}
+            text='New File'
+            />
         </div>
     );
 };
