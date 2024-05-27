@@ -5,7 +5,7 @@ import { uploadSyllabus } from "../../../../utils/UploadFile";
 export const UploadSyllabus = async (req: Request, res: Response) => {
     try {
         const { classID } = req.params;
-        const file = req.file;
+        const files = req.files as Express.Multer.File[];
 
         const findClass = await ClassModel.findById(classID);
         if (!findClass) {
@@ -17,10 +17,10 @@ export const UploadSyllabus = async (req: Request, res: Response) => {
         //     fileUrl = await uploadSyllabus(file);
         // }
 
-        if (!file) {
+        if (!files) {
             return res.status(400).json({ message: "Please upload a file" });
         }
-        const fileUrl = await uploadSyllabus(file);
+        const fileUrl = await uploadSyllabus(files[0]);
 
         const syllabus = new SyllabusModel({
             file_syl: fileUrl,
