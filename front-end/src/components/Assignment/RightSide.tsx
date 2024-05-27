@@ -35,9 +35,8 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
         setUploadedFiles(prevFiles => [...prevFiles, ...files].slice(0, 10));
     };
 
-    const handleDeleteFile = async (index: number) => {
+    const handleDeleteFile = (index: number) => {
         setUploadedFiles(prevFiles => prevFiles.filter((_, idx) => idx !== index));
-        console.log("Current files:", uploadedFiles);     
     };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -46,8 +45,8 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
         console.log('Files to submit:', uploadedFiles);
         console.log('Assignment ID:', assignID);
         console.log('Submissions:', submissions);
-        
-        
+
+
 
         try {
             const formData = new FormData();
