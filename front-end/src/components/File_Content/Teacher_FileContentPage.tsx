@@ -71,12 +71,12 @@ const Teacher_FileContentPage: FC = () => {
 
 
     const handleDeleteFile = async (fileId: string) => {
-        // try {
-        //     await axioslib.delete(`/api/user/deletefile/${fileId}`);
-        //     setFiles(files.filter(file => file._id !== fileId));
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            await axioslib.delete(`/api/user/deleteresource/${fileId}`);
+            setFiles(files.filter(file => file._id !== fileId));
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
@@ -135,7 +135,7 @@ const Teacher_FileContentPage: FC = () => {
             <div className=''>
 
                 <Teacher_NewButton
-                    newLink='/Teacher/classID/File_Content/New'
+                    newLink={`/Teacher/${classID}/File_Content/New`}
                     text='New File'
                     />
 

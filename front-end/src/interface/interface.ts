@@ -170,7 +170,7 @@ export interface Comment {
 export interface Announcement {
     _id: string;
     title_anm: string;
-    desc_anm: string; // description
+    description_anm: string; // description
     time_anm: Date; // datetime created
     // Foreign Key
     ClassID: string;

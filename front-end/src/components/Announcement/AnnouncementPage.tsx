@@ -45,7 +45,7 @@ const AnnouncementPage: React.FC = () => {
                                     username,
                                     Date: announcement.time_anm.toISOString(),
                                     Time: format(new Date(announcement.time_anm), 'HH:mm'),
-                                    message: announcement.desc_anm || 'No description available',
+                                    message: announcement.description_anm || 'No description available',
                                     profileImage: profile,
                                 }}
                             />
