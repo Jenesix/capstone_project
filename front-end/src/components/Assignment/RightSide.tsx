@@ -6,6 +6,7 @@ import { AssignmentTurnin } from '@/interface/interface';
 import profile from '../../../public/profile.svg';
 import { useUser } from '@/context/UserContext';
 import { axioslib } from '@/lib/axioslib';
+import { useParams } from 'next/navigation';
 
 interface RightSideProps {
     submissions: AssignmentTurnin[];
@@ -14,6 +15,7 @@ interface RightSideProps {
 
 const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetails }) => {
     const { user } = useUser();
+    const { assignID } = useParams();
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
     const [isEditing, setIsEditing] = useState(false);
 
@@ -33,27 +35,32 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
         setUploadedFiles(prevFiles => [...prevFiles, ...files].slice(0, 10));
     };
 
-    const handleDeleteFile = (index: number) => {
+    const handleDeleteFile = async (index: number) => {
         setUploadedFiles(prevFiles => prevFiles.filter((_, idx) => idx !== index));
+        console.log("Current files:", uploadedFiles);     
     };
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log("Submitting form...");
         console.log('Files to submit:', uploadedFiles);
+        console.log('Assignment ID:', assignID);
+        console.log('Submissions:', submissions);
+        
+        
 
         try {
             const formData = new FormData();
             uploadedFiles.forEach(file => formData.append('files', file));
-            formData.append('timestamp', new Date().toISOString());
 
             if (submissions.length > 0) {
                 // Edit 
-                await axioslib.put(`/api/user/editattend/${submissions[0]._id}`, formData);
+                await axioslib.put(`/api/user/editturnin/${submissions[0]?._id}`, formData);
             } else {
                 // First time submitted kub
-                await axioslib.post(`/api/user/createattend/${submissions[0].AssignmentID}`, formData);
+                await axioslib.post(`/api/user/createturnin/${assignID}`, formData);
             }
+            console.log('Form submitted:', formData);
 
             fetchAssignmentDetails();
         } catch (error) {
