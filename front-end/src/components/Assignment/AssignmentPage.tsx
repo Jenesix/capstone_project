@@ -33,11 +33,10 @@ const AssignmentPage: React.FC = () => {
                     let status = 'To Do';
                     const turninResponses = await axioslib.get(`/api/user/getturnin/${assignment._id}`);
                     const turnins: AssignmentTurnin[] = turninResponses.data;
-                    const userTurnin = turnins.find(turnin => turnin.UserID === userId);
+                    const userTurnin = turnins.find(turnin => turnin.UserID._id === userId);
 
                     if (userTurnin) {
                         status = userTurnin.status_turnin === 'On time' ? 'Submitted' : 'Late Submitted';
-                        // status = userTurnin.status_turnin === 'Late' ? 'Late Submitted' : 'Submitted';
                     }
 
                     return {
