@@ -1,6 +1,6 @@
 "use client";
 import { FiTrash2, FiUpload } from 'react-icons/fi';
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import Link from "next/link";
 
 import { axioslib } from '@/lib/axioslib';
@@ -12,6 +12,9 @@ const Teacher_NewFileContent: React.FC = () => {
     const { classID, folderID } = useParams();
     const [files, setFiles] = useState<File[]>([]);
 
+    const [dbfiles, setDBFiles] = useState<Resource[]>([]);
+    
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = e.target.files;
         if (fileList) {
@@ -21,7 +24,6 @@ const Teacher_NewFileContent: React.FC = () => {
 
     const handleFileDelete = async (index: number) => {
         setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
-        // await axioslib.delete(`/api/user/deleteresource/${files[index]}`);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
