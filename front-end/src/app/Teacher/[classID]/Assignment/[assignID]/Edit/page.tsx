@@ -1,11 +1,11 @@
-import Teacher_EditAnnouncement from "@/components/NewEdit/Teacher_EditAnnouncement";
+import Teacher_EditAssignment from "@/components/NewEdit/Teacher_EditAssignment";
 
 
 
 export default function Home() {
     return (
         <>
-            <Teacher_EditAnnouncement />
+            <Teacher_EditAssignment />
         </>
     );
 }

@@ -6,7 +6,7 @@ import Image from 'next/legacy/image';
 import Link from "next/link";
 
 
-const User_NewBoard: React.FC = () => {
+const Teacher_NewBoard: React.FC = () => {
     const { classID } = useParams();
 
     const [title, setTitle] = useState<string>('');
@@ -58,7 +58,7 @@ const User_NewBoard: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
-            <Link href={`/${classID}/QnABoard`}>
+            <Link href={`/Teacher/${classID}/QnABoard`}>
                 <button className="  text-salate-1000 font-bold py-2 px-4 rounded">
                     &lt;  Back
                 </button>
@@ -127,4 +127,4 @@ const User_NewBoard: React.FC = () => {
     );
 };
 
-export default User_NewBoard;
+export default Teacher_NewBoard;
