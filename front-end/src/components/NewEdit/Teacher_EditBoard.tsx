@@ -6,7 +6,7 @@ import Image from 'next/legacy/image';
 import Link from "next/link";
 
 
-const User_EditBoard: React.FC = () => {
+const Teacher_EditBoard: React.FC = () => {
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [image, setImage] = useState<File | null>(null);
@@ -74,8 +74,7 @@ const User_EditBoard: React.FC = () => {
                                     onChange={handleTitleChange}
                                     placeholder="Your Title"
                                     type='text'
-                                    disabled
-                                    className='mt-2 italic p-2 pl-4 bg-slate-1000 border-salate-1000 rounded-xl w-full'
+                                    className='mt-2 p-2 pl-4 bg-white border-salate-1000 rounded-xl w-full'
                                 />
                                 
                                 <p className='mt-4'>Board Description</p>
@@ -126,4 +125,4 @@ const User_EditBoard: React.FC = () => {
     );
 };
 
-export default User_EditBoard;
+export default Teacher_EditBoard;
