@@ -3,6 +3,7 @@ import Image from 'next/legacy/image';
 import { SlOptionsVertical } from "react-icons/sl";
 import Link from 'next/link';
 import { StaticImageData } from 'next/image';
+import profile from '../../../public/profile.svg';
 
 interface QnACardProps {
     boardID: string,
@@ -17,8 +18,8 @@ interface QnACardProps {
     lastname: string,
 }
 
-const QnACard: React.FC<QnACardProps> = ({
-    boardID, board_title, editLink, board_desc, postimage, time, user_id, profileImage, firstname, lastname}) => {
+const QnACard_Owner: React.FC<QnACardProps> = ({
+    boardID, board_title, editLink, board_desc, postimage, time, user_id, profileImage, firstname, lastname }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
     const toggleDropdown = () => {
@@ -30,9 +31,6 @@ const QnACard: React.FC<QnACardProps> = ({
             <div className="flex flex-row mb-4">
                 <h1 className="font-bold text-xl text-primary truncate pr-4 flex-grow">{board_title}</h1>
                 <div className="relative">
-
-
-                    {/*Option Button*/}
                     <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} />
                     {dropdownVisible && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
@@ -49,20 +47,17 @@ const QnACard: React.FC<QnACardProps> = ({
                             </button>
                         </div>
                     )}
-
-
                 </div>
             </div>
 
             <Link href={`QnABoard/${boardID}`}>
                 <div>
                     <div className={`mb-4 min-h-8 font-semibold truncate whitespace-normal`}>{board_desc}</div>
-
                     <div className="flex flex-col md:flex-row min-h-20">
                         <div className="flex items-center mb-4 md:mb-0">
                             <div className={`size-16 rounded-full overflow-hidden`}>
                                 <Image
-                                    src={profileImage}
+                                    src={profile}
                                     objectFit="fill"
                                     alt="profile"
                                 />
@@ -91,4 +86,4 @@ const QnACard: React.FC<QnACardProps> = ({
     );
 };
 
-export default QnACard;
+export default QnACard_Owner;
