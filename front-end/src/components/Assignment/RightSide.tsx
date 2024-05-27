@@ -41,7 +41,7 @@ const RightSide: React.FC<RightSideProps> = ({ submissions, fetchAssignmentDetai
     const handleDeleteSubmission = async () => {
         if (submissions.length > 0) {
             try {
-                await axioslib.delete(`/api/user/deletefileturnin/${submissions[0]._id}`);
+                await axioslib.delete(`/api/user/deleteturnin/${submissions[0]._id}`);
                 console.log(submissions[0]._id);
                 fetchAssignmentDetails();
             } catch (error) {
