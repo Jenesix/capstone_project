@@ -6,7 +6,6 @@ import { axioslib } from '@/lib/axioslib';
 
 const Teacher_NewAttendance: React.FC = () => {
     const { classID } = useParams();
-
     const [dueDate, setDueDate] = useState<string>('');
     const [dueTime, setDueTime] = useState<string>('');
 
@@ -23,7 +22,7 @@ const Teacher_NewAttendance: React.FC = () => {
         e.preventDefault();
 
         const attendanceData = {
-            date_atd: new Date(dueDate),
+            date_atd: dueDate,
             time_start: dueTime,
         };
 
