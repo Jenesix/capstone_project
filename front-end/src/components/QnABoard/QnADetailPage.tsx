@@ -17,8 +17,8 @@ const QnADetailPage: React.FC = () => {
     const { user } = useUser();
 
     const [post, setPost] = useState<Post | null>(null);
-    const [comments, setComments] = useState<Comment[]>([]);
     const [postOwner, setPostOwner] = useState<User | null>(null);
+    const [comments, setComments] = useState<Comment[]>([]);
 
     const [newComment, setNewComment] = useState<string>('');
     const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,13 +48,11 @@ const QnADetailPage: React.FC = () => {
         const fetchPostData = async () => {
             try {
                 const response = await axioslib.get(`/api/user/getpostbyid/${postID}`);
-                console.log("Post data response:", response.data);
                 setPost(response.data);
-                const commentIds: string[] = response.data.CommentID;
-                // ต้อง Fetch ข้อมูล Comment จาก CommentID ที่ได้จาก Post
+                // const commentIds: string[] = response.data.CommentID;
 
-                setComments(response.data.CommentID); // Mock up เป็น Array ว่างก่อน
-                setPostOwner(response.data.UserID);               
+                setComments(response.data.CommentID);
+                setPostOwner(response.data.UserID);                                        
             } catch (error) {
                 console.error("Error fetching post data", error);
             }
@@ -73,6 +71,9 @@ const QnADetailPage: React.FC = () => {
         const dateObj = parseISO(date);
         return format(dateObj, 'dd/MM/yyyy, HH:mm');
     }
+
+    console.log(comments);
+    
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
@@ -112,9 +113,9 @@ const QnADetailPage: React.FC = () => {
                             <div className='flex flex-row'>
                                 <UserCard
                                     profileImage={profile}
-                                    user_id={postOwner.user_id}
-                                    firstname={postOwner.firstname}
-                                    lastname={postOwner.lastname}
+                                    user_id={comment.UserID.user_id}
+                                    firstname={comment.UserID.firstname}
+                                    lastname={comment.UserID.lastname}
                                     sizeprofile='size-20'
                                     sizedivtext=''
                                     sizenameuser='text-base'
@@ -124,7 +125,7 @@ const QnADetailPage: React.FC = () => {
                             </div>
                             <div className='ml-12 bg-content-light rounded-tr-3xl rounded-b-3xl'>
                                 <p className='p-4 m-4 ml-12'>{comment.comment}</p>
-                                {postOwner._id === user?._id && (
+                                {comment.UserID._id === user?._id && (
                                     <FiTrash2 className="ml-auto mr-4 size-5 text-bookmark1 cursor-pointer" onClick={() => handleDeleteComment(comment._id)} />
                                 )}
                             </div>

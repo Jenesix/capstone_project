@@ -7,7 +7,7 @@ export const GetPostByID = async (req: Request, res: Response) => {
 
         const post = await PostModel.findById(postID)
             .populate({ path: "UserID" })
-            .populate({ path: "CommentID" });
+            .populate({ path: "CommentID", populate: { path: "UserID" } });
             
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
