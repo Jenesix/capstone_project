@@ -79,6 +79,15 @@ const Teacher_FileContentPage: FC = () => {
         }
     }
 
+    const handleDeleteFolder = async (folderId: string) => {
+        try {
+            await axioslib.delete(`/api/user/deletefolder/${folderId}`);
+            setFolders(folders.filter(folder => folder._id !== folderId));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
 
     useEffect(() => {
@@ -94,14 +103,20 @@ const Teacher_FileContentPage: FC = () => {
                 <h2 className="text-xl font-bold mb-4 text-gray">Folders</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-salate-1000 font-bold">
                     {folders.map((folder, index) => (
+                        <div className='rounded shadow flex flex-row w-fit items-center'>
                         <Link href={`/Teacher/${classID}/File_Content/${folder._id}`} key={index}>
-                            <div className="p-2 rounded shadow flex items-center cursor-pointer">
-                                <div className="flex items-center px-4">
-                                    <FaFolder className="mr-2 " />
+                            <div className="p-2 flex items-center cursor-pointer w-full">
+                                <div className="flex items-center px-4 mr-4 ">
+                                    <FaFolder className="mr-2" />
                                     <span>{folder.folder_name}</span>
                                 </div>
                             </div>
                         </Link>
+                                <FiTrash2 
+                                    className="text-bookmark1 cursor-pointer ml-2 ml-auto mr-2"
+                                    onClick={() => handleDeleteFolder(folder._id)}
+                                    />
+                        </div>
                     ))}
                 </div>
             </div>
