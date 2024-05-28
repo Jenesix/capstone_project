@@ -4,6 +4,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import React, { useState } from 'react';
 import Image from 'next/legacy/image';
 import Link from "next/link";
+import FormData from 'form-data';
 import { axioslib } from '../../lib/axioslib';
 import { Post } from '../../interface/interface';
 
@@ -12,7 +13,7 @@ const User_NewBoard: React.FC = () => {
 
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
-    const [image, setImage] = useState<File | null>(null);
+    const [image, setImage] = useState<File[] | null>([]);
     const [preview, setPreview] = useState<string | null>(null);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,14 +25,15 @@ const User_NewBoard: React.FC = () => {
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
+        const files = e.target.files;
+        if (files) {
+            const file = Array.from(files);
             setImage(file);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview(reader.result as string);
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file[0]);
         }
     };
 
@@ -43,12 +45,15 @@ const User_NewBoard: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const formData = new FormData();
+        formData.append('title_p', title);
+        formData.append('description_p', description);
+        if (image) {
+            formData.append('files', image[0]);
+        }
+
         try {
-            await axioslib.post(`/api/user/createpost/${classID}`, {
-                title_p: title,
-                description_p: description,
-                files: image ? [image] : null,
-            }).then(() => {
+            await axioslib.post(`/api/user/createpost/${classID}`, formData).then(() => {
                 window.location.href = `/${classID}/QnABoard`;
             });
         } catch (error) {
