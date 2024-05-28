@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { axioslib } from '@/lib/axioslib';
 import { Resource, ResourceFolder } from '@/interface/interface';
 import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
+import { FiTrash2 } from 'react-icons/fi';
 
 const folderFiles = [
     { name: 'Document1.pdf', type: 'pdf' },
@@ -32,6 +33,15 @@ const Teacher_FolderDetailPage: FC = () => {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const handleDeleteFile = async (fileId: string) => {
+        // try {
+        //     await axioslib.delete(`/api/user/deleteresource/${folderID}/${fileId}`);
+        //     setFiles(files.filter(file => file._id !== fileId));
+        // } catch (error) {
+        //     console.log(error);
+        // }
     }
 
     useEffect(() => {
@@ -64,6 +74,12 @@ const Teacher_FolderDetailPage: FC = () => {
                                     </a>
                                 </span>
                             </div>
+                            <div className="flex justify-end">
+                                <FiTrash2 
+                                    className="text-bookmark1 cursor-pointer ml-2"
+                                    onClick={() => handleDeleteFile(file._id)}
+                                />
+                                </div>
                         </div>
                     ))}
                 </div>
