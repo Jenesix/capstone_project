@@ -92,7 +92,7 @@ const Teacher_ViewAttendancePage: React.FC = () => {
             } else {
                 const response = await axioslib.post(`api/user/createattendcheckt?attendID=${attendID}&userID=${userID}`, {
                     userID: userID,
-                    status_atd: newStatus,
+                    status: newStatus,
                 });
                 console.log("New attendance entry:", response.data);
                 setAttendanceCheckData(prevData => [...prevData, response.data]);
