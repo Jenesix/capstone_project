@@ -6,10 +6,10 @@ import { StaticImageData } from 'next/image';
 import profile from '../../../public/profile.svg';
 
 interface QnACardProps {
-    boardID: string,
-    board_title: string,
+    postID: string,
+    post_title: string,
     editLink: string,
-    board_desc: string,
+    post_desc: string,
     postimage: string | StaticImageData;
     time: string,
     user_id: string,
@@ -19,7 +19,7 @@ interface QnACardProps {
 }
 
 const QnACard_Owner: React.FC<QnACardProps> = ({
-    boardID, board_title, editLink, board_desc, postimage, time, user_id, profileImage, firstname, lastname }) => {
+    postID, post_title, editLink, post_desc, postimage, time, user_id, profileImage, firstname, lastname }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
     const toggleDropdown = () => {
@@ -29,9 +29,9 @@ const QnACard_Owner: React.FC<QnACardProps> = ({
     return (
         <div className={`bg-content-light shadow-2xl rounded-lg p-4 mb-8 min-h-60 text-salate-1000 overflow-hidden`}>
             <div className="flex flex-row mb-4">
-                <h1 className="font-bold text-xl text-primary truncate pr-4 flex-grow">{board_title}</h1>
+                <h1 className="font-bold text-xl text-primary truncate pr-4 flex-grow">{post_title}</h1>
                 <div className="relative">
-                    <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} />
+                    <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} onBlur={() => setDropdownVisible(false)} />
                     {dropdownVisible && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                             <Link href={editLink}>
@@ -50,9 +50,9 @@ const QnACard_Owner: React.FC<QnACardProps> = ({
                 </div>
             </div>
 
-            <Link href={`QnABoard/${boardID}`}>
+            <Link href={`QnABoard/${postID}`}>
                 <div>
-                    <div className={`mb-4 min-h-8 font-semibold truncate whitespace-normal`}>{board_desc}</div>
+                    <div className={`mb-4 min-h-8 font-semibold truncate whitespace-normal`}>{post_desc}</div>
                     <div className="flex flex-col md:flex-row min-h-20">
                         <div className="flex items-center mb-4 md:mb-0">
                             <div className={`size-16 rounded-full overflow-hidden`}>
