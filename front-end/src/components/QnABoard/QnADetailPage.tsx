@@ -122,7 +122,7 @@ const QnADetailPage: React.FC = () => {
                 </div>
             </div>
             <div className='mb-5 bottom-0 ml-4 bg-content-light rounded-3xl flex items-center justify-center p-4 fixed text-salate-1000 w-auto md:w-96'>
-                <form onSubmit={handleSubmitComment}>
+                <form onSubmit={handleSubmitComment} className='flex flex-row'>
                     <IoChatbubbleEllipses className='ml-4 size-10 content-center' />
                     <input 
                         placeholder='Message Here...'
@@ -130,7 +130,7 @@ const QnADetailPage: React.FC = () => {
                         className='pl-2 p-2 ml-4 bg-content-light rounded-3xl w-full text-base md:base'
                         onChange={handleCommentChange}
                     />
-                    <button type='submit'>Send</button>
+                    <button type='submit' className='text-salate-1000 font-bold px-2 rounded'>Send</button>
                 </form>
             </div>
         </div>

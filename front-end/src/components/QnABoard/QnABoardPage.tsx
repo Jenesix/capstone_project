@@ -46,10 +46,10 @@ const QnABoardPage: React.FC = () => {
                     {posts.map(post => (
                         <QnACard_Owner
                             key={post._id}
-                            boardID={post._id}
-                            board_title={post.title_p}
+                            postID={post._id}
+                            post_title={post.title_p}
                             editLink={`/${classID}/QnABoard/${post._id}/Edit`}
-                            board_desc={post.description_p}
+                            post_desc={post.description_p}
                             postimage={post.post_image}
                             time={formatDate(String(post.time_p))}
                             user_id={post.UserID.user_id}
