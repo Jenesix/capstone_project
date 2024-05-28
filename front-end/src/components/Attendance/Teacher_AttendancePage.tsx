@@ -7,10 +7,14 @@ import { useParams } from 'next/navigation';
 import Teacher_EditButton from '../NewEdit/Teacher_EditButton';
 import Teacher_ViewButton from '../NewEdit/Teacher_ViewButton';
 
+import { format, isToday, isYesterday, parseISO } from 'date-fns';
+import { useState, useEffect } from 'react';
+import { axioslib } from '@/lib/axioslib';
+import { Attendance, AttendanceCheck } from '@/interface/interface';
 
 //------------Mock Up Data ----------------
 
-const Attendance = [
+const Attendancemock = [
     {
         date_atd: "19 January 2024",
         time_start: "9:30",
@@ -29,7 +33,7 @@ const Attendance = [
     }
 ];
 
-const AttendanceCheck = [
+const AttendanceCheckmock = [
     {
         status_atd: "On time",
         user_id: "65090500414",
@@ -76,25 +80,61 @@ const AttendanceCheck = [
 
 //-----------------------------------------------------
 
-const handleDeleteAttendance = async () => {
-    // try {
-    //     await axioslib.delete(`/api/user/deleteresource/${fileId}`);
-    //     setFiles(files.filter(file => file._id !== fileId));
-    // } catch (error) {
-    //     console.log(error);
-    // }
-}
 
 const Teacher_AttendancePage: React.FC = () => {
-    // import { useParams } from 'next/navigation';
-    // const { classID } = useParams();
-    // {`/Teacher/${classID}/Attendance/New`}
-    const { classID, attendanceID } = useParams();
+    const { classID, attendID } = useParams();
 
-    const countStatus = (status: string) => AttendanceCheck.filter(entry => entry.status_atd === status).length;
-    const onTimeCount = countStatus("On time");
-    const LateCount = countStatus("Late");
-    const AbsentCount = countStatus("Absent");
+    const [attendances, setAttendances] = useState<Attendance | undefined>(undefined);
+    const [attendChecks, setAttendChecks] = useState<AttendanceCheck | undefined>(undefined);
+
+    // const countStatus = (status: string) => AttendanceCheck.filter(entry => entry.status_atd === status).length;
+    // const onTimeCount = countStatus("On time");
+    // const LateCount = countStatus("Late");
+    // const AbsentCount = countStatus("Absent");
+
+    const fetchAttendance = async () => {
+        try {
+            const response = await axioslib.get(`/api/user/getattend/${classID}`);
+            setAttendances(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const fetchStatusCount = async (attendID: string, status: string) => {
+        try {
+            let count = 0;
+            const response = await axioslib.get(`/api/user/getattendcheck/${attendID}`);
+            response.data.forEach((entry: any) => {
+                if (entry.status_atd === status) {
+                    count++;
+                }
+            });
+            console.log(status, count);
+            return count;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchAttendance();
+    }, []);
+
+    const handleDeleteAttendance = async () => {
+        // try {
+        //     await axioslib.delete(`/api/user/deleteresource/${fileId}`);
+        //     setFiles(files.filter(file => file._id !== fileId));
+        // } catch (error) {
+        //     console.log(error);
+        // }
+    }
+
+    const formatDate = (date: string) => {
+        const dateObj = parseISO(date);
+        return format(dateObj, 'dd MMMM yyyy');
+    }
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
@@ -110,21 +150,21 @@ const Teacher_AttendancePage: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {Attendance.map((entry, index) => (
+                        {attendances?.map((attendance, index) => (
                             <tr key={index} className={index % 2 === 0 ? "bg-white h-20" : "bg-white h-20"}>
-                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap font-extrabold">{entry.date_atd}</td>
-                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.time_start}</td>
+                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap font-extrabold">{formatDate(attendance.date_atd)}</td>
+                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{attendance.time_start}</td>
                                 <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">
                                     <div className="flex flex-row justify-evenly items-center">
 
                                         <div className='bg-bookmark2 px-3 p-1 rounded-3xl'>
-                                            <p className='text-white font-bold text-base min-w-6'>{onTimeCount}</p>
+                                            <p className='text-white font-bold text-base min-w-6'>{1}</p>
                                         </div>
                                         <div className='bg-bookmark3 px-3 p-1 rounded-3xl'>
-                                            <p className='text-white font-bold text-base min-w-6'>{LateCount}</p>
+                                            <p className='text-white font-bold text-base min-w-6'>{1}</p>
                                         </div>
                                         <div className='bg-bookmark1 px-3 p-1 rounded-3xl'>
-                                            <p className='text-white font-bold text-base min-w-6'>{AbsentCount}</p>
+                                            <p className='text-white font-bold text-base min-w-6'>{1}</p>
                                         </div>
 
                                     </div>
@@ -132,16 +172,16 @@ const Teacher_AttendancePage: React.FC = () => {
                                 <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">
                                     <div className='flex flex-row justify-evenly items-center'>
                                         <Teacher_EditButton
-                                        editLink={`/Teacher/${classID}/Attendance/${attendanceID}/Edit`}
+                                            editLink={`/Teacher/${classID}/Attendance/${attendID}/Edit`}
                                         />
 
                                         <Teacher_ViewButton
-                                        viewLink={`/Teacher/${classID}/Attendance/${attendanceID}/View`}
+                                            viewLink={`/Teacher/${classID}/Attendance/${attendID}/View`}
                                         />
 
-                                        <FiTrash2 
-                                        className="text-bookmark1 cursor-pointer ml-2 size-5"
-                                        onClick={() => handleDeleteAttendance()}
+                                        <FiTrash2
+                                            className="text-bookmark1 cursor-pointer ml-2 size-5"
+                                            onClick={() => handleDeleteAttendance()}
                                         />
                                     </div>
                                 </td>
@@ -151,8 +191,8 @@ const Teacher_AttendancePage: React.FC = () => {
                 </table>
             </div>
             <Teacher_NewButton
-            newLink={`/Teacher/${classID}/Attendance/New`}
-            text='New Attendance'
+                newLink={`/Teacher/${classID}/Attendance/New`}
+                text='New Attendance'
             />
         </div>
     );
