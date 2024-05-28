@@ -80,7 +80,7 @@ const Teacher_ViewAttendancePage: React.FC = () => {
 
     const handleStatusChange = async (_id: string, newStatus: string) => {
         try {
-            const userAttendance = attendanceCheckData.find(entry => entry.UserID === _id);
+            const userAttendance = attendanceCheckData.find(entry => entry.userID === _id);
             console.log("ID:", _id);
             console.log("New Status:", newStatus);
             console.log("userAttendance:", userAttendance);
@@ -91,9 +91,8 @@ const Teacher_ViewAttendancePage: React.FC = () => {
                 });
             } else {
                 const response = await axioslib.post(`api/user/createattendcheckt?attendID=${attendID}&userID=${_id}`, {
-                    UserID: _id,
+                    userID: _id,
                     status_atd: newStatus,
-                    time_check: new Date().toISOString()
                 });
                 console.log("New attendance entry:", response.data);
                 setAttendanceCheckData(prevData => [...prevData, response.data]);
