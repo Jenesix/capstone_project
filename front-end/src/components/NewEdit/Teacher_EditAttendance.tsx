@@ -1,5 +1,4 @@
 "use client";
-import { FiTrash2, FiUpload } from 'react-icons/fi';
 import { useParams } from 'next/navigation';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Link from "next/link";
@@ -23,9 +22,8 @@ const Teacher_EditAttendance: React.FC = () => {
         e.preventDefault();
 
         const attendanceData = {
-            date_atd: new Date(dueDate),
+            date_atd: dueDate,
             time_start: dueTime,
-            ClassID: classID,
         };
 
         try {
@@ -34,6 +32,7 @@ const Teacher_EditAttendance: React.FC = () => {
         } catch (error) {
             console.error('Error submitting form:', error);
         }
+        window.location.href = `/Teacher/${classID}/Attendance`;
     };
 
     return (

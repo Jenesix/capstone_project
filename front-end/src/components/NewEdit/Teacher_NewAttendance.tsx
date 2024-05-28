@@ -32,6 +32,9 @@ const Teacher_NewAttendance: React.FC = () => {
         } catch (error) {
             console.error('Error submitting form:', error);
         }
+
+        window.location.href = `/Teacher/${classID}/Attendance`;
+
     };
 
     return (
