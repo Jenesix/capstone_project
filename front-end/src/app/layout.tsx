@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar/NavBar";
 import { UserProvider } from "@/context/UserContext";
 
 import { BsJustify } from "react-icons/bs";
-import Chatbot from "../../page";
+import Chatbot from "../../Chatbot/Chatbot";
 
 
 const inter = Inter({ subsets: ["latin"] });
