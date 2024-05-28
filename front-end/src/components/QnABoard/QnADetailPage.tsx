@@ -19,6 +19,19 @@ const QnADetailPage: React.FC = () => {
     const [comments, setComments] = useState<Comment[]>([]);
     const [user, setUser] = useState<User | null>(null);
 
+    const [newComment, setNewComment] = useState<string>('');
+    const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNewComment(event.target.value);
+    }
+
+    const handleSubmitComment = async (e: React.FormEvent) => {
+        try {
+            await axioslib.post(`/api/user/createcomment/${postID}`, { comment: newComment });
+        } catch (error) {
+            console.error("Error submitting comment:", error);
+        }
+    }
+
     useEffect(() => {
         const fetchPostData = async () => {
             try {
@@ -109,8 +122,16 @@ const QnADetailPage: React.FC = () => {
                 </div>
             </div>
             <div className='mb-5 bottom-0 ml-4 bg-content-light rounded-3xl flex items-center justify-center p-4 fixed text-salate-1000 w-auto md:w-96'>
-                <IoChatbubbleEllipses className='ml-4 size-10 content-center' />
-                <input placeholder='Message Here...' type='text' className='pl-2 p-2 ml-4 bg-content-light rounded-3xl w-full text-base md:base' />
+                <form onSubmit={handleSubmitComment}>
+                    <IoChatbubbleEllipses className='ml-4 size-10 content-center' />
+                    <input 
+                        placeholder='Message Here...'
+                        type='text' 
+                        className='pl-2 p-2 ml-4 bg-content-light rounded-3xl w-full text-base md:base'
+                        onChange={handleCommentChange}
+                    />
+                    <button type='submit'>Send</button>
+                </form>
             </div>
         </div>
     );
