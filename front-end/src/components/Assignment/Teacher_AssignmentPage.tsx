@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation'; // Import useParams instead of useRouter
 import { Assignment, AssignmentTurnin } from '@/interface/interface';
 import AssignBanner from './AssignBanner';
-import AssignmentCard from './AssignmentCard';
 import { axioslib } from '@/lib/axioslib';
 import { useUser } from '@/context/UserContext';
 import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
+import Teacher_AssignmentCard from './Teacher_AssignmentCard';
 
 const Teacher_AssignmentPage: React.FC = () => {
     const { classID } = useParams(); // Use useParams instead of useRouter
@@ -14,6 +14,9 @@ const Teacher_AssignmentPage: React.FC = () => {
     const [assignments, setAssignments] = useState<(Assignment & { status: string })[]>([]);
     const [loading, setLoading] = useState(true);
 
+
+
+    // ------------------------------------ แก้หลังบ้านตรงนี้ด้วยอันนี้ก็อกมาจากฝั่ง User  -------------------------------------------------------------
     useEffect(() => {
         const fetchAssignments = async () => {
             try {
@@ -67,31 +70,31 @@ const Teacher_AssignmentPage: React.FC = () => {
         return <p>Loading...</p>;
     }
 
+    //-------------------------------------------- แก้หลังบ้านตรงนี้ด้วยอันนี้ก็อกมาจากฝั่ง User  -------------------------------------------------------------
     const toDoAssignments = assignments.filter(assignment => assignment.status === "To Do");
     const submittedAssignments = assignments.filter(assignment => assignment.status === "Submitted" || assignment.status === "Late Submitted");
 
+
+    
     return (
         <div className="flex flex-col mt-12 w-full px-4 sm:px-8 min-h-screen pb-6">
             <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Assignment</h1>
             <div className="flex flex-col md:flex-row mx-12">
                 <div className="mb-4 md:mb-0 md:mr-4">
-                    <AssignBanner color="text-bookmark1" text="To Do" />
+                    <AssignBanner color="text-bookmark1" text="Ongoing" />
                 </div>
                 <div className="mb-4 md:mb-0 md:mr-4">
-                    <AssignBanner color="text-bookmark2" text="Submitted" />
-                </div>
-                <div>
-                    <AssignBanner color="text-bookmark3" text="Late Submitted" />
+                    <AssignBanner color="text-bookmark2" text="Finished" />
                 </div>
             </div>
             <div className="mx-12 mt-5">
                 <div className="flex flex-row items-center mb-4">
-                    <span className="font-bold text-salate-100">To Do</span>
+                    <span className="font-bold text-salate-100">Ongoing</span>
                     <div className="flex-grow border-t border-2 border-salate-100 ml-2"></div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {toDoAssignments.map(assignment => (
-                        <AssignmentCard
+                        <Teacher_AssignmentCard
                             key={assignment._id}
                             classID={classID as string}
                             assignID={assignment._id}
@@ -105,12 +108,12 @@ const Teacher_AssignmentPage: React.FC = () => {
             </div>
             <div className="mx-12 mt-5">
                 <div className="flex flex-row items-center mb-4">
-                    <span className="font-bold text-salate-100">Submitted</span>
+                    <span className="font-bold text-salate-100">Finished</span>
                     <div className="flex-grow border-t border-2 border-salate-100 ml-2"></div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     {submittedAssignments.map(assignment => (
-                        <AssignmentCard
+                        <Teacher_AssignmentCard
                             key={assignment._id}
                             classID={classID as string}
                             assignID={assignment._id}
