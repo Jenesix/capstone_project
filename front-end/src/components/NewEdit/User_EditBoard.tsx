@@ -6,10 +6,21 @@ import Image from 'next/legacy/image';
 import Link from "next/link";
 
 import { axioslib } from '../../lib/axioslib';
+import { Post } from '../../interface/interface';
 
 
 const User_EditBoard: React.FC = () => {
-    const { classID } = useParams();
+    const { classID, postID } = useParams();
+
+    const [oldPost, setOldPost] = useState<Post | undefined>(undefined);
+    useEffect(() => {
+        const fetchPost = async () => {
+            const response = await axioslib.get(`/api/user/getpostbyid/${postID}`);
+            setOldPost(response.data);
+            console.log(response.data);
+        };
+        fetchPost();
+    }, []);
 
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -53,7 +64,7 @@ const User_EditBoard: React.FC = () => {
         }
 
         try {
-            await axioslib.post(`/api/user/createpost/${classID}`, formData).then(() => {
+            await axioslib.post(`/api/user/editpost/${postID}`, formData).then(() => {
                 window.location.href = `/${classID}/QnABoard`;
             });
         } catch (error) {
@@ -79,7 +90,7 @@ const User_EditBoard: React.FC = () => {
                         <div className='w-60 md:w-72 lg:w-96 2xl:w-auto bg-content-light rounded-b-2xl text-xs md:text-base lg:text-lg pt-4 p-4 md:p-8 lg:p-12'>
                             <p>Board Title</p>
                             <input
-                                value={title}
+                                value={oldPost?.title_p}
                                 onChange={handleTitleChange}
                                 placeholder="Your Title"
                                 type='text'
@@ -89,7 +100,7 @@ const User_EditBoard: React.FC = () => {
 
                             <p className='mt-4'>Board Description</p>
                             <textarea
-                                value={description}
+                                value={oldPost?.description_p}
                                 onChange={handleDescriptionChange}
                                 placeholder="Your Description"
                                 className='mt-2 p-2 pl-4 bg-white border-salate-1000 rounded-xl w-full min-h-60'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/legacy/image';
 import { SlOptionsVertical } from "react-icons/sl";
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import profile from '../../../public/profile.svg';
 
 import { axioslib } from '@/lib/axioslib';
 import { useUser } from '@/context/UserContext';
+
 
 interface QnACardProps {
     postID: string,
@@ -29,15 +30,27 @@ const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, p
         setDropdownVisible(!dropdownVisible);
     };
 
+    const handleDeletePost = async () => {
+        try {
+            await axioslib.delete(`/api/user/deletepost/${postID}`)
+                .then(() => {
+                    window.location.reload();
+                });
+        } catch (error) {
+            console.error("Error deleting post:", error);
+        }
+    }
+
+
     return (
         <div className={`bg-content-light shadow-2xl rounded-lg p-4 mb-8 min-h-60 text-salate-1000 overflow-hidden`}>
             <div className="flex flex-row mb-4">
                 <h1 className="font-bold text-xl text-primary truncate pr-4 flex-grow">{post_title}</h1>
                 <div className="relative">
                     {/* <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} onBlur={() => setDropdownVisible(false)} /> */}
-                    {user?.user_id === user_id ?
+                    {user?.user_id === user_id || user?.role === "teacher" ?
                         (
-                            <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} onBlur={() => setDropdownVisible(false)} />
+                            <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} />
                         ) : <></>
                     }
                     {dropdownVisible && (
@@ -49,7 +62,7 @@ const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, p
                             </Link>
                             <button
                                 className="w-full text-left px-4 py-2 hover:bg-content-light"
-                                onClick={() => console.log('Delete clicked')}
+                                onClick={handleDeletePost}
                             >
                                 Delete
                             </button>
