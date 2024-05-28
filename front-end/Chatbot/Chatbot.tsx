@@ -1,6 +1,46 @@
 "use client";
 import React, { useEffect } from 'react';
-import "./globals.css";
+
+const Chatbot: React.FC = () => {
+    useEffect(() => {
+        const chatbox = new Chatbox();
+        chatbox.display();
+
+        return () => {
+
+        };
+    }, []); // Empty dependency array means this effect will only run once
+    
+    return (
+        <div className="container">
+            <div className="chatbox fixed bottom-30 right-30 z-50">
+                <div className="chatbox__support">
+                    <div className="chatbox__header sticky top-0 bg-gradient-to-r from-primary to-primary-light flex items-center justify-center px-5 py-3 rounded-t-lg shadow-md">
+                        <div className="chatbox__image--header">
+                            <div className="img_chat">
+                                <img className="chat_profile" src="https://img.freepik.com/premium-photo/small-friendly-orange-robot-waving-greeting_973328-580.jpg" alt="image" />
+                            </div>
+                        </div>
+                        <div className="chatbox__content--header">
+                            <h4 className="chatbox__heading--header">Learnbot</h4>
+                            <p className="chatbox__description--header">สวัสดีฉัน Learnbot นะ มีอะไรให้ช่วยมั้ย?</p>
+                        </div>
+                    </div>
+                    <div className="chatbox__messages px-5">
+                        <div></div>
+                    </div>
+                    <div className="chatbox__footer flex items-center justify-between px-5 py-3 bg-gradient-to-r from-primary to-primary-light shadow-md rounded-b-lg mt-3">
+                        <input type="text" placeholder="เขียนข้อความซักหน่อยสิ..." className="w-4/5 border-none px-4 py-2 rounded-full" />
+                        <button className="chatbox__send--footer send__button text-white">Send</button>
+                    </div>
+                </div>
+                <div className="chatbox__button">
+                    <button><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRR2YcBFHB3YTD6Z6lGBCtn7jkWK-C4yIohw&s" alt="icon" width="40px" height="30px"/></button>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 class Chatbox {
     constructor() {
@@ -93,48 +133,6 @@ class Chatbox {
         const chatmessage = chatbox.querySelector('.chatbox__messages');
         chatmessage.innerHTML = html;
     }
-}
-
-const Chatbot: React.FC = () => {
-    useEffect(() => {
-        const chatbox = new Chatbox();
-        chatbox.display();
-
-        return () => {
-
-        };
-    }, []); // Empty dependency array means this effect will only run once
-    
-    return (
-        <div className="container">
-            <div className="chatbox">
-                <div className="chatbox__support">
-                    <div className="chatbox__header">
-                        <div className="chatbox__image--header">
-                            <div className="img_chat">
-                            <img className="chat_profile" src="https://img.freepik.com/premium-photo/small-friendly-orange-robot-waving-greeting_973328-580.jpg" alt="image" />
-                            </div>
-                            
-                        </div>
-                        <div className="chatbox__content--header">
-                            <h4 className="chatbox__heading--header">Learnbot</h4>
-                            <p className="chatbox__description--header">สวัสดีฉัน Learnbot นะ มีอะไรให้ช่วยมั้ย?</p>
-                        </div>
-                    </div>
-                    <div className="chatbox__messages">
-                        <div></div>
-                    </div>
-                    <div className="chatbox__footer">
-                        <input type="text" placeholder="เขียนข้อความซักหน่อยสิ..." />
-                        <button className="chatbox__send--footer send__button"><span>Send</span></button>
-                    </div>
-                </div>
-                <div className="chatbox__button">
-                    <button><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRR2YcBFHB3YTD6Z6lGBCtn7jkWK-C4yIohw&s" alt="icon" width="40px" height="30px"/></button>
-                </div>
-            </div>
-        </div>
-    );
 }
 
 export default Chatbot;
