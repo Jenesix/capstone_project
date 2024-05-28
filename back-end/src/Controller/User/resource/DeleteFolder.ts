@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
-import { ResourceFolderModel } from "../../../Model/Schema";
+import { ResourceModel, ResourceFolderModel } from "../../../Model/Schema";
 
 export const DeleteFolder = async (req: Request, res: Response) => {
     try {
         const { folderID } = req.params;
-        const result = await ResourceFolderModel.findByIdAndDelete(folderID);
-        if (!result) {
+
+        const folder = await ResourceFolderModel.findById(folderID);
+        if (!folder) {
             return res.status(400).json({ message: "Folder not found" });
         }
+
+        await ResourceModel.deleteMany({ _id: { $in: folder.ResourceID } });
+        await folder.deleteOne();
+
         return res.status(200).json({ message: "Delete folder success" });
     } catch (error) {
         console.log(error);
