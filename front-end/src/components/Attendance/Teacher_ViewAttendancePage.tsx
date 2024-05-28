@@ -1,16 +1,14 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { MdWatchLater } from "react-icons/md";
 import { GoXCircleFill } from "react-icons/go";
 import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
 import profile from '../../../public/profile.svg';
 import Link from 'next/link';
-
 import { useParams } from 'next/navigation';
 import UserCard from '../QnABoard/UserCard';
-
-
+import { axioslib } from '@/lib/axioslib';
 
 const getStatusIcon = (status: string) => {
     switch (status) {
@@ -25,83 +23,93 @@ const getStatusIcon = (status: string) => {
     }
 };
 
-//------------Mock Up Data ----------------
+const formatDate = (dateString: string) => {
+    if (!dateString) return "";
 
-const Attendance = [
-    {
-        date_atd: "19 January 2024",
-        time_start: "9:30",
-    },
-]
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+};
 
-const AttendanceCheck = [
-    {
-        status_atd: "On time",
-        time_check: "9:37",
-        user_id: "65090500414",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "Late",
-        time_check: "9:48",
-        user_id: "65090500415",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "Absent",
-        time_check: "-",
-        user_id: "65090500416",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "Absent",
-        time_check: "-",
-        user_id: "65090500417",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "On time",
-        time_check: "9:32",
-        user_id: "65090500418",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "Late",
-        time_check: "9:50",
-        user_id: "65090500419",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-];
+const formatTime = (dateString: string) => {
+    if (!dateString) return "-";
 
-//-----------------------------------------------------
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "-";
+
+    const offset = 7 * 60;
+    const localTime = new Date(date.getTime() + offset * 60 * 1000);
+
+    const hours = localTime.getUTCHours().toString().padStart(2, '0');
+    const minutes = localTime.getUTCMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+};
 
 const Teacher_ViewAttendancePage: React.FC = () => {
     const { classID, attendID } = useParams();
-    const [attendanceData, setAttendanceData] = useState(AttendanceCheck);
+    const [attendanceData, setAttendanceData] = useState<any[]>([]);
+    const [attendanceCheckData, setAttendanceCheckData] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchAttendanceData = async () => {
+            try {
+                const userClassResponse = await axioslib.get(`/api/user/getuserclass/${classID}`);
+                const users: any[] = userClassResponse.data;
+
+                const attendanceCheckResponse = await axioslib.get(`/api/user/getattendcheck/${attendID}`);
+                const attendanceChecks: any[] = attendanceCheckResponse.data;
+
+                const data = users.map(user => {
+                    const userAttendance = attendanceChecks.find(attendCheck => attendCheck.UserID === user._id);
+                    return {
+                        ...user,
+                        status_atd: userAttendance ? userAttendance.status_atd : "Absent",
+                        time_check: userAttendance ? userAttendance.time_check : "-",
+                        profileImage: profile,
+                    };
+                });
+
+                setAttendanceData(data);
+                setAttendanceCheckData(attendanceChecks);
+            } catch (error) {
+                console.error('Error fetching attendance data:', error);
+            }
+        };
+
+        fetchAttendanceData();
+    }, [classID, attendID]);
 
     const countStatus = (status: string) => attendanceData.filter(entry => entry.status_atd === status).length;
     const onTimeCount = countStatus("On time");
     const lateCount = countStatus("Late");
     const absentCount = countStatus("Absent");
 
-    const handleStatusChange = (user_id: string, newStatus: string) => {
-        setAttendanceData(prevData =>
-            prevData.map(entry =>
-                entry.user_id === user_id ? { ...entry, status_atd: newStatus } : entry
-            )
-        );
+    const handleStatusChange = async (user_id: string, newStatus: string) => {
+        try {
+            const userAttendance = attendanceCheckData.find(entry => entry.UserID === user_id);
+            console.log(userAttendance);
+
+            if (userAttendance) {
+                await axioslib.put(`/api/user/editattendcheck/${userAttendance._id}`, {
+                    status_atd: newStatus
+                });
+            } else {
+                const response = await axioslib.post(`/api/user/createattendcheck/${attendID}`, {
+                    UserID: user_id,
+                    status_atd: newStatus,
+                    time_check: new Date().toISOString()
+                });
+                setAttendanceCheckData(prevData => [...prevData, response.data]);
+            }
+
+            setAttendanceData(prevData =>
+                prevData.map(entry =>
+                    entry._id === user_id ? { ...entry, status_atd: newStatus } : entry
+                )
+            );
+        } catch (error) {
+            console.error('Error updating attendance status:', error);
+        }
     };
 
     return (
@@ -114,7 +122,7 @@ const Teacher_ViewAttendancePage: React.FC = () => {
             <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Attendance</h1>
             <div className='flex flex-col justify-center mt-12 2xl:mx-20 overflow-x-auto'>
                 <div className='flex flex-row pl-12 pb-5'>
-                    <h2 className="text-salate-1000 font-bold text-2xl">{Attendance[0].date_atd}</h2>
+                    <h2 className="text-salate-1000 font-bold text-2xl">{attendanceData.length > 0 ? formatDate(attendanceData[0].date_atd) : ''}</h2>
                     <div className='bg-bookmark2 px-3 p-1 rounded-3xl ml-2'>
                         <p className='text-white font-bold text-center text-base min-w-6'>{onTimeCount}</p>
                     </div>
@@ -131,12 +139,12 @@ const Teacher_ViewAttendancePage: React.FC = () => {
                             <th className="font-black rounded-tl-4xl px-2 sm:px-6 lg:min-w-80">Date</th>
                             <th className="font-black border-x border-salate-1000 px-2 sm:px-6 lg:min-w-60">Time</th>
                             <th className="font-black border-x border-salate-1000 px-2 sm:px-6 lg:min-w-60">Status</th>
-                            <th className="font-black rounded-tr-4xl px-2 sm:px-6 lg:min-w-52">Manage</th>
+                            <th className="font-black rounded-tr-4xl px-2  sm:px-6 lg:min-w-52">Manage</th>
                         </tr>
                     </thead>
                     <tbody>
                         {attendanceData.map((entry, index) => (
-                            <tr key={index} className={index % 2 === 0 ? "bg-content-light h-20" : "bg-white h-20"}>
+                            <tr key={entry._id} className={index % 2 === 0 ? "bg-content-light h-20" : "bg-white h-20"}>
                                 <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap font-extrabold">
                                     <UserCard
                                         profileImage={entry.profileImage}
@@ -149,7 +157,7 @@ const Teacher_ViewAttendancePage: React.FC = () => {
                                         sizeiduser='text-sm'
                                     />
                                 </td>
-                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.time_check}</td>
+                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{formatTime(entry.time_check)}</td>
                                 <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">
                                     <div className="flex flex-row justify-evenly items-center">
                                         {getStatusIcon(entry.status_atd)}
@@ -157,13 +165,13 @@ const Teacher_ViewAttendancePage: React.FC = () => {
                                 </td>
                                 <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">
                                     <div className='flex flex-row justify-evenly'>
-                                        <div className="max-w-sm mx-auto">
-                                            <label htmlFor={`AttendanceCheck-${entry.user_id}`} className="block mb-2 text-sm font-medium">Change Status</label>
+                                        <div className="max-w-sm mx-auto" >
+                                            <label htmlFor={`AttendanceCheck-${entry._id}`} className="block mb-2 text-sm font-medium">Change Status</label>
                                             <select
-                                                id={`AttendanceCheck-${entry.user_id}`}
+                                                id={`AttendanceCheck-${entry._id}`}
                                                 className="border text-sm rounded-lg block w-full p-2.5"
                                                 value={entry.status_atd}
-                                                onChange={(e) => handleStatusChange(entry.user_id, e.target.value)}
+                                                onChange={(e) => handleStatusChange(entry._id, e.target.value)}
                                             >
                                                 <option value="On time">On time</option>
                                                 <option value="Late">Late</option>
@@ -186,4 +194,3 @@ const Teacher_ViewAttendancePage: React.FC = () => {
 };
 
 export default Teacher_ViewAttendancePage;
-

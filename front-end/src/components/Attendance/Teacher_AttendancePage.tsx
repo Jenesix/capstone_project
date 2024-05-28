@@ -1,140 +1,86 @@
 "use client";
 import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
-import profile from '../../../public/profile.svg';
 import { FiTrash2 } from 'react-icons/fi';
 
 import { useParams } from 'next/navigation';
 import Teacher_EditButton from '../NewEdit/Teacher_EditButton';
 import Teacher_ViewButton from '../NewEdit/Teacher_ViewButton';
 
-import { format, isToday, isYesterday, parseISO } from 'date-fns';
-import { useState, useEffect } from 'react';
+import { format } from 'date-fns';
+import { useState, useEffect, useCallback } from 'react';
 import { axioslib } from '@/lib/axioslib';
 import { Attendance, AttendanceCheck } from '@/interface/interface';
-
-//------------Mock Up Data ----------------
-
-const Attendancemock = [
-    {
-        date_atd: "19 January 2024",
-        time_start: "9:30",
-    },
-    {
-        date_atd: "26 January 2024",
-        time_start: "10:30",
-    },
-    {
-        date_atd: "02 February 2024",
-        time_start: "12:30",
-    },
-    {
-        date_atd: "22 May 2024",
-        time_start: "05:50",
-    }
-];
-
-const AttendanceCheckmock = [
-    {
-        status_atd: "On time",
-        user_id: "65090500414",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "Late",
-        user_id: "65090500415",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "Absent",
-        user_id: "65090500416",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "-",
-        user_id: "65090500417",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "On time",
-        user_id: "65090500418",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-    {
-        status_atd: "Late",
-        user_id: "65090500419",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        profileImage: profile,
-    },
-];
-
-//-----------------------------------------------------
-
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const Teacher_AttendancePage: React.FC = () => {
-    const { classID, attendID } = useParams();
+    const { classID } = useParams();
 
-    const [attendances, setAttendances] = useState<Attendance | undefined>(undefined);
-    const [attendChecks, setAttendChecks] = useState<AttendanceCheck | undefined>(undefined);
+    const [attendances, setAttendances] = useState<(Attendance & { checks: AttendanceCheck[] })[]>([]);
 
-    // const countStatus = (status: string) => AttendanceCheck.filter(entry => entry.status_atd === status).length;
-    // const onTimeCount = countStatus("On time");
-    // const LateCount = countStatus("Late");
-    // const AbsentCount = countStatus("Absent");
-
-    const fetchAttendance = async () => {
+    const fetchAttendance = useCallback(async () => {
         try {
             const response = await axioslib.get(`/api/user/getattend/${classID}`);
-            setAttendances(response.data);
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
+            const attendancesData = response.data;
 
-    const fetchStatusCount = async (attendID: string, status: string) => {
-        try {
-            let count = 0;
-            const response = await axioslib.get(`/api/user/getattendcheck/${attendID}`);
-            response.data.forEach((entry: any) => {
-                if (entry.status_atd === status) {
-                    count++;
-                }
-            });
-            console.log(status, count);
-            return count;
+            // Fetch attendance checks for each attendance record
+            const attendanceWithChecks = await Promise.all(
+                attendancesData.map(async (attendance: Attendance) => {
+                    const checkResponse = await axioslib.get(`/api/user/getattendcheck/${attendance._id}`);
+                    return { ...attendance, checks: checkResponse.data };
+                })
+            );
+
+            setAttendances(attendanceWithChecks);
         } catch (error) {
             console.log(error);
         }
-    }
+    }, [classID]);
 
     useEffect(() => {
         fetchAttendance();
-    }, []);
+    }, [fetchAttendance]);
 
-    const handleDeleteAttendance = async () => {
-        // try {
-        //     await axioslib.delete(`/api/user/deleteresource/${fileId}`);
-        //     setFiles(files.filter(file => file._id !== fileId));
-        // } catch (error) {
-        //     console.log(error);
-        // }
-    }
+    const handleDeleteAttendance = async (attendanceID: string) => {
+        try {
+            const attendanceToDelete = attendances.find(attendance => attendance._id === attendanceID);
+            if (attendanceToDelete) {
+                await Promise.all(attendanceToDelete.checks.map(async (check) => {
+                    await axioslib.delete(`/api/user/deleteattendcheck/${check._id}`);
+                }));
+            }
 
-    const formatDate = (date: string) => {
-        const dateObj = parseISO(date);
-        return format(dateObj, 'dd MMMM yyyy');
-    }
+            await axioslib.delete(`/api/user/deleteattend/${attendanceID}`);
+
+            setAttendances(attendances.filter(attendance => attendance._id !== attendanceID));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const confirmDelete = (attendanceID: string) => {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Are you sure you want to delete this attendance record?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => handleDeleteAttendance(attendanceID)
+                },
+                {
+                    label: 'No',
+                }
+            ]
+        });
+    };
+
+    const formatDate = (date: Date) => {
+        return format(date, 'dd MMMM yyyy');
+    };
+
+    const countStatus = (checks: AttendanceCheck[], status: string) => {
+        return checks.filter((check) => check.status_atd === status).length;
+    };
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
@@ -150,43 +96,45 @@ const Teacher_AttendancePage: React.FC = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {attendances?.map((attendance, index) => (
-                            <tr key={index} className={index % 2 === 0 ? "bg-white h-20" : "bg-white h-20"}>
-                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap font-extrabold">{formatDate(attendance.date_atd)}</td>
-                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{attendance.time_start}</td>
-                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">
-                                    <div className="flex flex-row justify-evenly items-center">
+                        {attendances.map((attendance, index) => {
+                            const onTimeCount = countStatus(attendance.checks, "On time");
+                            const lateCount = countStatus(attendance.checks, "Late");
+                            const absentCount = countStatus(attendance.checks, "Absent");
 
-                                        <div className='bg-bookmark2 px-3 p-1 rounded-3xl'>
-                                            <p className='text-white font-bold text-base min-w-6'>{1}</p>
+                            return (
+                                <tr key={index} className={index % 2 === 0 ? "bg-white h-20" : "bg-white h-20"}>
+                                    <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap font-extrabold">{formatDate(attendance.date_atd)}</td>
+                                    <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{attendance.time_start}</td>
+                                    <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">
+                                        <div className="flex flex-row justify-evenly items-center">
+                                            <div className='bg-bookmark2 px-3 p-1 rounded-3xl'>
+                                                <p className='text-white font-bold text-base min-w-6'>{onTimeCount}</p>
+                                            </div>
+                                            <div className='bg-bookmark3 px-3 p-1 rounded-3xl'>
+                                                <p className='text-white font-bold text-base min-w-6'>{lateCount}</p>
+                                            </div>
+                                            <div className='bg-bookmark1 px-3 p-1 rounded-3xl'>
+                                                <p className='text-white font-bold text-base min-w-6'>{absentCount}</p>
+                                            </div>
                                         </div>
-                                        <div className='bg-bookmark3 px-3 p-1 rounded-3xl'>
-                                            <p className='text-white font-bold text-base min-w-6'>{1}</p>
+                                    </td>
+                                    <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">
+                                        <div className='flex flex-row justify-evenly items-center'>
+                                            <Teacher_EditButton
+                                                editLink={`/Teacher/${classID}/Attendance/${attendance._id}/Edit`}
+                                            />
+                                            <Teacher_ViewButton
+                                                viewLink={`/Teacher/${classID}/Attendance/${attendance._id}/View`}
+                                            />
+                                            <FiTrash2
+                                                className="text-bookmark1 cursor-pointer ml-2 size-5"
+                                                onClick={() => confirmDelete(attendance._id)}
+                                            />
                                         </div>
-                                        <div className='bg-bookmark1 px-3 p-1 rounded-3xl'>
-                                            <p className='text-white font-bold text-base min-w-6'>{1}</p>
-                                        </div>
-
-                                    </div>
-                                </td>
-                                <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">
-                                    <div className='flex flex-row justify-evenly items-center'>
-                                        <Teacher_EditButton
-                                            editLink={`/Teacher/${classID}/Attendance/${attendID}/Edit`}
-                                        />
-
-                                        <Teacher_ViewButton
-                                            viewLink={`/Teacher/${classID}/Attendance/${attendID}/View`}
-                                        />
-
-                                        <FiTrash2
-                                            className="text-bookmark1 cursor-pointer ml-2 size-5"
-                                            onClick={() => handleDeleteAttendance()}
-                                        />
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
