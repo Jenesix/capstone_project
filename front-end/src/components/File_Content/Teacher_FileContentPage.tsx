@@ -53,20 +53,15 @@ const Teacher_FileContentPage: FC = () => {
         }
     }
 
-
-    // สำหรับหลังบ้าน
-    const handleAddFolder = async (e: React.FormEvent) => {
-        // e.preventDefault();
-        // try {
-        //     const response = await axioslib.post(`/api/user/addfolder`, {
-        //         classID,
-        //         folderName: newFolderName
-        //     });
-        //     setFolders([...folders, response.data]);
-        //     setNewFolderName('');
-        // } catch (error) {
-        //     console.log(error);
-        // }
+    const handleCreateFolder = async (e: React.FormEvent) => {
+        try {
+            await axioslib.post(`/api/user/createfolder/${classID}`, { folder_name: newFolderName })
+                .then(() => {
+                    window.location.href = `/Teacher/${classID}/File_Content`;
+                });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
@@ -103,19 +98,19 @@ const Teacher_FileContentPage: FC = () => {
                 <h2 className="text-xl font-bold mb-4 text-gray">Folders</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-salate-1000 font-bold">
                     {folders.map((folder, index) => (
-                        <div className='rounded shadow flex flex-row w-fit items-center'>
-                        <Link href={`/Teacher/${classID}/File_Content/${folder._id}`} key={index}>
-                            <div className="p-2 flex items-center cursor-pointer w-full">
-                                <div className="flex items-center px-4 mr-4 ">
-                                    <FaFolder className="mr-2" />
-                                    <span>{folder.folder_name}</span>
+                        <div className='rounded shadow flex flex-row w-fit items-center' key={index}>
+                            <Link href={`/Teacher/${classID}/File_Content/${folder._id}`}>
+                                <div className="p-2 flex items-center cursor-pointer w-full">
+                                    <div className="flex items-center px-4 mr-4 ">
+                                        <FaFolder className="mr-2" />
+                                        <span>{folder.folder_name}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </Link>
-                                <FiTrash2 
-                                    className="text-bookmark1 cursor-pointer ml-2 ml-auto mr-2"
-                                    onClick={() => handleDeleteFolder(folder._id)}
-                                    />
+                            </Link>
+                            <FiTrash2
+                                className="text-bookmark1 cursor-pointer ml-2 ml-auto mr-2"
+                                onClick={() => handleDeleteFolder(folder._id)}
+                            />
                         </div>
                     ))}
                 </div>
@@ -137,12 +132,12 @@ const Teacher_FileContentPage: FC = () => {
                                     </a>
                                 </span>
                             </div>
-                                <div className="flex justify-end">
-                                <FiTrash2 
+                            <div className="flex justify-end">
+                                <FiTrash2
                                     className="text-bookmark1 cursor-pointer ml-2"
                                     onClick={() => handleDeleteFile(file._id)}
                                 />
-                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -152,14 +147,15 @@ const Teacher_FileContentPage: FC = () => {
                 <Teacher_NewButton
                     newLink={`/Teacher/${classID}/File_Content/New`}
                     text='New File'
-                    />
+                />
 
                 {/* Add Folder Button */}
-                <form onSubmit={handleAddFolder} className="mb-5 px-2 md:pl-4 bottom-20 ml-4 bg-content-light rounded-3xl flex items-center justify-center p-4 fixed text-salate-1000">
+                <form onSubmit={handleCreateFolder} className="mb-5 px-2 md:pl-4 bottom-20 ml-4 bg-content-light rounded-3xl flex items-center justify-center p-4 fixed text-salate-1000">
                     <input
                         placeholder="Folder Name"
                         type="text"
                         value={newFolderName}
+                        name='folder_name'
                         onChange={(e) => setNewFolderName(e.target.value)}
                         className="pl-2 p-2 ml-2 bg-content-light rounded-3xl text-sm md:text-base w-20 md:w-32"
                     />

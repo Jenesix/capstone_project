@@ -12,8 +12,8 @@ const Teacher_NewFileContent: React.FC = () => {
     const { classID, folderID } = useParams();
     const [files, setFiles] = useState<File[]>([]);
 
-    const [dbfiles, setDBFiles] = useState<Resource[]>([]);
-    
+    // const [dbfiles, setDBFiles] = useState<Resource[]>([]);
+
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = e.target.files;
@@ -34,18 +34,30 @@ const Teacher_NewFileContent: React.FC = () => {
             formData.append('files', file);
         });
 
-        const endpoint = folderID
-            ? `/api/user/uploadresource?classID=${classID}&folderID=${folderID}`
-            : `/api/user/uploadresource?classID=${classID}`;
+        // const endpoint = folderID
+        //     ? `/api/user/uploadresource?classID=${classID}&folderID=${folderID}`
+        //     : `/api/user/uploadresource?classID=${classID}`;
 
+        // try {
+        //     await axioslib.post(endpoint, formData)
+        //         .then((response) => {
+        //             console.log('File uploaded successfully:', response.data);
+        //         })
+        //         .then(() => {
+        //             window.location.href = `/Teacher/${classID}/File_Content`;
+        //         });
         try {
-            await axioslib.post(endpoint, formData)
-                .then((response) => {
-                    console.log('File uploaded successfully:', response.data);
-                })
-                .then(() => {
-                    window.location.href = `/Teacher/${classID}/File_Content`;
-                });
+            if (!folderID) {
+                await axioslib.post(`/api/user/uploadresource?classID=${classID}`, formData)
+                    .then(() => {
+                        window.location.href = `/Teacher/${classID}/File_Content`;
+                    });
+            } else {
+                await axioslib.post(`/api/user/uploadresource?classID=${classID}&folderID=${folderID}`, formData)
+                    .then(() => {
+                        window.location.href = `/Teacher/${classID}/File_Content/${folderID}`;
+                    });
+            }
         } catch (error) {
             console.error('Error uploading file:', error);
         }
