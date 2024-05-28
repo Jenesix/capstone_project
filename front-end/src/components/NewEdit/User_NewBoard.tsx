@@ -43,20 +43,14 @@ const User_NewBoard: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append('title_p', title);
-        formData.append('description_p', description);
-        if (image) {
-            formData.append('post_image', image);
-        }
-
         try {
-            const response = await axioslib.post(`/api/user/createpost/${classID}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+            await axioslib.post(`/api/user/createpost/${classID}`, {
+                title_p: title,
+                description_p: description,
+                files: image ? [image] : null,
+            }).then(() => {
+                window.location.href = `/${classID}/QnABoard`;
             });
-            console.log('Post created:', response.data);
         } catch (error) {
             console.error('Error creating post:', error);
         }
@@ -78,7 +72,7 @@ const User_NewBoard: React.FC = () => {
                         <div className='w-60 md:w-72 lg:w-96 2xl:w-auto bg-content-light rounded-b-2xl text-xs md:text-base lg:text-lg pt-4 p-4 md:p-8 lg:p-12'>
                             <p>Board Title</p>
                             <input
-                                value={title}
+                                name='title_p'
                                 onChange={handleTitleChange}
                                 placeholder="Your Title"
                                 type='text'
@@ -87,7 +81,7 @@ const User_NewBoard: React.FC = () => {
 
                             <p className='mt-4'>Board Description</p>
                             <textarea
-                                value={description}
+                                name='description_p'
                                 onChange={handleDescriptionChange}
                                 placeholder="Your Description"
                                 className='mt-2 p-2 pl-4 bg-white border-salate-1000 rounded-xl w-full min-h-60'
@@ -101,6 +95,7 @@ const User_NewBoard: React.FC = () => {
                                     onChange={handleImageChange}
                                     className="hidden"
                                     id="file-upload"
+                                    multiple
                                 />
                                 <label htmlFor="file-upload" className="cursor-pointer text-primary bg-white border-salate-1000 rounded-xl py-2 px-4">
                                     Choose File

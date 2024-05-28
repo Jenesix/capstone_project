@@ -4,15 +4,16 @@ import { IoChatbubbleEllipses } from "react-icons/io5";
 import Link from 'next/link';
 import UserCard from './UserCard';
 import Image from 'next/image';
+import { format, parseISO } from 'date-fns';
 import { useParams } from 'next/navigation';
 import { Comment, Post, User } from '@/interface/interface';
 import { axioslib } from '@/lib/axioslib';
 import profile from '../../../public/profile.svg';
 
 const QnADetailPage: React.FC = () => {
-    const { classID, qnaboardID } = useParams();
+    const { classID, postID } = useParams();
     console.log("classID:", classID);
-    console.log("postID:", qnaboardID);
+    console.log("postID:", postID);
 
     const [post, setPost] = useState<Post | null>(null);
     const [comments, setComments] = useState<Comment[]>([]);
@@ -21,13 +22,13 @@ const QnADetailPage: React.FC = () => {
     useEffect(() => {
         const fetchPostData = async () => {
             try {
-                const response = await axioslib.get(`/api/user/getpostbyid/${qnaboardID}`);
+                const response = await axioslib.get(`/api/user/getpostbyid/${postID}`);
                 console.log("Post data response:", response.data);
                 setPost(response.data);
                 const commentIds: string[] = response.data.CommentID;
                 // ต้อง Fetch ข้อมูล Comment จาก CommentID ที่ได้จาก Post
 
-                setComments([]); // Mock up เป็น Array ว่างก่อน
+                setComments(response.data.CommentID); // Mock up เป็น Array ว่างก่อน
                 setUser(response.data.UserID);
             } catch (error) {
                 console.error("Error fetching post data", error);
@@ -35,7 +36,7 @@ const QnADetailPage: React.FC = () => {
         };
 
         fetchPostData();
-    }, [qnaboardID]);
+    }, [postID]);
 
     console.log("post:", post);
     console.log("comments:", comments);
@@ -46,6 +47,11 @@ const QnADetailPage: React.FC = () => {
     }
 
     const countComment = comments.length;
+
+    const formatDate = (date: string) => {
+        const dateObj = parseISO(date);
+        return format(dateObj, 'dd/MM/yyyy, HH:mm');
+    }
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
@@ -69,7 +75,7 @@ const QnADetailPage: React.FC = () => {
                             sizenameuser='text-base'
                             sizeiduser='text-sm'
                         />
-                        <p className='pt-5 pl-3 text-sm'>{new Date(post.time_p).toLocaleString()}</p>
+                        <p className='pt-5 pl-3 text-sm'>{formatDate(String(post.time_p))}</p>
                     </div>
                     <h1 className='text-primary font-bold text-2xl mt-4'>{post.title_p}</h1>
                     <p className='mt-4'>{post.description_p}</p>
@@ -85,7 +91,7 @@ const QnADetailPage: React.FC = () => {
                             <div className='flex flex-row'>
                                 <UserCard
                                     profileImage={profile}
-                                    user_id={comment.UserID}
+                                    user_id={user.user_id}
                                     firstname={user.firstname}
                                     lastname={user.lastname}
                                     sizeprofile='size-20'
@@ -93,7 +99,7 @@ const QnADetailPage: React.FC = () => {
                                     sizenameuser='text-base'
                                     sizeiduser='text-sm'
                                 />
-                                <p className='pt-5 pl-3 text-sm'>{new Date(comment.time_cm).toLocaleString()}</p>
+                                <p className='pt-5 pl-3 text-sm'>{formatDate(String(comment.time_cm))}</p>
                             </div>
                             <div className='ml-12 bg-content-light rounded-tr-3xl rounded-b-3xl'>
                                 <p className='p-4 m-4 ml-12'>{comment.comment}</p>
