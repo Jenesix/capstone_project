@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/NavBar";
 import { UserProvider } from "@/context/UserContext";
+import Chatbot from "../../testcap/src/app/page";
+import { BsJustify } from "react-icons/bs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +25,7 @@ export default function RootLayout({
         <UserProvider>
           <Navbar />
           {children}
+        <Chatbot/>
         </UserProvider>
       </body>
     </html>
