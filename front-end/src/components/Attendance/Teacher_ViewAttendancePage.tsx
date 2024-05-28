@@ -78,10 +78,10 @@ const Teacher_ViewAttendancePage: React.FC = () => {
     const lateCount = countStatus("Late");
     const absentCount = countStatus("Absent");
 
-    const handleStatusChange = async (_id: string, newStatus: string) => {
+    const handleStatusChange = async (userID: string, newStatus: string) => {
         try {
-            const userAttendance = attendanceCheckData.find(entry => entry.userID === _id);
-            console.log("ID:", _id);
+            const userAttendance = attendanceCheckData.find(entry => entry.userID === userID);
+            console.log("ID:", userID);
             console.log("New Status:", newStatus);
             console.log("userAttendance:", userAttendance);
 
@@ -90,8 +90,8 @@ const Teacher_ViewAttendancePage: React.FC = () => {
                     status_atd: newStatus
                 });
             } else {
-                const response = await axioslib.post(`api/user/createattendcheckt?attendID=${attendID}&userID=${_id}`, {
-                    userID: _id,
+                const response = await axioslib.post(`api/user/createattendcheckt?attendID=${attendID}&userID=${userID}`, {
+                    userID: userID,
                     status_atd: newStatus,
                 });
                 console.log("New attendance entry:", response.data);
@@ -100,7 +100,7 @@ const Teacher_ViewAttendancePage: React.FC = () => {
 
             setAttendanceData(prevData =>
                 prevData.map(entry =>
-                    entry._id === _id ? { ...entry, status_atd: newStatus } : entry
+                    entry._id === userID ? { ...entry, status_atd: newStatus } : entry
                 )
             );
         } catch (error) {
