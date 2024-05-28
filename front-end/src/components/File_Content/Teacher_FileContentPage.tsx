@@ -108,7 +108,7 @@ const Teacher_FileContentPage: FC = () => {
                                 </div>
                             </Link>
                             <FiTrash2
-                                className="text-bookmark1 cursor-pointer ml-2 ml-auto mr-2"
+                                className="text-bookmark1 cursor-pointer ml-auto mr-2"
                                 onClick={() => handleDeleteFolder(folder._id)}
                             />
                         </div>
