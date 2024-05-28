@@ -23,12 +23,6 @@ const getStatusIcon = (status: string) => {
     }
 };
 
-const formatDate = (dateString: string) => {
-    if (!dateString) return "";
-
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
-};
 
 const formatTime = (dateString: string) => {
     if (!dateString) return "-";
@@ -122,7 +116,7 @@ const Teacher_ViewAttendancePage: React.FC = () => {
             <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Attendance</h1>
             <div className='flex flex-col justify-center mt-12 2xl:mx-20 overflow-x-auto'>
                 <div className='flex flex-row pl-12 pb-5'>
-                    <h2 className="text-salate-1000 font-bold text-2xl">{attendanceData.length > 0 ? formatDate(attendanceData[0].date_atd) : ''}</h2>
+                    {/* <h2 className="text-salate-1000 font-bold text-2xl">{attendanceData.length > 0 ? formatDate(attendanceData[0].date_atd) : ''}</h2> */}
                     <div className='bg-bookmark2 px-3 p-1 rounded-3xl ml-2'>
                         <p className='text-white font-bold text-center text-base min-w-6'>{onTimeCount}</p>
                     </div>
