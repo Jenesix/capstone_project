@@ -10,13 +10,15 @@ import { useParams } from 'next/navigation';
 import { Comment, Post, User } from '@/interface/interface';
 import { axioslib } from '@/lib/axioslib';
 import profile from '../../../public/profile.svg';
+import { useUser } from '@/context/UserContext';
 
-const Teacher_QnADetailPage: React.FC = () => {
+const QnADetailPage: React.FC = () => {
   const { classID, postID } = useParams();
+  const { user } = useUser();
 
   const [post, setPost] = useState<Post | null>(null);
+  const [postOwner, setPostOwner] = useState<User | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
-  const [user, setUser] = useState<User | null>(null);
 
   const [newComment, setNewComment] = useState<string>('');
   const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,13 +48,11 @@ const Teacher_QnADetailPage: React.FC = () => {
     const fetchPostData = async () => {
       try {
         const response = await axioslib.get(`/api/user/getpostbyid/${postID}`);
-        console.log("Post data response:", response.data);
         setPost(response.data);
-        const commentIds: string[] = response.data.CommentID;
-        // ต้อง Fetch ข้อมูล Comment จาก CommentID ที่ได้จาก Post
+        // const commentIds: string[] = response.data.CommentID;
 
-        setComments(response.data.CommentID); // Mock up เป็น Array ว่างก่อน
-        setUser(response.data.UserID);
+        setComments(response.data.CommentID);
+        setPostOwner(response.data.UserID);
       } catch (error) {
         console.error("Error fetching post data", error);
       }
@@ -61,7 +61,7 @@ const Teacher_QnADetailPage: React.FC = () => {
     fetchPostData();
   }, [postID]);
 
-  if (!post || !user) {
+  if (!post || !postOwner) {
     return <div>Loading...</div>;
   }
 
@@ -71,6 +71,9 @@ const Teacher_QnADetailPage: React.FC = () => {
     const dateObj = parseISO(date);
     return format(dateObj, 'dd/MM/yyyy, HH:mm');
   }
+
+  console.log(comments);
+
 
   return (
     <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
@@ -86,9 +89,9 @@ const Teacher_QnADetailPage: React.FC = () => {
           <div className='flex flex-row'>
             <UserCard
               profileImage={profile}
-              user_id={user.user_id}
-              firstname={user.firstname}
-              lastname={user.lastname}
+              user_id={postOwner.user_id}
+              firstname={postOwner.firstname}
+              lastname={postOwner.lastname}
               sizeprofile='size-20'
               sizedivtext=''
               sizenameuser='text-base'
@@ -110,9 +113,9 @@ const Teacher_QnADetailPage: React.FC = () => {
               <div className='flex flex-row'>
                 <UserCard
                   profileImage={profile}
-                  user_id={user.user_id}
-                  firstname={user.firstname}
-                  lastname={user.lastname}
+                  user_id={comment.UserID.user_id}
+                  firstname={comment.UserID.firstname}
+                  lastname={comment.UserID.lastname}
                   sizeprofile='size-20'
                   sizedivtext=''
                   sizenameuser='text-base'
@@ -144,4 +147,4 @@ const Teacher_QnADetailPage: React.FC = () => {
   );
 };
 
-export default Teacher_QnADetailPage;
+export default QnADetailPage;
