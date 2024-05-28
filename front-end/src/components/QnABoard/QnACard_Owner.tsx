@@ -14,7 +14,7 @@ interface QnACardProps {
     post_title: string,
     editLink: string,
     post_desc: string,
-    postimage: string | StaticImageData;
+    postimage: string;
     time: string,
     user_id: string,
     profileImage: string | StaticImageData;
@@ -96,7 +96,7 @@ const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, p
                                     src={postimage}
                                     layout="fill"
                                     objectFit="cover"
-                                    alt="postimage"
+                                    alt=""
                                 />
                             </div>
                             <div className="font-base">{time}</div>

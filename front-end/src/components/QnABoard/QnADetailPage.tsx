@@ -102,7 +102,9 @@ const QnADetailPage: React.FC = () => {
                     <h1 className='text-primary font-bold text-2xl mt-4'>{post.title_p}</h1>
                     <p className='mt-4'>{post.description_p}</p>
 
-                    <Image className='mt-8 object-contain h-96 sm:h-auto' src={post.post_image} alt="postimage" width={600} height={400} />
+                    {post.post_image !== '' && (
+                        <Image className='mt-8 object-contain h-96 sm:h-auto' src={post.post_image} alt="" width={600} height={400} />
+                    )}
                 </div>
 
                 <div className='xl:pl-10'>
