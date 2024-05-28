@@ -11,7 +11,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { axioslib } from '@/lib/axioslib';
 import { Attendance, AttendanceCheck } from '@/interface/interface';
 import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const Teacher_AttendancePage: React.FC = () => {
     const { classID } = useParams();
@@ -23,7 +23,6 @@ const Teacher_AttendancePage: React.FC = () => {
             const response = await axioslib.get(`/api/user/getattend/${classID}`);
             const attendancesData = response.data;
 
-            // Fetch attendance checks for each attendance record
             const attendanceWithChecks = await Promise.all(
                 attendancesData.map(async (attendance: Attendance) => {
                     const checkResponse = await axioslib.get(`/api/user/getattendcheck/${attendance._id}`);
