@@ -47,6 +47,7 @@ const Teacher_AnnouncementPage: React.FC = () => {
                                     username,
                                     Date: announcement.time_anm.toISOString().split('T')[0],
                                     Time: format(new Date(announcement.time_anm), 'HH:mm'),
+                                    title: announcement.title_anm || 'No title available',
                                     message: announcement.description_anm || 'No description available',
                                     profileImage: profile,
                                 }}
