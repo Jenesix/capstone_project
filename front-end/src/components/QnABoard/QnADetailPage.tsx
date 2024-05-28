@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { IoChatbubbleEllipses } from "react-icons/io5";
+import { FiTrash2 } from 'react-icons/fi';
 import Link from 'next/link';
 import UserCard from './UserCard';
 import Image from 'next/image';
@@ -12,8 +13,6 @@ import profile from '../../../public/profile.svg';
 
 const QnADetailPage: React.FC = () => {
     const { classID, postID } = useParams();
-    console.log("classID:", classID);
-    console.log("postID:", postID);
 
     const [post, setPost] = useState<Post | null>(null);
     const [comments, setComments] = useState<Comment[]>([]);
@@ -50,10 +49,6 @@ const QnADetailPage: React.FC = () => {
 
         fetchPostData();
     }, [postID]);
-
-    console.log("post:", post);
-    console.log("comments:", comments);
-    console.log("user:", user);
 
     if (!post || !user) {
         return <div>Loading...</div>;
