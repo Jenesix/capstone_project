@@ -78,33 +78,37 @@ const Teacher_ViewAttendancePage: React.FC = () => {
     const lateCount = countStatus("Late");
     const absentCount = countStatus("Absent");
 
-    const handleStatusChange = async (user_id: string, newStatus: string) => {
+    const handleStatusChange = async (_id: string, newStatus: string) => {
         try {
-            const userAttendance = attendanceCheckData.find(entry => entry.UserID === user_id);
-            console.log(userAttendance);
+            const userAttendance = attendanceCheckData.find(entry => entry.UserID === _id);
+            console.log("ID:", _id);
+            console.log("New Status:", newStatus);
+            console.log("userAttendance:", userAttendance);
 
-            if (userAttendance) {
+            if (userAttendance && userAttendance.AttendanceID === attendID) {
                 await axioslib.put(`/api/user/editattendcheck/${userAttendance._id}`, {
                     status_atd: newStatus
                 });
             } else {
-                const response = await axioslib.post(`/api/user/createattendcheck/${attendID}`, {
-                    UserID: user_id,
+                const response = await axioslib.post(`api/user/createattendcheckt?attendID=${attendID}&userID=${_id}`, {
+                    UserID: _id,
                     status_atd: newStatus,
                     time_check: new Date().toISOString()
                 });
+                console.log("New attendance entry:", response.data);
                 setAttendanceCheckData(prevData => [...prevData, response.data]);
             }
 
             setAttendanceData(prevData =>
                 prevData.map(entry =>
-                    entry._id === user_id ? { ...entry, status_atd: newStatus } : entry
+                    entry._id === _id ? { ...entry, status_atd: newStatus } : entry
                 )
             );
         } catch (error) {
             console.error('Error updating attendance status:', error);
         }
     };
+
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
