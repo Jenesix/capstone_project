@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { StaticImageData } from 'next/image';
 import profile from '../../../public/profile.svg';
 
+import { axioslib } from '@/lib/axioslib';
+import { useUser } from '@/context/UserContext';
+
 interface QnACardProps {
     postID: string,
     post_title: string,
@@ -18,9 +21,9 @@ interface QnACardProps {
     lastname: string,
 }
 
-const QnACard_Owner: React.FC<QnACardProps> = ({
-    postID, post_title, editLink, post_desc, postimage, time, user_id, profileImage, firstname, lastname }) => {
+const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, post_desc, postimage, time, user_id, profileImage, firstname, lastname }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const { user } = useUser();
 
     const toggleDropdown = () => {
         setDropdownVisible(!dropdownVisible);
@@ -31,7 +34,12 @@ const QnACard_Owner: React.FC<QnACardProps> = ({
             <div className="flex flex-row mb-4">
                 <h1 className="font-bold text-xl text-primary truncate pr-4 flex-grow">{post_title}</h1>
                 <div className="relative">
-                    <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} onBlur={() => setDropdownVisible(false)} />
+                    {/* <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} onBlur={() => setDropdownVisible(false)} /> */}
+                    {user?.user_id === user_id ?
+                        (
+                            <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} onBlur={() => setDropdownVisible(false)} />
+                        ) : <></>
+                    }
                     {dropdownVisible && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                             <Link href={editLink}>
@@ -46,7 +54,8 @@ const QnACard_Owner: React.FC<QnACardProps> = ({
                                 Delete
                             </button>
                         </div>
-                    )}
+                    )
+                    }
                 </div>
             </div>
 
