@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation'; // Import useParams instead of useRouter
+import { useParams } from 'next/navigation';
 import { Assignment, AssignmentTurnin } from '@/interface/interface';
 import AssignBanner from './AssignBanner';
 import { axioslib } from '@/lib/axioslib';
@@ -9,14 +9,11 @@ import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
 import Teacher_AssignmentCard from './Teacher_AssignmentCard';
 
 const Teacher_AssignmentPage: React.FC = () => {
-    const { classID } = useParams(); // Use useParams instead of useRouter
+    const { classID } = useParams();
     const { user, loading: userLoading } = useUser();
     const [assignments, setAssignments] = useState<(Assignment & { status: string })[]>([]);
     const [loading, setLoading] = useState(true);
 
-
-
-    // ------------------------------------ แก้หลังบ้านตรงนี้ด้วยอันนี้ก็อกมาจากฝั่ง User  -------------------------------------------------------------
     useEffect(() => {
         const fetchAssignments = async () => {
             try {
@@ -36,16 +33,20 @@ const Teacher_AssignmentPage: React.FC = () => {
                     let status = 'To Do';
                     const turninResponses = await axioslib.get(`/api/user/getturnin/${assignment._id}`);
                     const turnins: AssignmentTurnin[] = turninResponses.data;
-                    const userTurnin = turnins.find(turnin => turnin.UserID === userId);
+                    const userTurnin = turnins.find(turnin => turnin.UserID._id === userId);
+
+                    const dueDate = new Date(assignment.due_date);
+                    const now = new Date();
 
                     if (userTurnin) {
-                        const dueDate = new Date(assignment.due_date);
                         const turninDate = new Date(userTurnin.turnin_date);
                         if (turninDate > dueDate) {
                             status = 'Late Submitted';
                         } else {
                             status = 'Submitted';
                         }
+                    } else if (now > dueDate) {
+                        status = 'Finished';
                     }
 
                     return {
@@ -70,12 +71,9 @@ const Teacher_AssignmentPage: React.FC = () => {
         return <p>Loading...</p>;
     }
 
-    //-------------------------------------------- แก้หลังบ้านตรงนี้ด้วยอันนี้ก็อกมาจากฝั่ง User  -------------------------------------------------------------
     const toDoAssignments = assignments.filter(assignment => assignment.status === "To Do");
-    const submittedAssignments = assignments.filter(assignment => assignment.status === "Submitted" || assignment.status === "Late Submitted");
+    const finishedAssignments = assignments.filter(assignment => assignment.status === "Finished");
 
-
-    
     return (
         <div className="flex flex-col mt-12 w-full px-4 sm:px-8 min-h-screen pb-6">
             <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Assignment</h1>
@@ -112,7 +110,17 @@ const Teacher_AssignmentPage: React.FC = () => {
                     <div className="flex-grow border-t border-2 border-salate-100 ml-2"></div>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    {submittedAssignments.map(assignment => (
+                    {finishedAssignments.map(assignment => (
+                        <Teacher_AssignmentCard
+                            key={assignment._id}
+                            classID={classID as string}
+                            assignID={assignment._id}
+                            title={assignment.assignment_name}
+                            description={assignment.description_asm}
+                            dueDate={new Date(assignment.due_date).toLocaleDateString()}
+                            status={assignment.status} />
+                    ))}
+                    {finishedAssignments.map(assignment => (
                         <Teacher_AssignmentCard
                             key={assignment._id}
                             classID={classID as string}
