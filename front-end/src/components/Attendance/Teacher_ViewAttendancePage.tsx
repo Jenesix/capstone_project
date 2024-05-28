@@ -88,7 +88,7 @@ const AttendanceCheck = [
 //-----------------------------------------------------
 
 const Teacher_ViewAttendancePage: React.FC = () => {
-    const { classID, attendanceID } = useParams();
+    const { classID, attendID } = useParams();
     const [attendanceData, setAttendanceData] = useState(AttendanceCheck);
 
     const countStatus = (status: string) => attendanceData.filter(entry => entry.status_atd === status).length;
