@@ -80,21 +80,20 @@ const Teacher_ViewAttendancePage: React.FC = () => {
 
     const handleStatusChange = async (user_id: string, newStatus: string) => {
         try {
-            const userAttendance = attendanceCheckData.find(entry => entry.UserID === user_id);
+            let userAttendance = attendanceCheckData.find(entry => entry.UserID === user_id);
             console.log(userAttendance);
 
-            if (userAttendance) {
+            if (!userAttendance) {
+                const response = await axioslib.post(`/api/user/createattendcheck/${attendID}`);
+                userAttendance = response.data.attendCheck;
+                setAttendanceCheckData(prevData => [...prevData, userAttendance]);
+            } else {
                 await axioslib.put(`/api/user/editattendcheck/${userAttendance._id}`, {
                     status_atd: newStatus
                 });
-            } else {
-                const response = await axioslib.post(`/api/user/createattendcheck/${attendID}`, {
-                    UserID: user_id,
-                    status_atd: newStatus,
-                    time_check: new Date().toISOString()
-                });
-                setAttendanceCheckData(prevData => [...prevData, response.data]);
             }
+
+
 
             setAttendanceData(prevData =>
                 prevData.map(entry =>
