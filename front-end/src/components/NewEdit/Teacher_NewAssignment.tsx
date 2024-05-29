@@ -1,12 +1,14 @@
 "use client";
 import { FiTrash2, FiUpload } from 'react-icons/fi';
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import Link from "next/link";
 import { useParams } from 'next/navigation';
 
+import { axioslib } from '@/lib/axioslib';
+
 const Teacher_NewAssignment: React.FC = () => {
     const { classID } = useParams();
-    
+
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [dueDate, setDueDate] = useState<string>('');
@@ -46,29 +48,31 @@ const Teacher_NewAssignment: React.FC = () => {
         setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('dueDate', dueDate);
-        formData.append('dueTime', dueTime);
-        if (score !== '') {
-            formData.append('score', score.toString());
-        }
-        files.forEach(file => {
-            formData.append('files', file);
-        });
+    const handleSubmit = async (e: React.FormEvent) => {
+        try {
+            const formData = new FormData();
+            formData.append('assignment_name', title);
+            formData.append('description_asm', description);
+            formData.append('date', dueDate);
+            formData.append('time', dueTime);
+            if (score !== '') {
+                formData.append('fullscore', score.toString());
+            }
+            files.forEach(file => {
+                formData.append('files', file);
+            });
 
-        console.log('Form submitted:', {
-            title,
-            description,
-            dueDate,
-            dueTime,
-            score,
-            files,
-        });
+            await axioslib.post(`/api/user/createassign/${classID}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then(() => {
+                    window.location.href = `/Teacher/${classID}/Assignment`;
+                });
+        } catch (error) {
+            console.error('Error creating assignment:', error);
+        }
     };
 
     return (
@@ -105,24 +109,24 @@ const Teacher_NewAssignment: React.FC = () => {
                             <div className='flex flex-row'>
                                 <div className='flex flex-col mr-4'>
                                     <p className='mt-4'>Due Date</p>
-                                    <input 
-                                        type="date" 
-                                        id="date" 
-                                        className="mt-2 p-2 md:pl-4 border leading-none text-xs md:text-sm rounded-xl block w-20 lg:w-full" 
-                                        value={dueDate} 
-                                        onChange={handleDueDateChange} 
-                                        required 
+                                    <input
+                                        type="date"
+                                        id="date"
+                                        className="mt-2 p-2 md:pl-4 border leading-none text-xs md:text-sm rounded-xl block w-20 lg:w-full"
+                                        value={dueDate}
+                                        onChange={handleDueDateChange}
+                                        required
                                     />
                                 </div>
                                 <div className='flex flex-col'>
                                     <p className='mt-4'>Due Time</p>
-                                    <input 
-                                        type="time" 
-                                        id="time" 
-                                        className="mt-2 p-2 md:pl-4 border leading-none text-xs md:text-sm rounded-xl block w-20 md:w-24 lg:w-24 2xl:w-full" 
-                                        value={dueTime} 
-                                        onChange={handleDueTimeChange} 
-                                        required 
+                                    <input
+                                        type="time"
+                                        id="time"
+                                        className="mt-2 p-2 md:pl-4 border leading-none text-xs md:text-sm rounded-xl block w-20 md:w-24 lg:w-24 2xl:w-full"
+                                        value={dueTime}
+                                        onChange={handleDueTimeChange}
+                                        required
                                     />
                                 </div>
                                 <div className='flex flex-col mt-4 pl-1 md:pl-2'>
@@ -146,6 +150,7 @@ const Teacher_NewAssignment: React.FC = () => {
                                     id="fileInput"
                                     onChange={handleFileChange}
                                 />
+                                <p className='text-bookmark1 font-bold text-sm my-2'>Warning if you upload files you will not be able to edit</p>
                                 <label htmlFor="fileInput" className="bg-white flex items-center justify-center text-black font-semibold py-2 px-4 border border-salate-1000 rounded-xl cursor-pointer">
                                     <FiUpload className="mr-2 text-salate-1000" />
                                     <span className="text-center text-salate-1000">Upload File</span>

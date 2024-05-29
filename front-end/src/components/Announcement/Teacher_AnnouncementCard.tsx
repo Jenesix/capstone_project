@@ -38,7 +38,7 @@ const Teacher_AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcemen
     }
 
     return (
-        <div className="p-4 sm:p-6 lg:p-8 rounded-lg shadow-2xl bg-white mb-12">
+        <div className="p-4 sm:p-6 lg:p-8 rounded-4xl shadow-lg bg-white mb-12">
             
             <div className="relative text-salate-1000">
                 {/*Option Button*/}

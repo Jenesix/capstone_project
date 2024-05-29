@@ -94,7 +94,7 @@ const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
                         <div className="text-center">{isCurrentMonth && isDayFromCurrentMonth ? formattedDate : ''}</div>
                         <div className="overflow-y-auto h-20 pr-2 mt-1">
                             {isCurrentMonth && isDayFromCurrentMonth && assignmentsForDay.map((assignment, idx) => (
-                                <div key={idx} className="text-xs mt-1 bg-assign border-l-primary border-l-4 p-1 rounded text-primary ">
+                                <div key={idx} className="text-xs mt-1 bg-assign border-l-primary border-l-4 p-1 rounded line-clamp-2 text-primary ">
                                     {assignment.name} <br /> {assignment.dueTime}
                                 </div>
                             ))}

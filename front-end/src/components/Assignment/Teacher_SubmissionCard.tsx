@@ -43,7 +43,7 @@ const Teacher_SubmissionCard: React.FC<Teacher_SubmissionCardProps> = ({
                         />
                     </div>
                     <div className="flex flex-col bg-salate-1000 rounded-full p-2 text-white ml-auto">
-                        <span className="font-bold text-sm text-center">{score}</span>
+                        <span className="font-bold text-sm text-center">{score || 0}</span>
                         <span className="font-bold text-sm">Points</span>
                     </div>
                 </div>

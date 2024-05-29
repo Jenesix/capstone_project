@@ -10,7 +10,7 @@ import Teacher_EditButton from '../NewEdit/Teacher_EditButton';
 import Teacher_GiveScoreCard from './Teacher_GiveScoreCard';
 
 const Teacher_SubmissionDetailPage: React.FC = () => {
-    const { classID, assignID } = useParams();
+    const { classID, assignID, } = useParams();
 
     
     //------------------------------------------- ก็อปมาจาก user แก้ด้วยนะ--------------------------------------------------------------------//
