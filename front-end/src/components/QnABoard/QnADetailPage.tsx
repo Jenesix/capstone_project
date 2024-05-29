@@ -71,8 +71,6 @@ const QnADetailPage: React.FC = () => {
         const dateObj = parseISO(date);
         return format(dateObj, 'dd/MM/yyyy, HH:mm');
     }
-
-    console.log(comments);
     
 
     return (

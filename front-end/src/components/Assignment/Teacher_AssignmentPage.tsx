@@ -120,16 +120,6 @@ const Teacher_AssignmentPage: React.FC = () => {
                             dueDate={new Date(assignment.due_date).toLocaleDateString()}
                             status={assignment.status} />
                     ))}
-                    {finishedAssignments.map(assignment => (
-                        <Teacher_AssignmentCard
-                            key={assignment._id}
-                            classID={classID as string}
-                            assignID={assignment._id}
-                            title={assignment.assignment_name}
-                            description={assignment.description_asm}
-                            dueDate={new Date(assignment.due_date).toLocaleDateString()}
-                            status={assignment.status} />
-                    ))}
                 </div>
             </div>
             <Teacher_NewButton

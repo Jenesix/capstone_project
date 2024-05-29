@@ -9,34 +9,42 @@ import { useParams } from 'next/navigation';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Teacher_SubmissionCard from './Teacher_SubmissionCard';
 import UserCard from '../QnABoard/UserCard';
+import { AssignmentTurnin, Assignment } from '@/interface/interface';
+import { format, parseISO } from 'date-fns';
 
 const Teacher_GiveScoreCard: React.FC = () => {
-    const { classID, assignID, submissionID } = useParams();
+    const { classID, assignID, turninID } = useParams();
     const { user } = useUser();
 
-    const [assignmentTurninData, setAssignmentTurninData] = useState<AssignmentTurnin>({
-        _id: "turnin1",
-        user_id: "65090500414",
-        firstname: "Natthapon",
-        lastname: "Tanateeraanan",
-        assignmentID: "assign1",
-        turnin_date: "2024-01-01T11:29:00Z",
-        status_turnin: "On time",
-        score: 85,
-        files: ["file1.pdf", "file2.png"]
-    });
+    const [assign, setAssign] = useState<Assignment>();
+    const [turnin, setTurnin] = useState<AssignmentTurnin>();
+    const [score, setScore] = useState<number | undefined>();
+    const fetchTurnin = async () => {
+        try {
+            const response = await axioslib.get(`/api/user/getturninbyid/${turninID}`);
+            setTurnin(response.data);
+            setScore(response.data.score);
+            console.log(response.data);
+        } catch (error) {
+            console.log("Error fetching turnin data", error);
+        }
+    }
+    const fetchAssign = async () => {
+        try {
+            const response = await axioslib.get(`/api/user/getassignbyid/${assignID}`);
+            setAssign(response.data);
+        } catch (error) {
+            console.log("Error fetching assignment data", error);
+        }
+    }
 
-    const [score, setScore] = useState<number | undefined>(assignmentTurninData.score);
-    const [fullScore, setFullScore] = useState<number>(100); // Assuming full score is 100
+    useEffect(() => {
+        fetchTurnin();
+        fetchAssign();
+    }, []);
 
     const handleScoreChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const newScore = Number(e.target.value);
-        if (newScore <= fullScore) {
-            setScore(newScore);
-        } else {
-            console.log("Score cannot be higher than full score");
-            setScore(fullScore);
-        }
+        setScore(e.target.valueAsNumber);
     };
 
     const handleFileIcon = (fileName: string) => {
@@ -53,12 +61,27 @@ const Teacher_GiveScoreCard: React.FC = () => {
         }
     };
 
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-        // Handle submission logic
+    const handleSubmit = async () => {
+        try {
+            const response = await axioslib.put(`/api/user/editturnin/${turninID}`, {
+                score: score
+            });
+            console.log("Score submitted successfully:", response.data);
+            window.location.reload();
+        } catch (error) {
+            console.error("Error submitting score:", error);
+        }
     };
 
-    const colortext = assignmentTurninData.status_turnin === "On time" ? "text-bookmark2" : "text-bookmark3";
+    const colortext = turnin?.status_turnin === "On time" ? "text-bookmark2" : "text-bookmark3";
+
+    const options = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+    };
 
     return (
         <div className="flex flex-col pt-6 xl:pt-0 xl:mx-12 min-w-96 max-w-96">
@@ -68,9 +91,9 @@ const Teacher_GiveScoreCard: React.FC = () => {
                     <div className='text-start w-full overflow-hidden'>
                         <UserCard
                             profileImage={profile}
-                            user_id={assignmentTurninData.user_id}
-                            firstname={assignmentTurninData.firstname}
-                            lastname={assignmentTurninData.lastname}
+                            user_id={turnin?.UserID.user_id}
+                            firstname={turnin?.UserID.firstname}
+                            lastname={turnin?.UserID.lastname}
                             sizeprofile='min-w-12 min-h-12'
                             sizedivtext='w-full'
                             sizenameuser='text-sm truncate'
@@ -81,31 +104,32 @@ const Teacher_GiveScoreCard: React.FC = () => {
                         <p className='font-bold'>Score</p>
                         <div className='flex flex-row items-end'>
                             <input
-                                value={score}
+                                value={score} 
+                                name='score'
                                 onChange={handleScoreChange}
                                 placeholder="Score"
                                 type='number'
                                 className='text-sm mt-2 p-2 pl-2 bg-white border rounded-xl w-16 '
                             />
-                            <p className='pl-1 text-sm'>/{fullScore}</p>
+                            <p className='pl-1 text-sm'> /{assign?.fullscore}</p>
                         </div>
                     </div>
                 </div>
-                <p className='pl-4 font-bold mb-2'>Attachments - {assignmentTurninData.files.length} File(s)</p>
+                <p className='pl-4 font-bold mb-2'>Attachments - {turnin?.file_turnin.length} File(s)</p>
                 <div className='bg-white rounded-lg border p-4 mx-4'>
-                    {assignmentTurninData.files.map((file, index) => (
+                    {turnin?.file_turnin.map((file, index) => (
                         <div key={index} className='flex items-center mb-2'>
                             {handleFileIcon(file)}
-                            <a href={`/path/to/files/${file}`} target="_blank" rel="noopener noreferrer" className='ml-2 text-primary hover:underline'>
-                                {file}
+                            <a href={file} target="_blank" className='ml-2 text-primary hover:underline truncate'>
+                                {file.substring(file.lastIndexOf('/') + 1)}
                             </a>
                         </div>
                     ))}
                 </div>
                 <p className='text-center font-bold mt-4'>Turned In</p>
                 <div className='flex flex-row justify-center '>
-                    <p className={`font-bold mt-2 ${colortext}`}>{assignmentTurninData.status_turnin} &nbsp;</p>
-                    <p className='font-base mt-2'>{new Date(assignmentTurninData.turnin_date).toLocaleString()} </p>
+                    <p className={`font-bold mt-2 ${colortext}`}>{turnin?.status_turnin} &nbsp;</p>
+                    <p className='font-base mt-2'>{new Date(turnin?.turnin_date).toLocaleString('en-GB', options)} </p>
                 </div>
                 <button
                     type="submit"

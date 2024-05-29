@@ -56,8 +56,6 @@ const Teacher_EditBoard: React.FC = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
         const formData = new FormData();
         formData.append('title_p', title);
         formData.append('description_p', description);

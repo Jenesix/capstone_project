@@ -34,6 +34,7 @@ import { EditTurnin } from "../Controller/User/assignment/EditTurnin";
 import { GetTurnin } from "../Controller/User/assignment/GetTurnin";
 import { DeleteTurnin } from "../Controller/User/assignment/DeleteTurnin";
 import { DeleteFileTurnin } from "../Controller/User/assignment/DeleteFileTurnin";
+import { GetTurninByID } from "../Controller/User/assignment/GetTurninByID";
 import { CreateFolder } from "../Controller/User/resource/CreateFolder";
 import { EditFolder } from "../Controller/User/resource/EditFolder";
 import { GetFolder } from "../Controller/User/resource/GetFolder";
@@ -112,6 +113,7 @@ router.put("/editturnin/:turninID", EditTurnin); // teacher edit score, student 
 router.get("/getturnin/:assignID", GetTurnin); // get all submissions of each assignment
 router.delete("/deleteturnin/:turninID", DeleteTurnin);
 router.delete("/deletefileturnin/:turninID", DeleteFileTurnin); // delete file from array **body: array
+router.get("/getturninbyid/:turninID", GetTurninByID);
 
 // Attendance
 router.post("/createattend/:classID", CreateAttend);

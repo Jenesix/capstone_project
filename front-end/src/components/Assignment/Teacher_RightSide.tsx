@@ -12,8 +12,23 @@ import Teacher_SubmissionCard from './Teacher_SubmissionCard';
 
 
 const Teacher_RightSide: React.FC = () => {
-    const { classID, assignID, submissionID } = useParams(); //------------ถ้าแก้ submissionID ตรงนี้  แก้อันนี้ด้วย-----------
+    const { classID, assignID } = useParams();
+    const [turninData, setTurninData] = useState<AssignmentTurnin[]>([]);
     
+    const fetchTurninData = async () => {
+        try {
+            const response = await axioslib.get(`/api/user/getturnin/${assignID}`);
+            setTurninData(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.log("Error fetching turnin data", error);
+        }
+    }
+
+    useEffect(() => {
+        fetchTurninData();
+    }, []);
+
     const mockTurninData = [
         {
             _id: "turnin1",
@@ -74,25 +89,26 @@ const Teacher_RightSide: React.FC = () => {
 
 
     return (
+
         <div className="flex flex-col pt-6 xl:pt-0 xl:mx-12 min-w-96 max-w-96">
             <h2 className="font-bold text-xl text-salate-1000 mb-2">Submission</h2>
             <div className='overflow-y-auto h-2/3'>
 
-            {mockTurninData.map((submission) => (
-                <div className='mb-6 pr-2'>
-                <Teacher_SubmissionCard
-                key={submission._id}
-                giveScoreLink= {`/Teacher/${classID}/Assignment/${assignID}/${submissionID}`} //------------ถ้าแก้ submissionID ตรงนี้  ไปแก้ข้างบนด้วย-----------
-                user_id= {submission.user_id}
-                firstname= {submission.firstname}
-                lastname= {submission.lastname}
-                score= {submission.score}
-                status_turnin= {submission.status_turnin}
-                turnin_date= {submission.turnin_date}
-                file_turnin= {submission.files}
-                />
-            </div>
-            ))}
+                {turninData.map((submission, index) => (
+                    <div className='mb-6 pr-2'>
+                        <Teacher_SubmissionCard
+                            key={index}
+                            giveScoreLink={`/Teacher/${classID}/Assignment/${assignID}/${submission._id}`}
+                            user_id={submission.UserID.user_id}
+                            firstname={submission.UserID.firstname}
+                            lastname={submission.UserID.lastname}
+                            score={submission.score}
+                            status_turnin={submission.status_turnin}
+                            turnin_date={submission.turnin_date}
+                            file_turnin={submission.file_turnin}
+                        />
+                    </div>
+                ))}
             </div>
 
         </div>
