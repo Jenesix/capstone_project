@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FaBookmark } from 'react-icons/fa';
 import { SlOptionsVertical } from "react-icons/sl";
 
+import { axioslib } from '@/lib/axioslib';
 
 interface Teacher_AssignmentCardProps {
     classID: string;
@@ -20,6 +21,17 @@ const Teacher_AssignmentCard: React.FC<Teacher_AssignmentCardProps> = ({ classID
         setDropdownVisible(!dropdownVisible);
     };
 
+    const handleDelete = async () => {
+        try {
+            await axioslib.delete(`/api/user/deleteassign/${assignID}`)
+                .then(() => {
+                    window.location.reload();
+                });
+        } catch (error) {
+            console.log(error);         
+        }
+    }
+
     return (
         <div className='bg-white shadow-2xl rounded-lg '>
             <div className="relative text-salate-1000 mt-4 mb-2 mr-4">
@@ -33,6 +45,7 @@ const Teacher_AssignmentCard: React.FC<Teacher_AssignmentCardProps> = ({ classID
                         </Link>
                         <button
                             className="w-full text-left px-4 py-2 hover:bg-content-light"
+                            onClick={handleDelete}
                         >
                             Delete
                         </button>

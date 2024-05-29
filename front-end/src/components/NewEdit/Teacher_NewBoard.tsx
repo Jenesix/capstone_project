@@ -6,7 +6,6 @@ import Image from 'next/legacy/image';
 import Link from "next/link";
 import FormData from 'form-data';
 import { axioslib } from '../../lib/axioslib';
-import { Post } from '../../interface/interface';
 
 const Teacher_NewBoard: React.FC = () => {
     const { classID } = useParams();
