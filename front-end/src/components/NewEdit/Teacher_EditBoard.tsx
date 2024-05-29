@@ -12,20 +12,22 @@ import { Post } from '../../interface/interface';
 const Teacher_EditBoard: React.FC = () => {
     const { classID, postID } = useParams();
 
-    const [oldPost, setOldPost] = useState<Post | undefined>(undefined);
-    useEffect(() => {
-        const fetchPost = async () => {
-            const response = await axioslib.get(`/api/user/getpostbyid/${postID}`);
-            setOldPost(response.data);
-            console.log(response.data);
-        };
-        fetchPost();
-    }, []);
+    
 
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [image, setImage] = useState<File[] | null>([]);
     const [preview, setPreview] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchPost = async () => {
+            const response = await axioslib.get(`/api/user/getpostbyid/${postID}`);
+            setTitle(response.data.title_p);
+            setDescription(response.data.description_p);
+            setPreview(response.data.post_image);
+        };
+        fetchPost();
+    }, []);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -59,13 +61,17 @@ const Teacher_EditBoard: React.FC = () => {
         const formData = new FormData();
         formData.append('title_p', title);
         formData.append('description_p', description);
-        if (image) {
+        if (image && image.length > 0) {
             formData.append('files', image[0]);
         }
 
         try {
-            await axioslib.post(`/api/user/editpost/${postID}`, formData).then(() => {
-                window.location.href = `Teacher/${classID}/QnABoard`;
+            await axioslib.put(`/api/user/editpost/${postID}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }).then(() => {
+                window.location.href = `/Teacher/${classID}/QnABoard`;
             });
         } catch (error) {
             console.error('Error creating post:', error);
@@ -90,7 +96,7 @@ const Teacher_EditBoard: React.FC = () => {
                         <div className='w-60 md:w-72 lg:w-96 2xl:w-auto bg-content-light rounded-b-2xl text-xs md:text-base lg:text-lg pt-4 p-4 md:p-8 lg:p-12'>
                             <p>Board Title</p>
                             <input
-                                value={oldPost?.title_p}
+                                value={title}
                                 onChange={handleTitleChange}
                                 placeholder="Your Title"
                                 type='text'
@@ -100,7 +106,7 @@ const Teacher_EditBoard: React.FC = () => {
 
                             <p className='mt-4'>Board Description</p>
                             <textarea
-                                value={oldPost?.description_p}
+                                value={description}
                                 onChange={handleDescriptionChange}
                                 placeholder="Your Description"
                                 className='mt-2 p-2 pl-4 bg-white border-salate-1000 rounded-xl w-full min-h-60'

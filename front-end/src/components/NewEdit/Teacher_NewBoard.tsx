@@ -48,13 +48,18 @@ const Teacher_NewBoard: React.FC = () => {
         const formData = new FormData();
         formData.append('title_p', title);
         formData.append('description_p', description);
-        if (image) {
+        if (image && image.length > 0) {
             formData.append('files', image[0]);
         }
 
         try {
-            await axioslib.post(`/api/user/createpost/${classID}`, formData).then(() => {
-                window.location.href = `/Teacher/${classID}/QnABoard`;
+            await axioslib.post(`/api/user/createpost/${classID}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            .then(() => {
+                window.location.href = `/${classID}/QnABoard`;
             });
         } catch (error) {
             console.error('Error creating post:', error);

@@ -59,7 +59,7 @@ const User_EditBoard: React.FC = () => {
         const formData = new FormData();
         formData.append('title_p', title);
         formData.append('description_p', description);
-        if (image) {
+        if (image && image.length > 0) {
             formData.append('files', image[0]);
         }
 

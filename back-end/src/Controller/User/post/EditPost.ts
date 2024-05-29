@@ -6,9 +6,9 @@ export const EditPost = async (req: Request, res: Response) => {
     try {
         const { postID } = req.params;
         const updateFields = req.body;
-        const files = req.files as Express.Multer.File[];
+        const files = req.files as Express.Multer.File[] | undefined;
 
-        if (files) {
+        if (files && files.length > 0) {
             const fileUrl = await uploadImagePost(files[0]);
             updateFields.post_image = fileUrl;
         }
