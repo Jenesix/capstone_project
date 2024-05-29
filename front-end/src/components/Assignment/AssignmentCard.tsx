@@ -14,7 +14,7 @@ interface AssignmentCardProps {
 const AssignmentCard: React.FC<AssignmentCardProps> = ({ classID, assignID, title, description, dueDate, status }) => {
     return (
         <Link href={`/${classID}/Assignment/${assignID}`}>
-            <div className="bg-white shadow-2xl rounded-lg p-4 mb-4 flex flex-row gap-3">
+            <div className="bg-white shadow-lg rounded-4xl p-4 mb-4 flex flex-row gap-3">
                 <div>
                     <FaBookmark className={`top-2 left-2 text-4xl ${status === 'To Do' ? 'text-bookmark1' : status === 'Submitted' ? 'text-bookmark2' : 'text-bookmark3'}`} />
                 </div>

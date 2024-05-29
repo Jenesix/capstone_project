@@ -8,7 +8,6 @@ import { axioslib } from '@/lib/axioslib';
 
 const Teacher_EditAssignment: React.FC = () => {
     const { classID, assignID } = useParams();
-
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [date, setDate] = useState<string>('');
@@ -164,32 +163,6 @@ const Teacher_EditAssignment: React.FC = () => {
                                     />
                                 </div>
                             </div>
-
-                            <p className='mt-4'>Attachments (Optional)</p>
-                            <div className="relative w-full">
-                                <input
-                                    type="file"
-                                    multiple
-                                    className="hidden"
-                                    id="fileInput"
-                                    onChange={handleFileChange}
-                                />
-                                <label htmlFor="fileInput" className="bg-white flex items-center justify-center text-black font-semibold py-2 px-4 border border-salate-1000 rounded-xl cursor-pointer">
-                                    <FiUpload className="mr-2 text-salate-1000" />
-                                    <span className="text-center text-salate-1000">Upload File</span>
-                                </label>
-                            </div>
-                            <ul className="mt-4">
-                                {files.map((file, index) => (
-                                    <li key={index} className="flex items-center justify-between text-sm text-bookmark1 p-2 rounded-lg mb-2">
-                                        <a href={file} target='_blank'>{file.substring(file.lastIndexOf('/') + 1)}</a>
-                                        <button type="button" onClick={() => handleFileDelete(index)} className="">
-                                            <FiTrash2 />
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-
                             <button
                                 type="submit"
                                 className="text-xs md:text-base bg-bookmark2 text-white font-bold py-4 px-4 md:px-12 lg:px-14 rounded block mx-auto transition-all duration-300 transform hover:scale-105 mt-4"

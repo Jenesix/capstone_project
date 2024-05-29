@@ -29,7 +29,7 @@ const AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcementData })
     }
 
     return (
-        <div className="p-4 sm:p-6 lg:p-8 rounded-lg shadow-2xl bg-white mb-12">
+        <div className="p-4 sm:p-6 lg:p-8 rounded-4xl shadow-lg bg-white mb-12">
             <div className="flex lg:flex-row items-start">
                 <div className="w-16 h-16 lg:w-20 lg:h-20 relative mb-4 lg:mb-0">
                     <Image

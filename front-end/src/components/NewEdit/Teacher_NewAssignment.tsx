@@ -150,6 +150,7 @@ const Teacher_NewAssignment: React.FC = () => {
                                     id="fileInput"
                                     onChange={handleFileChange}
                                 />
+                                <p className='text-bookmark1 font-bold text-sm my-2'>Warning if you upload files you will not be able to edit</p>
                                 <label htmlFor="fileInput" className="bg-white flex items-center justify-center text-black font-semibold py-2 px-4 border border-salate-1000 rounded-xl cursor-pointer">
                                     <FiUpload className="mr-2 text-salate-1000" />
                                     <span className="text-center text-salate-1000">Upload File</span>
