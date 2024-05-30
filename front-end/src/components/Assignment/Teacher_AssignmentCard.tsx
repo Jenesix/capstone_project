@@ -54,10 +54,10 @@ const Teacher_AssignmentCard: React.FC<Teacher_AssignmentCardProps> = ({ classID
                         <FaBookmark className={`top-2 left-2 text-4xl ${status === 'To Do' ? 'text-bookmark1' : status === 'Finished' ? 'text-bookmark2' : 'text-bookmark3'}`} />
                         <div className="ml-3">
                             <div className="flex justify-between items-center mb-2">
-                                <h2 className="text-xl xl:text-2xl font-bold text-salate-1000 ">{title}</h2>
+                                <h2 className=" text-md md:text-lg xl:text-xl font-bold text-salate-1000 ">{title}</h2>
                             </div>
-                            <p className="text-salate-1000 font-bold mb-2">{description}</p>
-                            <p className="text-salate-1000 font-bold text-sm">Due Date: {dueDate}</p>
+                            <p className="text-salate-1000 font-bold mb-2 text-sm md:text-md lg:text-sm xl:text-md">{description}</p>
+                            <p className="text-salate-1000 font-bold text-sm md:text-md lg:text-sm xl:text-md">Due Date: {dueDate}</p>
                         </div>
                 </Link>
                 <div className="relative text-salate-1000 mt-4 mb-2">

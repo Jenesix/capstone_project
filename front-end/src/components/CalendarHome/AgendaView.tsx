@@ -16,7 +16,7 @@ const AgendaView: React.FC<AgendaViewProps> = ({ assignments }) => {
             <h2 className="text-xl text-primary font-bold mb-4">To do list</h2>
             <ul>
                 {assignments.map((assignment, index) => (
-                    <li key={index} className="mb-2 p-4 rounded shadow-2xl">
+                    <li key={index} className="mb-2 p-4 rounded-4xl px-6 shadow-lg">
                         <div className="font-bold text-xl text-primary">{assignment.name}</div>
                         <div className='font-bold text-salate-1000'>{assignment.dueDate}</div>
                         <div className='text-salate-1000'>{assignment.dueTime}</div>

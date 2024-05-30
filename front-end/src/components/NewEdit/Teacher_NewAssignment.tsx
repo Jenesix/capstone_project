@@ -83,12 +83,12 @@ const Teacher_NewAssignment: React.FC = () => {
                 </button>
             </Link>
             <div className='flex md:justify-center'>
-                <div className='w-1/3 flex flex-col text-salate-1000'>
-                    <form onSubmit={handleSubmit}>
-                        <div className='w-60 md:w-72 lg:w-96 2xl:w-auto bg-content-light rounded-t-2xl text-center border-b border-salate-1000 pt-6 p-4 md:p-8 lg:p-12 text-sm md:text-xl lg:text-2xl font-extrabold'>
+                <div className='w-full flex flex-col items-center text-salate-1000 '>
+                    <form onSubmit={handleSubmit} className=''>
+                        <div className='w-full bg-content-light rounded-t-2xl text-center border-b border-salate-1000 pt-6 p-4 md:p-8 lg:p-12 text-sm md:text-xl lg:text-2xl font-extrabold'>
                             New Assignment
                         </div>
-                        <div className='w-60 md:w-72 lg:w-96 2xl:w-auto bg-content-light rounded-b-2xl text-xs md:text-base lg:text-lg pt-4 p-4 md:p-8 lg:p-12'>
+                        <div className='w-full bg-content-light rounded-b-2xl text-xs md:text-base lg:text-lg pt-4 p-4 md:p-8 lg:p-12'>
                             <p>Assignment Title</p>
                             <input
                                 value={title}
