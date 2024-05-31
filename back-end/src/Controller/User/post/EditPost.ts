@@ -7,8 +7,10 @@ export const EditPost = async (req: Request, res: Response) => {
         const { postID } = req.params;
         const updateFields = req.body;
         const files = req.files as Express.Multer.File[] | undefined;
-
-        if (files && files.length > 0) {
+        
+        if (updateFields.removeImage === 'true') {
+            updateFields.post_image = "";
+        } else if (files && files.length > 0) {
             const fileUrl = await uploadImagePost(files[0]);
             updateFields.post_image = fileUrl;
         }

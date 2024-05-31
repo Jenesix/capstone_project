@@ -56,7 +56,7 @@ const Homepage: React.FC<HomepageProps> = ({ role, enrolledClasses }) => {
           filteredClasses.map((classData, index) => {
             return (
               <Card key={classData._id} classData={classData} role={role} />
-            );
+            )
           })
         ) : (
           <p>No classes available.</p>
