@@ -91,7 +91,7 @@ const AssignmentPage: React.FC = () => {
                             assignID={assignment._id}
                             title={assignment.assignment_name}
                             description={assignment.description_asm}
-                            dueDate={new Date(assignment.due_date).toLocaleDateString()}
+                            dueDate={new Date(assignment.due_date).toLocaleDateString("en-GB")}
                             status={assignment.status}
                         />
                     ))}
@@ -110,7 +110,7 @@ const AssignmentPage: React.FC = () => {
                             assignID={assignment._id}
                             title={assignment.assignment_name}
                             description={assignment.description_asm}
-                            dueDate={new Date(assignment.due_date).toLocaleDateString()}
+                            dueDate={new Date(assignment.due_date).toLocaleDateString("en-GB")}
                             status={assignment.status}
                         />
                     ))}
