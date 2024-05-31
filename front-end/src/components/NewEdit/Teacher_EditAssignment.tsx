@@ -73,6 +73,7 @@ const Teacher_EditAssignment: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         try {
+            e.preventDefault();
             const formData = new FormData();
             formData.append('assignment_name', title);
             formData.append('description_asm', description);

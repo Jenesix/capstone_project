@@ -11,7 +11,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ role, classData }) => {
 
-    const linkHref = role === 'teacher' ? `/Teacher/${classData._id}/Home` : `/${classData._id}/Home`;
+    const linkHref = (role === 'teacher') ? `/Teacher/${classData._id}/Home` : `/${classData._id}/Home`;
 
     return (
         <Link href={linkHref}>
