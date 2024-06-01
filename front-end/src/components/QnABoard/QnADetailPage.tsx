@@ -123,8 +123,8 @@ const QnADetailPage: React.FC = () => {
                                 />
                                 <p className='pt-5 pl-3 text-sm'>{formatDate(String(comment.time_cm))}</p>
                             </div>
-                            <div className='ml-12 bg-content-light rounded-tr-3xl rounded-b-3xl'>
-                                <p className='p-4 m-4 ml-12'>{comment.comment}</p>
+                            <div className='ml-24 bg-content-light rounded-tr-3xl rounded-b-3xl w-fit h-fit'>
+                                    <p className='p-2 pt-4 ml-8 mr-24'>{comment.comment}</p>
                                 {comment.UserID._id === user?._id && (
                                     <FiTrash2 className="ml-auto mr-4 size-5 text-bookmark1 cursor-pointer" onClick={() => handleDeleteComment(comment._id)} />
                                 )}

@@ -20,10 +20,10 @@ const AssignmentCard: React.FC<AssignmentCardProps> = ({ classID, assignID, titl
                 </div>
                 <div>
                     <div className="flex justify-between items-center mb-2">
-                        <h2 className="text-xl norap xl:text-2xl font-bold text-salate-1000 ">{title}</h2>
+                        <h2 className=" text-md md:text-lg xl:text-xl font-bold text-salate-1000 ">{title}</h2>
                     </div>
-                    <p className="text-salate-1000 font-bold mb-2">{description}</p>
-                    <p className="text-salate-1000 font-bold text-sm">Due Date: {dueDate}</p>
+                    <p className="text-salate-1000 font-bold mb-2 text-sm md:text-md lg:text-sm xl:text-md">{description}</p>
+                    <p className="text-salate-1000 font-bold text-sm md:text-md lg:text-sm xl:text-md">Due Date: {dueDate}</p>
                 </div>
             </div>
         </Link>
