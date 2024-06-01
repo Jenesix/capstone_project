@@ -63,6 +63,8 @@ const Teacher_EditBoard: React.FC = () => {
             formData.append('description_p', description);
             if (image && image.length > 0) {
                 formData.append('files', image[0]);
+            } else {
+                formData.append('removeImage', 'true');
             }
             await axioslib.put(`/api/user/editpost/${postID}`, formData, {
                 headers: {
