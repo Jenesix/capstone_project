@@ -12,7 +12,7 @@ import { Post } from '../../interface/interface';
 const Teacher_EditBoard: React.FC = () => {
     const { classID, postID } = useParams();
 
-    
+
 
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -56,14 +56,14 @@ const Teacher_EditBoard: React.FC = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        const formData = new FormData();
-        formData.append('title_p', title);
-        formData.append('description_p', description);
-        if (image && image.length > 0) {
-            formData.append('files', image[0]);
-        }
-
         try {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append('title_p', title);
+            formData.append('description_p', description);
+            if (image && image.length > 0) {
+                formData.append('files', image[0]);
+            }
             await axioslib.put(`/api/user/editpost/${postID}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',

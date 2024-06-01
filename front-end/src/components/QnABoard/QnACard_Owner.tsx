@@ -55,11 +55,14 @@ const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, p
                     }
                     {dropdownVisible && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                            <Link href={editLink}>
-                                <p className="w-full text-left px-4 py-2 hover:bg-content-light">
-                                    Edit
-                                </p>
-                            </Link>
+                            {user?.user_id === user_id ?
+                                <Link href={editLink}>
+                                    <p className="w-full text-left px-4 py-2 hover:bg-content-light">
+                                        Edit
+                                    </p>
+                                </Link>
+                                : <></>
+                            }
                             <button
                                 className="w-full text-left px-4 py-2 hover:bg-content-light"
                                 onClick={handleDeletePost}
