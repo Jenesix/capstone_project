@@ -44,6 +44,7 @@ const Teacher_AnnouncementPage: React.FC = () => {
                             <Teacher_AnnouncementCard
                                 key={announcement._id}
                                 announcementData={{
+                                    _id: announcement._id,
                                     username,
                                     Date: announcement.time_anm.toISOString().split('T')[0],
                                     Time: format(new Date(announcement.time_anm), 'HH:mm'),
