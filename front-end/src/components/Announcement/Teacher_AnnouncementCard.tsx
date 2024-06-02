@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { format, isToday, isYesterday, parseISO } from 'date-fns';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { SlOptionsVertical } from "react-icons/sl";
 import { ImBullhorn } from "react-icons/im";
+
+import { axioslib } from '@/lib/axioslib';
 
 interface AnnouncementCardProps {
     announcementData: {
@@ -18,7 +20,7 @@ interface AnnouncementCardProps {
 }
 
 const Teacher_AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcementData }) => {
-    const { classID, announcementID } = useParams();
+    const { classID, announceID } = useParams();
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const formattedDate = formatDate(announcementData.Date);
 
@@ -37,6 +39,17 @@ const Teacher_AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcemen
         }
     }
 
+    const handleDelete = () => {
+        try {
+            axioslib.delete(`/api/user/deleteannounce/${announceID}`)
+                .then(() => {
+                    window.location.reload();
+                });
+        } catch (error) {
+            console.error('Error deleting announcement:', error);
+        }
+    };
+
     return (
         <div className="p-4 sm:p-6 lg:p-8 rounded-4xl shadow-lg bg-white mb-12">
             
@@ -45,14 +58,14 @@ const Teacher_AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcemen
                 <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} />
                 {dropdownVisible && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                        <Link href={`/Teacher/${classID}/Announcement/${announcementID}/Edit`}>
+                        <Link href={`/Teacher/${classID}/Announcement/${announceID}/Edit`}>
                             <p className="w-full text-left px-4 py-2 hover:bg-content-light">
                                 Edit
                             </p>
                         </Link>
                         <button
                             className="w-full text-left px-4 py-2 hover:bg-content-light"
-                            // onClick={() => console.log('Delete clicked')}
+                            onClick={handleDelete}
                         >
                             Delete
                         </button>

@@ -14,12 +14,16 @@ const Homepage: React.FC<HomepageProps> = ({ role, enrolledClasses }) => {
 
   const [selectedOption, setSelectedOption] = useState<string>(() => {
     const savedOption = localStorage.getItem('selectedOption');
-    return savedOption || (uniqueYearSemesters[0] || '');
+    // return savedOption || (uniqueYearSemesters[0] || '');
+    return 'all_classes';
   });
   const [filteredClasses, setFilteredClasses] = useState<Class[]>([]);
 
   useEffect(() => {
-    if (selectedOption) {
+    if (selectedOption === 'all_classes') {
+      setFilteredClasses(classes);
+    }
+    else if (selectedOption) {
       const [year, semester] = selectedOption.split('/');
       const filtered = classes.filter(c => c.year.toString() === year && c.semester.toString() === semester);
       setFilteredClasses(filtered);
@@ -45,6 +49,7 @@ const Homepage: React.FC<HomepageProps> = ({ role, enrolledClasses }) => {
             value={selectedOption}
             onChange={(e) => setSelectedOption(e.target.value)}
           >
+            <option value="all_classes">All</option>
             {uniqueYearSemesters.map((ys, index) => (
               <option key={index} value={ys}>{ys}</option>
             ))}
