@@ -25,7 +25,6 @@ const FileContentPage: FC = () => {
         try {
             const response = await axioslib.get(`/api/user/getresource/${classID}`);
             setFiles(response.data);
-            console.log(response.data);
         } catch (error) {
             console.log(error);
         }

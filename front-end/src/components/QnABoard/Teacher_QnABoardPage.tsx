@@ -3,8 +3,6 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 import QnACard_Owner from './QnACard_Owner';
 import profile from '../../../public/profile.svg';
-import Announcementtest from '../../../public/Announcementtest.jpg';
-import cristiano from '../../../public/cristiano.jpg';
 import Link from 'next/link';
 import { IoMdAddCircle } from "react-icons/io";
 

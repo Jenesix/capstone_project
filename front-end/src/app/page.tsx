@@ -31,7 +31,6 @@ const Home: React.FC = () => {
     try {
       const response = await axioslib.get(`/api/user/getenrollment/${userID}`);
       setEnrolledClasses(response.data);
-      console.log("Enrolled classes:", response.data);
     } catch (error) {
       console.error("Error fetching enrolled classes:", error);
       setEnrolledClasses({ classes: [] });
