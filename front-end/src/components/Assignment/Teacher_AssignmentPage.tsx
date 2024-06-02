@@ -90,7 +90,7 @@ const Teacher_AssignmentPage: React.FC = () => {
                     <span className="font-bold text-salate-100">Ongoing</span>
                     <div className="flex-grow border-t border-2 border-salate-100 ml-2"></div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     {toDoAssignments.map(assignment => (
                         <Teacher_AssignmentCard
                             key={assignment._id}

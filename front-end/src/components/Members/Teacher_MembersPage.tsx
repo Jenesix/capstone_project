@@ -67,7 +67,7 @@ const Teacher_MembersPage: React.FC = () => {
                                     <tr key={index} className={index % 2 === 0 ? "bg-content-light h-28" : "bg-white h-28"}>
                                         <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap font-extrabold pb-2">
                                             <div className="flex items-center">
-                                                <div className="relative min-w-20 min-h-20 rounded-full overflow-hidden">
+                                                <div className="relative min-w-20 min-h-20 rounded-full">
                                                     <Image
                                                         src={profile}
                                                         layout="fill"
