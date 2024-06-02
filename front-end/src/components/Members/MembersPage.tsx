@@ -67,8 +67,8 @@ const Memberspage: React.FC = () => {
                                                         alt="profile"
                                                     />
                                                 </div>
-                                                <div className="text-left ml-4 font-bold text-salate-1000 flex flex-col min-w-96">
-                                                    <span className='text-lg'>{entry.firstname} {entry.lastname}</span>
+                                                <div className='text-left ml-4 font-bold flex flex-col min-w-96'>
+                                                    <span className={`text-lg ${entry.role === 'teacher' ? 'text-bookmark4' : 'text-salate-1000'}`}>{entry.firstname} {entry.lastname}</span>
                                                     <span className='text-base'>{entry.user_id}</span>
                                                     <span className='text-sm font-semibold flex items-center'><MdEmail />&nbsp;{entry.email}</span>
                                                 </div>

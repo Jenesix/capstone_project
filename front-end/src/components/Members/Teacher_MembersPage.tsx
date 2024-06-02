@@ -8,6 +8,8 @@ import { User } from '@/interface/interface';
 import { axioslib } from '@/lib/axioslib';
 import { useParams } from 'next/navigation';
 import { HiUserRemove } from "react-icons/hi";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const Teacher_MembersPage: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
@@ -21,7 +23,9 @@ const Teacher_MembersPage: React.FC = () => {
             try {
                 const response = await axioslib.get<User[]>(`/api/user/getuserclass/${classID}`);
                 console.log('API response data:', response.data);
-                setUsers(response.data);
+                // Filter users to show only students
+                const students = response.data.filter(user => user.role === 'student');
+                setUsers(students);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -41,9 +45,23 @@ const Teacher_MembersPage: React.FC = () => {
     };
 
     const handleRemoveUser = (index: number) => {
-        const updatedUsers = [...users];
-        updatedUsers.splice(indexOfFirstUser + index, 1);
-        setUsers(updatedUsers);
+        confirmAlert({
+            title: 'Confirm to submit',
+            message: 'Are you sure you want to remove this user?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        const updatedUsers = [...users];
+                        updatedUsers.splice(indexOfFirstUser + index, 1);
+                        setUsers(updatedUsers);
+                    }
+                },
+                {
+                    label: 'No',
+                }
+            ]
+        });
     };
 
     return (
