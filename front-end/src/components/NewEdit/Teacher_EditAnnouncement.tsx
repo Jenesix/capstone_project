@@ -9,7 +9,7 @@ import { useUser } from '@/context/UserContext';
 const Teacher_EditAnnouncement: React.FC = () => {
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
-    const { classID } = useParams();
+    const { classID, announceID } = useParams();
     const { user } = useUser();
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,11 +29,9 @@ const Teacher_EditAnnouncement: React.FC = () => {
         }
 
         try {
-            const response = await axioslib.post(`/api/user/createannounce/${classID}`, {
+            const response = await axioslib.put(`/api/user/editannounce/${announceID}`, {
                 title_anm: title,
                 desc_anm: description,
-                time_anm: new Date().toISOString(),
-                UserID: user._id, // Include user ID from the context
             });
 
             console.log('Form submitted successfully:', response.data);
