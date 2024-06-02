@@ -11,6 +11,7 @@ import { Comment, Post, User } from '@/interface/interface';
 import { axioslib } from '@/lib/axioslib';
 import profile from '../../../public/profile.svg';
 import { useUser } from '@/context/UserContext';
+import LoadingScreen from '../Loading/LoadingScreen';
 
 const QnADetailPage: React.FC = () => {
   const { classID, postID } = useParams();
@@ -62,7 +63,7 @@ const QnADetailPage: React.FC = () => {
   }, [postID]);
 
   if (!post || !postOwner) {
-    return <div>Loading...</div>;
+    return <LoadingScreen />;
   }
 
   const countComment = comments.length;
@@ -72,7 +73,6 @@ const QnADetailPage: React.FC = () => {
     return format(dateObj, 'dd/MM/yyyy, HH:mm');
   }
 
-  console.log(comments);
 
 
   return (

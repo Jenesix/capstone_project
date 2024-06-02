@@ -34,7 +34,6 @@ const Teacher_AssignmentDetailPage: React.FC = () => {
             setAssignment(assignmentResponse.data);
 
             const submissionsResponse = await axioslib.get(`/api/user/getturnin/${assignID}`);
-            console.log("Full submissions response:", submissionsResponse.data);
 
             const userSubmissions = submissionsResponse.data.filter(
                 (submission: AssignmentTurnin) => submission.UserID._id === user._id
@@ -62,7 +61,7 @@ const Teacher_AssignmentDetailPage: React.FC = () => {
     if (error) {
         return <div className="text-center mt-12 text-red-500">{error}</div>;
     }
-//------------------------------------------- ก็อปมาจาก user แก้ด้วยนะ--------------------------------------------------------------------//
+    //------------------------------------------- ก็อปมาจาก user แก้ด้วยนะ--------------------------------------------------------------------//
 
 
     return (
@@ -80,15 +79,15 @@ const Teacher_AssignmentDetailPage: React.FC = () => {
             <div className="mx-12">
                 <div className="flex flex-row items-center mb-4">
                     <span className="font-bold text-2xl text-primary mr-4">{assignment?.assignment_name}</span>
-                        <Teacher_EditButton
+                    <Teacher_EditButton
                         editLink={`/Teacher/${classID}/Assignment/${assignID}/Edit`}
-                        />
+                    />
                 </div>
                 <div className="flex-grow border-b border-2 border-salate-100 mb-4"></div>
             </div>
             <div className="min-h-screen mx-12 grid grid-cols-1 lg:grid-cols-2 gap-8 pb-6">
                 {assignment && <Teacher_LeftSide assignment={assignment} />}
-                <Teacher_RightSide/>
+                <Teacher_RightSide />
             </div>
         </div>
     );

@@ -29,7 +29,6 @@ const AssignmentDetailPage: React.FC = () => {
             setAssignment(assignmentResponse.data);
 
             const submissionsResponse = await axioslib.get(`/api/user/getturnin/${assignID}`);
-            console.log("Full submissions response:", submissionsResponse.data);
 
             const userSubmissions = submissionsResponse.data.filter(
                 (submission: AssignmentTurnin) => submission.UserID._id === user._id

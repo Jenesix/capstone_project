@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/legacy/image';
 import { SlOptionsVertical } from "react-icons/sl";
 import Link from 'next/link';
@@ -7,7 +7,6 @@ import profile from '../../../public/profile.svg';
 
 import { axioslib } from '@/lib/axioslib';
 import { useUser } from '@/context/UserContext';
-
 
 interface QnACardProps {
     postID: string,
@@ -41,28 +40,24 @@ const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, p
         }
     }
 
-
     return (
         <div className={`bg-content-light shadow-2xl rounded-4xl p-4 mb-8 min-h-60 text-salate-1000 overflow-hidden px-6`}>
             <div className="flex flex-row mb-4">
-            <h1 className="font-bold text-xl text-primary truncate pr-4 flex-grow mt-1">{post_title}</h1>
+                <h1 className="font-bold text-xl text-primary truncate pr-4 flex-grow mt-1">{post_title}</h1>
+
                 <div className="relative">
-                    {/* <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} onBlur={() => setDropdownVisible(false)} /> */}
-                    {user?.user_id === user_id || user?.role === "teacher" ?
-                        (
-                            <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} />
-                        ) : <></>
-                    }
+                    {user?.user_id === user_id || user?.role === "teacher" ? (
+                        <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} />
+                    ) : null}
                     {dropdownVisible && (
                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                            {user?.user_id === user_id ?
+                            {user?.user_id === user_id ? (
                                 <Link href={editLink}>
                                     <p className="w-full text-left px-4 py-2 hover:bg-content-light">
                                         Edit
                                     </p>
                                 </Link>
-                                : <></>
-                            }
+                            ) : null}
                             <button
                                 className="w-full text-left px-4 py-2 hover:bg-content-light"
                                 onClick={handleDeletePost}
@@ -70,8 +65,7 @@ const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, p
                                 Delete
                             </button>
                         </div>
-                    )
-                    }
+                    )}
                 </div>
             </div>
 
@@ -82,7 +76,7 @@ const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, p
                         <div className="flex items-center mb-4 md:mb-0">
                             <div className={`size-16 rounded-full overflow-hidden`}>
                                 <Image
-                                    src={profile}
+                                    src={profileImage}
                                     objectFit="fill"
                                     alt="profile"
                                 />
@@ -94,14 +88,16 @@ const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, p
                         </div>
 
                         <div className="md:ml-auto flex flex-col items-end">
-                            <div className={`relative mb-2 h-32 w-52`}>
-                                <Image
-                                    src={postimage}
-                                    layout="fill"
-                                    objectFit="cover"
-                                    alt=""
-                                />
-                            </div>
+                            {postimage && (
+                                <div className={`relative mb-2 h-32 w-52`}>
+                                    <Image
+                                        src={postimage}
+                                        layout="fill"
+                                        objectFit="cover"
+                                        alt="post image"
+                                    />
+                                </div>
+                            )}
                             <div className="font-base">{time}</div>
                         </div>
                     </div>

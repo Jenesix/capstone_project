@@ -11,6 +11,9 @@ import { Comment, Post, User } from '@/interface/interface';
 import { axioslib } from '@/lib/axioslib';
 import profile from '../../../public/profile.svg';
 import { useUser } from '@/context/UserContext';
+import LoadingScreen from '../Loading/LoadingScreen';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const QnADetailPage: React.FC = () => {
     const { classID, postID } = useParams();
@@ -26,8 +29,11 @@ const QnADetailPage: React.FC = () => {
     }
 
     const handleSubmitComment = async (e: React.FormEvent) => {
+        e.preventDefault();
         try {
             await axioslib.post(`/api/user/createcomment/${postID}`, { comment: newComment });
+            setNewComment(''); // Clear the input after submitting
+            // Optionally, you can reload comments or add the new comment to the comments state
         } catch (error) {
             console.error("Error submitting comment:", error);
         }
@@ -35,24 +41,37 @@ const QnADetailPage: React.FC = () => {
 
     const handleDeleteComment = async (commentID: string) => {
         try {
-          await axioslib.delete(`/api/user/deletecomment/${commentID}`)
-            .then(() => {
-              window.location.reload();
-            });
+            await axioslib.delete(`/api/user/deletecomment/${commentID}`);
+            setComments(comments.filter(comment => comment._id !== commentID)); // Remove the deleted comment from the state
         } catch (error) {
-          console.error("Error deleting comment:", error);
+            console.error("Error deleting comment:", error);
         }
-      };
+    };
+
+    const confirmDeleteComment = (commentID: string) => {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Are you sure to delete this comment?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => handleDeleteComment(commentID)
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                }
+            ]
+        });
+    };
 
     useEffect(() => {
         const fetchPostData = async () => {
             try {
                 const response = await axioslib.get(`/api/user/getpostbyid/${postID}`);
                 setPost(response.data);
-                // const commentIds: string[] = response.data.CommentID;
-
                 setComments(response.data.CommentID);
-                setPostOwner(response.data.UserID);                                        
+                setPostOwner(response.data.UserID);
             } catch (error) {
                 console.error("Error fetching post data", error);
             }
@@ -62,7 +81,7 @@ const QnADetailPage: React.FC = () => {
     }, [postID]);
 
     if (!post || !postOwner) {
-        return <div>Loading...</div>;
+        return <LoadingScreen />;
     }
 
     const countComment = comments.length;
@@ -71,7 +90,7 @@ const QnADetailPage: React.FC = () => {
         const dateObj = parseISO(date);
         return format(dateObj, 'dd/MM/yyyy, HH:mm');
     }
-    
+
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
@@ -82,7 +101,7 @@ const QnADetailPage: React.FC = () => {
             </Link>
             <h1 className="text-primary text-center font-bold text-xl sm:text-2xl lg:text-3xl">Q&A Board</h1>
 
-            <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 mt-12 2xl:mx-20 text-salate-1000'>
+            <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 mt-12 2xl:mx-20 text-salate-1000 pb-32'>
                 <div className='border-r pr-10'>
                     <div className='flex flex-row'>
                         <UserCard
@@ -124,9 +143,10 @@ const QnADetailPage: React.FC = () => {
                                 <p className='pt-5 pl-3 text-sm'>{formatDate(String(comment.time_cm))}</p>
                             </div>
                             <div className='ml-24 bg-content-light rounded-tr-3xl rounded-b-3xl w-fit h-fit'>
-                                    <p className='p-2 pt-4 ml-8 mr-24'>{comment.comment}</p>
+                                <p className='p-2 pt-4 ml-2 mr-24'>{comment.comment}</p>
+
                                 {comment.UserID._id === user?._id && (
-                                    <FiTrash2 className="ml-auto mr-4 size-5 text-bookmark1 cursor-pointer" onClick={() => handleDeleteComment(comment._id)} />
+                                    <FiTrash2 className="ml-auto mr-4 mb-5 size-5 text-bookmark1 cursor-pointer" onClick={() => confirmDeleteComment(comment._id)} />
                                 )}
                             </div>
                         </div>
@@ -140,6 +160,7 @@ const QnADetailPage: React.FC = () => {
                         placeholder='Message Here...'
                         type='text'
                         className='pl-2 p-2 ml-4 bg-content-light rounded-3xl w-full text-base md:base'
+                        value={newComment}
                         onChange={handleCommentChange}
                     />
                     <button type='submit' className='text-salate-1000 font-bold px-2 rounded'>Send</button>

@@ -1,9 +1,7 @@
 "use client";
 import React from 'react';
 import { useParams } from 'next/navigation'
-import { AiOutlineFilePdf } from 'react-icons/ai'; // PDF icon
 import { Assignment as AssignmentInterface } from '@/interface/interface';
-import Teacher_EditButton from '../NewEdit/Teacher_EditButton';
 
 interface Teacher_LeftSideProps {
     assignment: AssignmentInterface;
