@@ -11,7 +11,8 @@ import {
     isSameDay,
     parseISO,
     addMonths,
-    getDate
+    getDate,
+    isToday
 } from 'date-fns';
 
 interface Assignment {
@@ -32,20 +33,31 @@ const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
 
         return (
             <div className="flex justify-between items-center py-2 mb-6 mx-12">
-                <button
-                    onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}
-                    className="text-white bg-primary-light font-bold px-4 py-2 rounded-full transform transition-transform duration-300 hover:scale-105"
-                >
-                    Previous
-                </button>
-                <div className="text-lg font-bold">{format(currentMonth, dateFormat)}</div>
-                <button
-                    onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-                    className="text-white bg-primary-light font-bold px-4 py-2 rounded-full transform transition-transform duration-300 hover:scale-105"
-                >
-                    Next
-                </button>
+
+                <div className="text-2xl font-bold">{format(currentMonth, dateFormat)}</div>
+                <div className='flex'>
+                    <button
+                        onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}
+                        className="text-black  font-bold px-4 py-2 rounded-full transform transition-transform duration-300 hover:scale-105"
+                    >
+                        &lt;
+                    </button>
+                    <button
+                        onClick={() => setCurrentMonth(new Date())}
+                        className="text-white bg-primary-light font-bold px-4 py-2 rounded-full transform transition-transform duration-300 hover:scale-105"
+                    >
+                        Today
+                    </button>
+                    <button
+                        onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+                        className="text-black  font-bold px-4 py-2 rounded-full transform transition-transform duration-300 hover:scale-105"
+                    >
+                        &gt;
+                    </button>
+                </div>
+
             </div>
+
         );
     };
 
@@ -85,16 +97,17 @@ const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
 
                 const isCurrentMonth = isSameMonth(day, monthStart);
                 const isDayFromCurrentMonth = getDate(day) <= getDate(monthEnd) && getDate(day) >= 1;
+                const todayClass = isToday(day) ? 'text-primary font-bold' : '';
 
                 days.push(
                     <div
-                        className={`p-2  h-32 ${!isCurrentMonth ? 'text-gray-400' : ''}`}
+                        className={`p-2 h-32 ${!isCurrentMonth ? 'text-gray-400' : ''} ${todayClass}`}
                         key={day.toISOString()}
                     >
                         <div className="text-center">{isCurrentMonth && isDayFromCurrentMonth ? formattedDate : ''}</div>
                         <div className="overflow-y-auto h-20 pr-2 mt-1">
                             {isCurrentMonth && isDayFromCurrentMonth && assignmentsForDay.map((assignment, idx) => (
-                                <div key={idx} className="text-xs mt-1 bg-assign border-l-primary border-l-4 p-1 rounded line-clamp-2 text-primary ">
+                                <div key={idx} className="text-xs mt-1 bg-assign border-l-primary border-l-4 p-1 rounded line-clamp-2 text-primary">
                                     {assignment.name} <br /> {assignment.dueTime}
                                 </div>
                             ))}
@@ -122,6 +135,7 @@ const Calendar: React.FC<CalendarProps> = ({ assignments }) => {
             {renderHeader()}
             {renderDays()}
             {renderCells()}
+
         </div>
     );
 };

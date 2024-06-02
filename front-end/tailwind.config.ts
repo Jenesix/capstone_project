@@ -20,6 +20,7 @@ const config: Config = {
       'bookmark1': '#FF5050',
       'bookmark2': '#63D86E',
       'bookmark3': '#FFCA43',
+      'bookmark4': '#2563eb',
       'content-light': '#F5F5F5',
       salate: {
         50: '#f8fafc',
