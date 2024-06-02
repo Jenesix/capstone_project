@@ -1,6 +1,6 @@
 "use client";
 import { FiTrash2, FiUpload } from 'react-icons/fi';
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import { useParams } from 'next/navigation';
 
@@ -13,7 +13,7 @@ const Teacher_EditAssignment: React.FC = () => {
     const [date, setDate] = useState<string>('');
     const [time, setTime] = useState<string>('');
     const [score, setScore] = useState<number | ''>('');
-    const [files, setFiles] = useState<File[]>([]); 
+    const [files, setFiles] = useState<File[]>([]);
 
     useEffect(() => {
         const fetchAssignment = async () => {
@@ -21,7 +21,7 @@ const Teacher_EditAssignment: React.FC = () => {
                 const response = await axioslib.get(`/api/user/getassignbyid/${assignID}`);
                 setTitle(response.data.assignment_name);
                 setDescription(response.data.description_asm);
-                const duedate = (response.data.due_date).split("T");
+                const duedate = response.data.due_date.split("T");
                 setDate(duedate[0]);
                 setTime(duedate[1].substring(0, 5));
                 setScore(response.data.fullscore);
@@ -29,10 +29,10 @@ const Teacher_EditAssignment: React.FC = () => {
             } catch (error) {
                 console.error("Error fetching assignment:", error);
             }
-        }
+        };
 
         fetchAssignment();
-    }, []);
+    }, [assignID]);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -63,11 +63,14 @@ const Teacher_EditAssignment: React.FC = () => {
     };
 
     const handleFileDelete = async (index: number) => {
+        const fileToDelete = files[index];
         setFiles(prevFiles => prevFiles.filter((_, i) => i !== index));
         try {
-            await axioslib.delete(`/api/user/deletefileassign/${assignID}`, { file_delete: files });
+            await axioslib.delete(`/api/user/deletefileassign/${assignID}`, {
+                data: { file_delete: fileToDelete }
+            });
         } catch (error) {
-            console.log(error);
+            console.error("Error deleting file:", error);
         }
     };
 
@@ -91,11 +94,11 @@ const Teacher_EditAssignment: React.FC = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             })
-            .then(() => {
-                window.location.href = `/Teacher/${classID}/Assignment`;
-            });
+                .then(() => {
+                    window.location.href = `/Teacher/${classID}/Assignment`;
+                });
         } catch (error) {
-            console.log(error);
+            console.error("Error updating assignment:", error);
         }
     };
 
@@ -107,7 +110,7 @@ const Teacher_EditAssignment: React.FC = () => {
                 </button>
             </Link>
             <div className='flex md:justify-center'>
-            <div className='w-full flex flex-col items-center text-salate-1000 '>
+                <div className='w-full flex flex-col items-center text-salate-1000'>
                     <form onSubmit={handleSubmit} className=''>
                         <div className='w-full bg-content-light rounded-t-2xl text-center border-b border-salate-1000 pt-6 p-4 md:p-8 lg:p-12 text-sm md:text-xl lg:text-2xl font-extrabold'>
                             Edit Assignment
@@ -162,6 +165,32 @@ const Teacher_EditAssignment: React.FC = () => {
                                         type='number'
                                         className='text-sm mt-2 p-2 pl-4 bg-white border rounded-xl w-full'
                                     />
+                                </div>
+                            </div>
+                            <div className='mt-4'>
+                                <label htmlFor="file_upload" className='block text-sm font-medium text-gray-700'>
+                                    Attach Files
+                                </label>
+                                <input
+                                    id="file_upload"
+                                    type="file"
+                                    onChange={handleFileChange}
+                                    className='mt-2 p-2 bg-white border-salate-1000 rounded-xl w-full'
+                                    multiple
+                                />
+                                <div className='mt-4'>
+                                    {files.map((file, index) => (
+                                        <div key={index} className='flex items-center justify-between bg-gray-100 p-2 rounded-lg mt-2'>
+                                            <span>{file.name}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleFileDelete(index)}
+                                                className='text-red-600'
+                                            >
+                                                <FiTrash2 />
+                                            </button>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                             <button

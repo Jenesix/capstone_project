@@ -5,7 +5,6 @@ import Link from "next/link";
 
 import { axioslib } from '@/lib/axioslib';
 import { useParams } from 'next/navigation';
-import { Resource, ResourceFolder } from '@/interface/interface';
 
 const Teacher_NewFileContent: React.FC = () => {
 
@@ -34,18 +33,6 @@ const Teacher_NewFileContent: React.FC = () => {
             formData.append('files', file);
         });
 
-        // const endpoint = folderID
-        //     ? `/api/user/uploadresource?classID=${classID}&folderID=${folderID}`
-        //     : `/api/user/uploadresource?classID=${classID}`;
-
-        // try {
-        //     await axioslib.post(endpoint, formData)
-        //         .then((response) => {
-        //             console.log('File uploaded successfully:', response.data);
-        //         })
-        //         .then(() => {
-        //             window.location.href = `/Teacher/${classID}/File_Content`;
-        //         });
         try {
             if (!folderID) {
                 await axioslib.post(`/api/user/uploadresource?classID=${classID}`, formData)
@@ -65,7 +52,7 @@ const Teacher_NewFileContent: React.FC = () => {
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
-            <Link href={`/Teacher/${classID}/File_Content`}>
+            <Link href={`/Teacher/${classID}/File_Content/${folderID}`}>
                 <button className="text-salate-1000 font-bold py-2 px-4 rounded">
                     &lt;  Back
                 </button>

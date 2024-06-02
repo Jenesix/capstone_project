@@ -4,15 +4,10 @@ import { FaTrashAlt } from "react-icons/fa";
 import React, { useState, useEffect } from 'react';
 import Image from 'next/legacy/image';
 import Link from "next/link";
-
 import { axioslib } from '../../lib/axioslib';
-import { Post } from '../../interface/interface';
-
 
 const Teacher_EditBoard: React.FC = () => {
     const { classID, postID } = useParams();
-
-
 
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -21,13 +16,19 @@ const Teacher_EditBoard: React.FC = () => {
 
     useEffect(() => {
         const fetchPost = async () => {
-            const response = await axioslib.get(`/api/user/getpostbyid/${postID}`);
-            setTitle(response.data.title_p);
-            setDescription(response.data.description_p);
-            setPreview(response.data.post_image);
+            try {
+                const response = await axioslib.get(`/api/user/getpostbyid/${postID}`);
+                setTitle(response.data.title_p);
+                setDescription(response.data.description_p);
+                setPreview(response.data.post_image);
+            } catch (error) {
+                console.error('Error fetching post:', error);
+            }
         };
-        fetchPost();
-    }, []);
+        if (postID) {
+            fetchPost();
+        }
+    }, [postID]);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -74,16 +75,14 @@ const Teacher_EditBoard: React.FC = () => {
                 window.location.href = `/Teacher/${classID}/QnABoard`;
             });
         } catch (error) {
-            console.error('Error creating post:', error);
+            console.error('Error updating post:', error);
         }
     };
-
-
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">
             <Link href={`/Teacher/${classID}/QnABoard`}>
-                <button className="  text-salate-1000 font-bold py-2 px-4 rounded">
+                <button className="text-salate-1000 font-bold py-2 px-4 rounded">
                     &lt;  Back
                 </button>
             </Link>

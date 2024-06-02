@@ -1,43 +1,27 @@
 "use client";
-import { FC } from 'react';
+import { FC, useState, useEffect, useCallback } from 'react';
 import { FaFolder, FaFile } from "react-icons/fa";
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 
 import { axioslib } from '@/lib/axioslib';
 import { Resource, ResourceFolder } from '@/interface/interface';
-
-const filesmock = [
-    { name: 'Slide_Week1.pdf', type: 'pdf' },
-    { name: 'Lab_test_result.png', type: 'image' },
-    { name: 'App.jsx', type: 'code' },
-    { name: 'Test.file', type: 'file' },
-];
-
-const foldersmock = [
-    'Study Lecture Week 1',
-    'Study Lecture Week 2',
-    'Test Lab For ALL',
-    'Researchs',
-    'PDF Links',
-];
 
 const FileContentPage: FC = () => {
     const [folders, setFolders] = useState<ResourceFolder[]>([]);
     const [files, setFiles] = useState<Resource[]>([]);
     const { classID } = useParams();
 
-    const fetchFolder = async () => {
+    const fetchFolder = useCallback(async () => {
         try {
             const response = await axioslib.get(`/api/user/getfolder/${classID}`);
             setFolders(response.data);
         } catch (error) {
             console.log(error);
         }
-    }
+    }, [classID]);
 
-    const fetchFile = async () => {
+    const fetchFile = useCallback(async () => {
         try {
             const response = await axioslib.get(`/api/user/getresource/${classID}`);
             setFiles(response.data);
@@ -45,12 +29,12 @@ const FileContentPage: FC = () => {
         } catch (error) {
             console.log(error);
         }
-    }
+    }, [classID]);
 
     useEffect(() => {
         fetchFolder();
         fetchFile();
-    }, []);
+    }, [fetchFolder, fetchFile]);
 
     return (
         <div className="container mx-auto p-6 min-h-screen">

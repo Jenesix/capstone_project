@@ -1,10 +1,9 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Link from "next/link";
 import { useParams } from 'next/navigation';
 import { axioslib } from '../../lib/axioslib';
 import { useUser } from '@/context/UserContext';
-
 
 const Teacher_EditAnnouncement: React.FC = () => {
     const [title, setTitle] = useState<string>('');
@@ -12,7 +11,7 @@ const Teacher_EditAnnouncement: React.FC = () => {
     const { classID, announceID } = useParams();
     const { user } = useUser();
 
-    const fetchAnnouncement = async () => {
+    const fetchAnnouncement = useCallback(async () => {
         try {
             const response = await axioslib.get(`/api/user/getannouncebyid/${announceID}`);
             setTitle(response.data.title_anm);
@@ -20,14 +19,13 @@ const Teacher_EditAnnouncement: React.FC = () => {
         } catch (error) {
             console.error("Error fetching announcement:", error);
         }
-    };
+    }, [announceID]);
 
     useEffect(() => {
         if (classID && announceID) {
             fetchAnnouncement();
         }
-    }, [classID, announceID]);
-    
+    }, [classID, announceID, fetchAnnouncement]);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -38,20 +36,20 @@ const Teacher_EditAnnouncement: React.FC = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        try {
-            e.preventDefault();
+        e.preventDefault();
 
+        try {
             if (!classID || !user) {
                 console.error("Class ID or User ID is missing");
                 return;
             }
-            
-            const response = await axioslib.put(`/api/user/editannounce/${announceID}`, {
+
+            await axioslib.put(`/api/user/editannounce/${announceID}`, {
                 title_anm: title,
                 description_anm: description,
-            }).then(() => {
-                window.location.href = `/Teacher/${classID}/Announcement`;
             });
+
+            window.location.href = `/Teacher/${classID}/Announcement`;
         } catch (error) {
             console.error('Error submitting form:', error);
         }

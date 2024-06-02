@@ -8,12 +8,8 @@ import Link from "next/link";
 import { axioslib } from '../../lib/axioslib';
 import { Post } from '../../interface/interface';
 
-
 const User_EditBoard: React.FC = () => {
     const { classID, postID } = useParams();
-
-
-
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [image, setImage] = useState<File[] | null>([]);
@@ -27,7 +23,7 @@ const User_EditBoard: React.FC = () => {
             setPreview(response.data.post_image);
         };
         fetchPost();
-    }, []);
+    }, [postID]); // Added postID as a dependency here
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -77,8 +73,6 @@ const User_EditBoard: React.FC = () => {
             console.error('Error creating post:', error);
         }
     };
-
-
 
     return (
         <div className="min-h-screen flex flex-col mt-12 w-full px-4 sm:px-8 pb-6">

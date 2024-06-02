@@ -27,7 +27,6 @@ const HomePage: React.FC = () => {
 
     const fetchAssignments = useCallback(async () => {
         try {
-            console.log(`Fetching assignments for classID: ${classID}`);
             const response = await axioslib.get(`/api/user/getassign/${classID}`);
             const assignmentsData = response.data.map((assignment: ServerAssignment) => ({
                 _id: assignment._id,
@@ -35,7 +34,6 @@ const HomePage: React.FC = () => {
                 dueDate: assignment.due_date.toString().split('T')[0], // Convert to string before splitting
                 dueTime: assignment.due_date.toString().split('T')[1].slice(0, 5), // Convert to string before splitting
             }));
-            console.log('Fetched assignments:', assignmentsData);
             setAssignments(assignmentsData);
         } catch (error: any) {
             console.error("Error fetching assignments:", error.response?.data);
@@ -56,7 +54,6 @@ const HomePage: React.FC = () => {
         return <LoadingScreen />;
     }
 
-    console.log('Assignments passed to Calendar and AgendaView:', assignments);
 
     return (
         <div className="min-h-screen w-full mt-6 pb-6">
