@@ -111,6 +111,7 @@ const Teacher_EditAssignment: React.FC = () => {
             </Link>
             <div className='flex md:justify-center'>
                 <div className='w-full flex flex-col items-center text-salate-1000'>
+
                     <form onSubmit={handleSubmit} className=''>
                         <div className='w-full bg-content-light rounded-t-2xl text-center border-b border-salate-1000 pt-6 p-4 md:p-8 lg:p-12 text-sm md:text-xl lg:text-2xl font-extrabold'>
                             Edit Assignment

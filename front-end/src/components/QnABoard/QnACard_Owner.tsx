@@ -44,6 +44,7 @@ const QnACard_Owner: React.FC<QnACardProps> = ({ postID, post_title, editLink, p
         <div className={`bg-content-light shadow-2xl rounded-4xl p-4 mb-8 min-h-60 text-salate-1000 overflow-hidden px-6`}>
             <div className="flex flex-row mb-4">
                 <h1 className="font-bold text-xl text-primary truncate pr-4 flex-grow mt-1">{post_title}</h1>
+
                 <div className="relative">
                     {user?.user_id === user_id || user?.role === "teacher" ? (
                         <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} />

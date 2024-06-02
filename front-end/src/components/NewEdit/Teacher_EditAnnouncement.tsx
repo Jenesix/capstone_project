@@ -12,6 +12,7 @@ const Teacher_EditAnnouncement: React.FC = () => {
     const { user } = useUser();
 
     const fetchAnnouncement = useCallback(async () => {
+
         try {
             const response = await axioslib.get(`/api/user/getannouncebyid/${announceID}`);
             setTitle(response.data.title_anm);
@@ -21,11 +22,13 @@ const Teacher_EditAnnouncement: React.FC = () => {
         }
     }, [announceID]);
 
+
     useEffect(() => {
         if (classID && announceID) {
             fetchAnnouncement();
         }
     }, [classID, announceID, fetchAnnouncement]);
+
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -39,6 +42,8 @@ const Teacher_EditAnnouncement: React.FC = () => {
         e.preventDefault();
 
         try {
+
+
             if (!classID || !user) {
                 console.error("Class ID or User ID is missing");
                 return;
@@ -50,6 +55,7 @@ const Teacher_EditAnnouncement: React.FC = () => {
             });
 
             window.location.href = `/Teacher/${classID}/Announcement`;
+
         } catch (error) {
             console.error('Error submitting form:', error);
         }

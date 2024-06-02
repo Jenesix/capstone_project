@@ -144,6 +144,7 @@ const QnADetailPage: React.FC = () => {
                             </div>
                             <div className='ml-24 bg-content-light rounded-tr-3xl rounded-b-3xl w-fit h-fit'>
                                 <p className='p-2 pt-4 ml-2 mr-24'>{comment.comment}</p>
+
                                 {comment.UserID._id === user?._id && (
                                     <FiTrash2 className="ml-auto mr-4 mb-5 size-5 text-bookmark1 cursor-pointer" onClick={() => confirmDeleteComment(comment._id)} />
                                 )}

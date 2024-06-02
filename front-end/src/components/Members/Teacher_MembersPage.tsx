@@ -22,7 +22,9 @@ const Teacher_MembersPage: React.FC = () => {
         const fetchUsers = async () => {
             try {
                 const response = await axioslib.get<User[]>(`/api/user/getuserclass/${classID}`);
-                // Filter users to show only students
+
+                console.log('API response data:', response.data);
+
                 const students = response.data.filter(user => user.role === 'student');
                 setUsers(students);
             } catch (error) {
