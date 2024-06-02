@@ -10,6 +10,7 @@ import { axioslib } from '@/lib/axioslib';
 
 interface AnnouncementCardProps {
     announcementData: {
+        _id: string;
         username: string;
         Date: string;
         Time: string;
@@ -20,7 +21,7 @@ interface AnnouncementCardProps {
 }
 
 const Teacher_AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcementData }) => {
-    const { classID, announceID } = useParams();
+    const { classID } = useParams();
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const formattedDate = formatDate(announcementData.Date);
 
@@ -41,7 +42,7 @@ const Teacher_AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcemen
 
     const handleDelete = () => {
         try {
-            axioslib.delete(`/api/user/deleteannounce/${announceID}`)
+            axioslib.delete(`/api/user/deleteannounce/${announcementData._id}`)
                 .then(() => {
                     window.location.reload();
                 });
@@ -58,7 +59,7 @@ const Teacher_AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcemen
                 <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} />
                 {dropdownVisible && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                        <Link href={`/Teacher/${classID}/Announcement/${announceID}/Edit`}>
+                        <Link href={`/Teacher/${classID}/Announcement/${announcementData._id}/Edit`}>
                             <p className="w-full text-left px-4 py-2 hover:bg-content-light">
                                 Edit
                             </p>

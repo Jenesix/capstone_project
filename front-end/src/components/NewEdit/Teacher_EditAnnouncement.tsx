@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from "next/link";
 import { useParams } from 'next/navigation';
 import { axioslib } from '../../lib/axioslib';
@@ -12,6 +12,23 @@ const Teacher_EditAnnouncement: React.FC = () => {
     const { classID, announceID } = useParams();
     const { user } = useUser();
 
+    const fetchAnnouncement = async () => {
+        try {
+            const response = await axioslib.get(`/api/user/getannouncebyid/${announceID}`);
+            setTitle(response.data.title_anm);
+            setDescription(response.data.description_anm);
+        } catch (error) {
+            console.error("Error fetching announcement:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (classID && announceID) {
+            fetchAnnouncement();
+        }
+    }, [classID, announceID]);
+    
+
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
     };
@@ -21,20 +38,20 @@ const Teacher_EditAnnouncement: React.FC = () => {
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!classID || !user) {
-            console.error("Class ID or User ID is missing");
-            return;
-        }
-
         try {
+            e.preventDefault();
+
+            if (!classID || !user) {
+                console.error("Class ID or User ID is missing");
+                return;
+            }
+            
             const response = await axioslib.put(`/api/user/editannounce/${announceID}`, {
                 title_anm: title,
-                desc_anm: description,
+                description_anm: description,
+            }).then(() => {
+                window.location.href = `/Teacher/${classID}/Announcement`;
             });
-
-            console.log('Form submitted successfully:', response.data);
         } catch (error) {
             console.error('Error submitting form:', error);
         }
