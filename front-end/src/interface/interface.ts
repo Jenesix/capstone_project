@@ -162,7 +162,7 @@ export interface Comment {
     comment: string;
     time_cm: Date; // datetime created
     // Foreign Key
-    UserID: string;
+    UserID: User;
     PostID: string;
     __v: number;
 }
