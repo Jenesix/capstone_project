@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { FaFile, FaFilePdf, FaFileImage } from 'react-icons/fa';
 import { useParams } from 'next/navigation';
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 
 import { axioslib } from '@/lib/axioslib';
 import { Resource, ResourceFolder } from '@/interface/interface';
@@ -21,7 +22,7 @@ const getFileIcon = (fileType: string) => {
 const FolderDetailPage: FC = () => {
     const [folder, setFolder] = useState<ResourceFolder | null>(null);
     const [files, setFiles] = useState<Resource[]>([]);
-    const { folderID } = useParams();
+    const { classID, folderID } = useParams();
 
     const fetchFolder = useCallback(async () => {
         try {
@@ -39,9 +40,12 @@ const FolderDetailPage: FC = () => {
 
     return (
         <div className="container mx-auto p-6 min-h-screen">
-            <h1 className="text-3xl font-bold text-center text-primary mb-6">
-                Folder: {folder?.folder_name}
-            </h1>
+            <Link href={`/${classID}/File_Content`}>
+                <button className="text-salate-1000 font-bold py-2 px-4 rounded">
+                    &lt; Back
+                </button>
+            </Link>
+            <h1 className="text-3xl font-bold text-center text-primary mb-6">Folder: {folder?.folder_name}</h1>
 
             <div>
                 <h2 className="text-xl font-bold mb-4 text-gray">Files</h2>
