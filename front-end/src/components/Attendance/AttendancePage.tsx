@@ -153,7 +153,7 @@ const Attendancepage: React.FC = () => {
 
                             return (
                                 <tr key={entry._id} className={index % 2 === 0 ? "bg-content-light h-20" : "bg-white h-20"}>
-                                    <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap font-extrabold">{new Date(entry.date_atd).toLocaleDateString()}</td>
+                                    <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap font-extrabold">{new Date(entry.date_atd).toLocaleDateString("en-GB")}</td>
                                     <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.time_start}</td>
                                     <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">
                                         <div className="flex justify-center items-center space-x-2">

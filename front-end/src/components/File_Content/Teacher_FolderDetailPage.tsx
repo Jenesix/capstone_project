@@ -9,20 +9,23 @@ import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
 import { FiTrash2 } from 'react-icons/fi';
 
 const Teacher_FolderDetailPage: FC = () => {
-    const { classID, folderID } = useParams();
-
-    const [folders, setFolders] = useState<ResourceFolder[]>([]);
+    const [folder, setFolder] = useState<ResourceFolder | null>(null);
     const [files, setFiles] = useState<Resource[]>([]);
+    const { classID, folderID } = useParams();
 
     const fetchFolder = useCallback(async () => {
         try {
             const response = await axioslib.get(`/api/user/getfolderbyid/${folderID}`);
-            setFolders(response.data);
+            setFolder(response.data);
             setFiles(response.data.ResourceID);
         } catch (error) {
             console.log(error);
         }
     }, [folderID]);
+
+    useEffect(() => {
+        fetchFolder();
+    }, [fetchFolder]);
 
     const handleDeleteFile = async (fileId: string) => {
         try {
@@ -33,10 +36,6 @@ const Teacher_FolderDetailPage: FC = () => {
         }
     }
 
-    useEffect(() => {
-        fetchFolder();
-    }, [fetchFolder]);
-
     return (
         <div className="container mx-auto p-6 min-h-screen">
             <Link href={`/Teacher/${classID}/File_Content`}>
@@ -44,7 +43,7 @@ const Teacher_FolderDetailPage: FC = () => {
                     &lt; Back
                 </button>
             </Link>
-            <h1 className="text-3xl font-bold text-center text-primary mb-6">Folder</h1>
+            <h1 className="text-3xl font-bold text-center text-primary mb-6">Folder: {folder?.folder_name}</h1>
 
             <div>
                 <h2 className="text-xl font-bold mb-4 text-gray">Files</h2>
