@@ -12,6 +12,9 @@ import { axioslib } from '@/lib/axioslib';
 import profile from '../../../public/profile.svg';
 import { useUser } from '@/context/UserContext';
 import LoadingScreen from '../Loading/LoadingScreen';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 
 const QnADetailPage: React.FC = () => {
   const { classID, postID } = useParams();
@@ -43,6 +46,22 @@ const QnADetailPage: React.FC = () => {
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
+  };
+  const confirmDeleteComment = (commentID: string) => {
+    confirmAlert({
+      title: 'Confirm to delete',
+      message: 'Are you sure to delete this comment?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => handleDeleteComment(commentID)
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
   };
 
   useEffect(() => {
@@ -127,7 +146,7 @@ const QnADetailPage: React.FC = () => {
               </div>
               <div className='ml-24 bg-content-light rounded-tr-3xl rounded-b-3xl w-fit h-fit'>
                 <p className='p-2 pt-4 ml-8 mr-24'>{comment.comment}</p>
-                <FiTrash2 className="ml-auto mr-4 size-5 text-bookmark1 cursor-pointer" onClick={() => handleDeleteComment(comment._id)} />
+                <FiTrash2 className="ml-auto mr-4 size-5 text-bookmark1 cursor-pointer" onClick={() => confirmDeleteComment(comment._id)} />
               </div>
             </div>
           ))}

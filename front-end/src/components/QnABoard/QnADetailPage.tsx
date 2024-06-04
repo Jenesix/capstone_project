@@ -32,8 +32,8 @@ const QnADetailPage: React.FC = () => {
         e.preventDefault();
         try {
             await axioslib.post(`/api/user/createcomment/${postID}`, { comment: newComment });
-            setNewComment(''); // Clear the input after submitting
-            // Optionally, you can reload comments or add the new comment to the comments state
+            setNewComment('');
+            window.location.reload();
         } catch (error) {
             console.error("Error submitting comment:", error);
         }

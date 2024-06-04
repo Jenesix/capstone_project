@@ -4,10 +4,13 @@ import { FaFolder, FaFile, FaFolderPlus } from "react-icons/fa";
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { FiTrash2 } from 'react-icons/fi';
-
 import { axioslib } from '@/lib/axioslib';
 import { Resource, ResourceFolder } from '@/interface/interface';
 import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
+
 
 const Teacher_FileContentPage: FC = () => {
     const [folders, setFolders] = useState<ResourceFolder[]>([]);
@@ -63,6 +66,40 @@ const Teacher_FileContentPage: FC = () => {
             console.log(error);
         }
     };
+    const confirmDeleteFile = (fileID: string) => {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Are you sure to delete this file?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => handleDeleteFile(fileID)
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                }
+            ]
+        });
+    };
+
+
+    const confirmDeleteFolder = (folderID: string) => {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Are you sure to delete this folder?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => handleDeleteFolder(folderID)
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                }
+            ]
+        });
+    };
 
     useEffect(() => {
         fetchFolder();
@@ -88,7 +125,7 @@ const Teacher_FileContentPage: FC = () => {
                             </Link>
                             <FiTrash2
                                 className="text-bookmark1 cursor-pointer ml-auto mr-2"
-                                onClick={() => handleDeleteFolder(folder._id)}
+                                onClick={() => confirmDeleteFolder(folder._id)}
                             />
                         </div>
                     ))}
@@ -114,7 +151,7 @@ const Teacher_FileContentPage: FC = () => {
                             <div className="flex justify-end">
                                 <FiTrash2
                                     className="text-bookmark1 cursor-pointer ml-2"
-                                    onClick={() => handleDeleteFile(file._id)}
+                                    onClick={() => confirmDeleteFile(file._id)}
                                 />
                             </div>
                         </div>

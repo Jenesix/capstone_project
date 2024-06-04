@@ -7,6 +7,9 @@ import { axioslib } from '@/lib/axioslib';
 import { Resource, ResourceFolder } from '@/interface/interface';
 import Teacher_NewButton from '../NewEdit/Teacher_NewButton';
 import { FiTrash2 } from 'react-icons/fi';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 
 const Teacher_FolderDetailPage: FC = () => {
     const [folder, setFolder] = useState<ResourceFolder | null>(null);
@@ -35,6 +38,22 @@ const Teacher_FolderDetailPage: FC = () => {
             console.log(error);
         }
     }
+    const confirmDeleteFile = (fileID: string) => {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Are you sure to delete this file?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => handleDeleteFile(fileID)
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                }
+            ]
+        });
+    };
 
     return (
         <div className="container mx-auto p-6 min-h-screen">
@@ -64,7 +83,7 @@ const Teacher_FolderDetailPage: FC = () => {
                             <div className="flex justify-end">
                                 <FiTrash2
                                     className="text-bookmark1 cursor-pointer ml-2"
-                                    onClick={() => handleDeleteFile(file._id)}
+                                    onClick={() => confirmDeleteFile(file._id)}
                                 />
                             </div>
                         </div>

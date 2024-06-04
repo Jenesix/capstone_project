@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { SlOptionsVertical } from "react-icons/sl";
 import { ImBullhorn } from "react-icons/im";
-
 import { axioslib } from '@/lib/axioslib';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 
 interface AnnouncementCardProps {
     announcementData: {
@@ -51,9 +53,27 @@ const Teacher_AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcemen
         }
     };
 
+
+    const confirmDeleteAnnoucement = () => {
+        confirmAlert({
+            title: 'Confirm to delete',
+            message: 'Are you sure to delete this file?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => handleDelete()
+                },
+                {
+                    label: 'No',
+                    onClick: () => { }
+                }
+            ]
+        });
+    };
+
     return (
         <div className="p-4 sm:p-6 lg:p-8 rounded-4xl shadow-lg bg-white mb-12">
-            
+
             <div className="relative text-salate-1000">
                 {/*Option Button*/}
                 <SlOptionsVertical className="ml-auto cursor-pointer" onClick={toggleDropdown} />
@@ -66,13 +86,13 @@ const Teacher_AnnouncementCard: React.FC<AnnouncementCardProps> = ({ announcemen
                         </Link>
                         <button
                             className="w-full text-left px-4 py-2 hover:bg-content-light"
-                            onClick={handleDelete}
+                            onClick={confirmDeleteAnnoucement}
                         >
                             Delete
                         </button>
                     </div>
                 )}
-            </div>  
+            </div>
 
 
             <div className="flex lg:flex-row items-start">
