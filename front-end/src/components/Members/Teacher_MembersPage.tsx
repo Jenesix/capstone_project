@@ -22,11 +22,8 @@ const Teacher_MembersPage: React.FC = () => {
         const fetchUsers = async () => {
             try {
                 const response = await axioslib.get<User[]>(`/api/user/getuserclass/${classID}`);
-
                 console.log('API response data:', response.data);
-
-                const students = response.data.filter(user => user.role === 'student');
-                setUsers(students);
+                setUsers(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -74,7 +71,7 @@ const Teacher_MembersPage: React.FC = () => {
                     <table className="text-salate-1000 font-semibold rounded-md text-center w-full bg-white mx-auto">
                         <thead>
                             <tr className='h-24 bg-primary-light text-white text-lg px-6 py-3 tracking-wider'>
-                                <th className="font-black rounded-tl-4xl px-2 sm:px-6 lg:min-w-96">Student</th>
+                                <th className="font-black rounded-tl-4xl px-2 sm:px-6 lg:min-w-96">User</th>
                                 <th className="font-black border-x border-salate-1000 px-2 sm:px-6 lg:min-w-72">Faculty</th>
                                 <th className="font-black border-x border-salate-1000 px-2 sm:px-6 lg:min-w-72">Department</th>
                                 <th className="font-black rounded-tr-4xl px-2 sm:px-6 lg:min-w-72">Major</th>
@@ -94,16 +91,18 @@ const Teacher_MembersPage: React.FC = () => {
                                                         alt="profile"
                                                     />
                                                 </div>
-                                                <div className="text-left ml-4 font-bold text-salate-1000 flex flex-col min-w-96">
+                                                <div className={`text-left ml-4 font-bold flex flex-col min-w-96 ${entry.role === 'teacher' ? 'text-bookmark4' : 'text-salate-1000'}`}>
                                                     <span className='text-lg'>{entry.firstname} {entry.lastname}</span>
                                                     <span className='text-base'>{entry.user_id}</span>
                                                     <span className='text-sm font-semibold flex items-center'><MdEmail />&nbsp;{entry.email}</span>
                                                 </div>
+                                                {entry.role === 'student' && (
+                                                    <HiUserRemove
+                                                        className='ml-auto text-bookmark1 size-6 cursor-pointer'
+                                                        onClick={() => handleRemoveUser(index)}
+                                                    />
+                                                )}
                                             </div>
-                                            <HiUserRemove
-                                                className='ml-auto text-bookmark1 size-6 cursor-pointer'
-                                                onClick={() => handleRemoveUser(index)}
-                                            />
                                         </td>
                                         <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.faculty}</td>
                                         <td className="border border-salate-1000 px-2 sm:px-6 py-4 whitespace-nowrap">{entry.department}</td>
@@ -112,7 +111,7 @@ const Teacher_MembersPage: React.FC = () => {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={4} className="text-center py-4">No users found.</td>
+                                    <td colSpan={5} className="text-center py-4">No users found.</td>
                                 </tr>
                             )}
                         </tbody>
