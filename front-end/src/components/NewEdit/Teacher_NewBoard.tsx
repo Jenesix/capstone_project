@@ -57,9 +57,9 @@ const Teacher_NewBoard: React.FC = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             })
-            .then(() => {
-                window.location.href = `/${classID}/QnABoard`;
-            });
+                .then(() => {
+                    window.location.href = `/Teacher/${classID}/QnABoard;`;
+                });
         } catch (error) {
             console.error('Error creating post:', error);
         }
