@@ -8,16 +8,7 @@ import Link from 'next/link';
 import { axioslib } from '@/lib/axioslib';
 import { Resource, ResourceFolder } from '@/interface/interface';
 
-const getFileIcon = (fileType: string) => {
-    switch (fileType) {
-        case 'pdf':
-            return <FaFilePdf size={24} className="mr-2" />;
-        case 'image':
-            return <FaFileImage size={24} className="mr-2" />;
-        default:
-            return <FaFile size={24} className="mr-2" />;
-    }
-};
+
 
 const FolderDetailPage: FC = () => {
     const [folder, setFolder] = useState<ResourceFolder | null>(null);
